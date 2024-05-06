@@ -8,10 +8,10 @@ library(pkgdown)
 #usethis::use_github_action("pkgdown")
 #usethis::use_pkgdown()
 roxygen2::roxygenise(clean = TRUE)
-build_home()
+#build_home()
 build_site()
 preview_site()
-# run once when you have your man/figures/logo.png
+# run once when you have your logo.png
 build_favicons(overwrite = TRUE)
 #  usethis -----
 library(usethis)
