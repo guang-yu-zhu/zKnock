@@ -1,5 +1,2 @@
-# YKnock
-
-# YKnock 1.0.0
-
-This is the first version of the **YKnock** package to be released open-source on GitHub. 
+# ZKnock 1.0.0 (2024-05-01)
+- `knockoff.filter` can take `family` argument and pass to statistics functions such as `stat.glmnet_coefdiff`

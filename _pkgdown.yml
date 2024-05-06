@@ -1,4 +1,4 @@
-url: https://guang-yu-zhu.github.io/Yknock/
+url: https://guang-yu-zhu.github.io/zKnock/
 template:
   package: zpreferably
   bootstrap: 3
@@ -6,36 +6,27 @@ template:
     ganalytics:
     toggle: manual
 home:
-  title: YKnock
-  description: Controlled Response Variable Selection
+  title: zKnock
+  description: Controlled Feature Selection
 authors:
   Guangyu Zhu:
     href: https://guangyuzhu.rbind.io/
 repo:
   url:
-    home: https://github.com/guang-yu-zhu/YKnock
+    home: https://github.com/guang-yu-zhu/zKnock
   branch: main
 navbar:
   structure:
-    left:  [home,intro,guide,reference,articles, news]
+    left:  [home,intro,reference,news]
     right: [personal,github]
   components:
     home:
       icon: fas fa-home fa-lg
       href: index.html
-    guide:
-      text: Analyst Guide
-      menu:
-        - text: Introduction
     reference:
       text: Functions
       href: reference/index.html
       icon: fa-file-code-o
-    articles:
-      text: Articles
-      icon: fa-book
-      menu:
-        - text: Introduction to {YKnock}
     news:
       text: Changelog
       href: news/index.html
@@ -46,8 +37,22 @@ navbar:
     github:
       icon: fab fa-github fa-lg
       href: https://github.com/guang-yu-zhu/YKnock
+reference:
+- title: Controlled Feature Selection
+  desc:
+  contents:
+  - starts_with("knockoff.")
+  - print.knockoff.result
+- title: Generate Knockoffs
+  desc:
+  contents:
+  - starts_with("create.")
 
+- title: Calculate Knockoffs Statistics
+  desc:
+  contents:
+  - starts_with("stat.")
 footer:
   structure:
-    left: developed_by
+    left:
     right:
