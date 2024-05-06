@@ -5,7 +5,4 @@ _development/
 .RData
 Meta
 .RDataTmp
-0create.R
-sourceDir.R
-try.R
 docs
