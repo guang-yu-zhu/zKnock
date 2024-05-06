@@ -36,7 +36,7 @@ navbar:
       href: http://guangyuzhu.rbind.io
     github:
       icon: fab fa-github fa-lg
-      href: https://github.com/guang-yu-zhu/YKnock
+      href: https://github.com/guang-yu-zhu/zKnock
 reference:
 - title: Controlled Feature Selection
   desc:
