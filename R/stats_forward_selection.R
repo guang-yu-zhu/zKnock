@@ -69,6 +69,8 @@ stat.forward_selection <- function(X, X_k, y, omp=F) {
   W = pmax(Z[orig], Z[orig+p]) * sign(Z[orig] - Z[orig+p])
   # Correct for swapping of columns of X and Xk
   W = W * (1-2*swap)
+ W = as.vector(W)
+  return(W)
 }
 
 #' Forward selection

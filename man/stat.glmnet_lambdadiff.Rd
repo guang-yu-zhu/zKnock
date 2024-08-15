@@ -79,6 +79,7 @@ print(result$selected)
 }
 \seealso{
 Other statistics: 
+\code{\link{stat.SHAP}()},
 \code{\link{stat.forward_selection}()},
 \code{\link{stat.glmnet_coefdiff}()},
 \code{\link{stat.lasso_coefdiff_bin}()},
@@ -87,6 +88,7 @@ Other statistics:
 \code{\link{stat.lasso_lambdadiff}()},
 \code{\link{stat.random_forest}()},
 \code{\link{stat.sqrt_lasso}()},
-\code{\link{stat.stability_selection}()}
+\code{\link{stat.stability_selection}()},
+\code{\link{stat.xgboost}()}
 }
 \concept{statistics}

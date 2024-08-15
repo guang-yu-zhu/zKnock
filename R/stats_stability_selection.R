@@ -66,6 +66,8 @@ stat.stability_selection <- function(X, X_k, y, fitfun = stabs::lars.lasso, ...)
   
   # Correct for swapping of columns of X and Xk
   W = W * (1-2*swap)
+ W = as.vector(W)
+  return(W)
 }
 
 #' Stability selection

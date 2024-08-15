@@ -65,4 +65,6 @@ stat.sqrt_lasso <- function(X, X_k, y, ...) {
   
   # Correct for swapping of columns of X and Xk
   W = W * (1-2*swap)
+ W = as.vector(W)
+  return(W)
 }

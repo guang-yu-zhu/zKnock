@@ -12,7 +12,7 @@ roxygen2::roxygenise(clean = TRUE)
 build_site()
 preview_site()
 # run once when you have your logo.png
-build_favicons(overwrite = TRUE)
+# build_favicons(overwrite = TRUE)
 #  usethis -----
 library(usethis)
 use_description(fields = list(Language = "es"))

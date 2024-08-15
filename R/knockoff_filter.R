@@ -82,27 +82,24 @@ NULL
 #' beta[Ac]=sample(c(-1,1)*scale,k,replace=TRUE)
 #' X = matrix(rnorm(n*p),n)%*%SigmaXhalf
 #' y = X %*% beta + rnorm(n)
-#' # Regular Usage
-#' result1 = knockoff.filter(X, y,statistic =stat.glmnet_coefdiff,offset = 0,fdr = 0.2)
-#' print(result1$selected)
+#' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+#' res1 = knockoff.filter(X, y, Xk,statistic =stat.glmnet_coefdiff,offset = 1,fdr = 0.1)
+#' print(res1$s)
 #'
-#' # Generate Knockoffs Variables Firstly
-#' Xk = create.second_order(X)
-#' result1 = knockoff.filter(X, y, Xk,statistic =stat.glmnet_coefdiff,offset = 0,fdr = 0.2)
-#' print(result1$selected)
+#'
 #' # Logistics Regression
 #' pis <- plogis(X %*% beta)
 #' Y <- factor(rbinom(n, 1, pis))
-#' result2 =  knockoff.filter(X,Y,Xk,statistic =stat.glmnet_coefdiff,family='binomial',offset = 0,fdr = 0.2)
-#' print(result2$selected)
+#' res2 =  knockoff.filter(X,Y,Xk,statistic =stat.glmnet_coefdiff,family='binomial',offset = 0,fdr = 0.2)
+#' print(res2$s)
 #'
 #' @export
 knockoff.filter <- function(X,y,Xk=NULL,
-                              knockoffs=create.second_order,
-                              statistic=stat.glmnet_coefdiff,
-                              fdr=0.10,
-                              offset=1,...
-                              ) {
+                            knockoffs=create.second_order,
+                            statistic=stat.glmnet_coefdiff,
+                            fdr=0.10,
+                            offset=1,...
+) {
 
   # Validate input types.
   if (is.data.frame(X)) {
@@ -131,6 +128,10 @@ knockoff.filter <- function(X,y,Xk=NULL,
   n = nrow(X); p = ncol(X)
   stopifnot(length(y) == n)
 
+  if(is.matrix(Xk)){
+    Xk=list(Xk)
+  }
+
   # If fixed-design knockoffs are being used, provive them with the response vector
   # in order to augment the data with new rows if necessary
   if( identical(knockoffs, create.fixed) )
@@ -156,23 +157,27 @@ knockoff.filter <- function(X,y,Xk=NULL,
 
 
   # Compute statistics
-  W = statistic(X, Xk, y,...)
-
+  Ws <- vector(mode = "list", length = length(Xk))
+  for (i in 1:length(Xk)) {
+    cat('--Calculate',i,'knockoff statistics.\n')
+    Ws[[i]] <- statistic(X, Xk[[i]],y,...)
+  }
   # Run the knockoff filter
-  t = knockoff.threshold(W, fdr=fdr, offset=offset)
-  selected = sort(which(W >= t))
+  res = knockoff.select(Ws,fdr = 0.1,offset = 1)
+  s = res$s
   if (!is.null(X.names))
     names(selected) = X.names[selected]
 
   # Package up the results.
   structure(list(call = match.call(),
-                 X = X,
-                 Xk = Xk,
-                 y = y,
-                 statistic = W,
-                 threshold = t,
-                 selected = selected),
-            class = 'knockoff.result')
+                 #X = X,
+                 #Xk = Xk,
+                 #y = y,
+                 W = res$W,
+                 Ws = res$Ws,
+                 t =res$t,
+                 s = s),
+            class = 'knockoff.filter')
 }
 
 #' Threshold for the knockoff filter
@@ -197,6 +202,49 @@ knockoff.threshold <- function(W, fdr=0.10, offset=1) {
   ok = which(ratio <= fdr)
   ifelse(length(ok) > 0, ts[ok[1]], Inf)
 }
+
+
+#' Select Variables based on knockoff statistics
+#'
+#'
+#' @param Ws the test statistics, it is either a nrep by p matrix, or list of length to be nrep, or a vector with length being p.
+#' @param fdr target false discovery rate (default: 0.1)
+#' @param offset either 0 or 1 (default: 1). The offset used to compute the rejection threshold on the
+#' statistics. The value 1 yields a slightly more conservative procedure ("knockoffs+") that
+#' controls the FDR according to the usual definition, while an offset of 0 controls a modified FDR.
+#' @return An object of class "knockoff.select. This object is a list
+#'  containing at least the following components:
+#'  \item{W}{computed test statistics}
+#'  \item{Ws}{matrix of computed test statistics}
+#'  \item{thre}{computed selection threshold}
+#'  \item{index}{index of selected variables}
+#'
+#' @export
+knockoff.select <- function(Ws, fdr=0.10, offset=1) {
+  if(is.list(Ws)){
+    Ws <- matrix(unlist(Ws), ncol = length(Ws[[1]]), byrow = TRUE)
+  }
+  if(is.vector(Ws)){
+    W = Ws
+  }else{
+    W = colMeans(Ws)
+  }
+  if(offset!=1 && offset!=0) {
+    stop('Input offset must be either 0 or 1')
+  }
+  ts = sort(c(0, abs(W)))
+  ratio = sapply(ts, function(t)
+    (offset + sum(W <= -t)) / max(1, sum(W >= t)))
+  ok = which(ratio <= fdr)
+  thre = ifelse(length(ok) > 0, ts[ok[1]], Inf)
+  s <- which(W >= thre)
+  structure(list(W = W,
+                 Ws = Ws,
+                 t = thre,
+                 s = s),
+            class = 'knockoff.select')
+}
+
 
 #' Print results for the knockoff filter
 #'

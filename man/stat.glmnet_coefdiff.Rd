@@ -11,17 +11,17 @@ stat.glmnet_coefdiff(X, X_k, y, family = "gaussian", cores = 2, ...)
 
 \item{X_k}{n-by-p matrix of knockoff variables.}
 
-\item{y}{vector of length n, containing the response variables. Quantitative for family="gaussian", 
-or family="poisson" (non-negative counts). For family="binomial" 
-should be either a factor with two levels, or a two-column matrix of counts 
-or proportions (the second column is treated as the target class; for a factor, 
-the last level in alphabetical order is the target class). For family="multinomial", 
-can be a nc>=2 level factor, or a matrix with nc columns of counts or proportions. 
-For either "binomial" or "multinomial", if y is presented as a vector, it will 
-be coerced into a factor. For family="cox", y should be a two-column matrix with 
-columns named 'time' and 'status'. The latter is a binary variable, with '1' 
-indicating death, and '0' indicating right censored. The function Surv() in 
-package survival produces such a matrix. For family="mgaussian", y is a matrix 
+\item{y}{vector of length n, containing the response variables. Quantitative for family="gaussian",
+or family="poisson" (non-negative counts). For family="binomial"
+should be either a factor with two levels, or a two-column matrix of counts
+or proportions (the second column is treated as the target class; for a factor,
+the last level in alphabetical order is the target class). For family="multinomial",
+can be a nc>=2 level factor, or a matrix with nc columns of counts or proportions.
+For either "binomial" or "multinomial", if y is presented as a vector, it will
+be coerced into a factor. For family="cox", y should be a two-column matrix with
+columns named 'time' and 'status'. The latter is a binary variable, with '1'
+indicating death, and '0' indicating right censored. The function Surv() in
+package survival produces such a matrix. For family="mgaussian", y is a matrix
 of quantitative responses.}
 
 \item{family}{response type (see above).}
@@ -38,7 +38,7 @@ A vector of statistics \eqn{W} of length p.
 Fits a generalized linear model via penalized maximum likelihood and cross-validation.
 Then, compute the difference statistic
   \deqn{W_j = |Z_j| - |\tilde{Z}_j|}
-where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the coefficient estimates for the 
+where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the coefficient estimates for the
 jth variable and its knockoff, respectively. The value of the regularization
 parameter \eqn{\lambda} is selected by cross-validation and computed with \code{glmnet}.
 }
@@ -46,49 +46,43 @@ parameter \eqn{\lambda} is selected by cross-validation and computed with \code{
 This function uses the \code{glmnet} package to fit a generalized linear model
 via penalized maximum likelihood.
 
-The statistics \eqn{W_j} are constructed by taking the difference 
+The statistics \eqn{W_j} are constructed by taking the difference
 between the coefficient of the j-th variable and its knockoff.
- 
+
 By default, the value of the regularization parameter is chosen by 10-fold cross-validation.
 
 The default response family is 'gaussian', for a linear regression model.
 Different response families (e.g. 'binomial') can be specified by passing an
 optional parameter 'family'.
 
-The optional \code{nlambda} parameter can be used to control the granularity of the 
+The optional \code{nlambda} parameter can be used to control the granularity of the
 grid of \eqn{\lambda}'s. The default value of \code{nlambda} is \code{500},
 where \code{p} is the number of columns of \code{X}.
 
-If the family is 'binomial' and a lambda sequence is not provided by the user, 
+If the family is 'binomial' and a lambda sequence is not provided by the user,
 this function generates it on a log-linear scale before calling 'glmnet'.
 
 For a complete list of the available additional arguments, see \code{\link[glmnet]{cv.glmnet}}
 and \code{\link[glmnet]{glmnet}}.
 }
 \examples{
+# Synthetic Data
 set.seed(2022)
 p=200; n=100; k=15
 mu = rep(0,p); Sigma = diag(p)
 X = matrix(rnorm(n*p),n)
-nonzero = sample(p, k)
+nonzero = 1:k
 beta = 3.5 * (1:p \%in\% nonzero)
 y = X \%*\% beta + rnorm(n)
-knockoffs = function(X) create.gaussian(X, mu, Sigma)
 
-# Basic usage with default arguments
-result = knockoff.filter(X, y, knockoffs=knockoffs, 
-                           statistic=stat.glmnet_coefdiff)
-print(result$selected)
-
-# Advanced usage with custom arguments
-foo = stat.glmnet_coefdiff
-k_stat = function(X, X_k, y) foo(X, X_k, y, nlambda=200)
-result = knockoff.filter(X, y, knockoffs=knockoffs, statistic=k_stat)
-print(result$selected)
+# Knockoff Procedure
+Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_coefdiff,family='gaussian')
 
 }
 \seealso{
 Other statistics: 
+\code{\link{stat.SHAP}()},
 \code{\link{stat.forward_selection}()},
 \code{\link{stat.glmnet_lambdadiff}()},
 \code{\link{stat.lasso_coefdiff_bin}()},
@@ -97,6 +91,7 @@ Other statistics:
 \code{\link{stat.lasso_lambdadiff}()},
 \code{\link{stat.random_forest}()},
 \code{\link{stat.sqrt_lasso}()},
-\code{\link{stat.stability_selection}()}
+\code{\link{stat.stability_selection}()},
+\code{\link{stat.xgboost}()}
 }
 \concept{statistics}

@@ -28,6 +28,12 @@
     <loc>https://guang-yu-zhu.github.io/zKnock/reference/create.gaussian.html</loc>
   </url>
   <url>
+    <loc>https://guang-yu-zhu.github.io/zKnock/reference/create.knockoff.html</loc>
+  </url>
+  <url>
+    <loc>https://guang-yu-zhu.github.io/zKnock/reference/create.pc.knockoff.html</loc>
+  </url>
+  <url>
     <loc>https://guang-yu-zhu.github.io/zKnock/reference/create.second_order.html</loc>
   </url>
   <url>
@@ -64,6 +70,9 @@
     <loc>https://guang-yu-zhu.github.io/zKnock/reference/knockoff.filter.html</loc>
   </url>
   <url>
+    <loc>https://guang-yu-zhu.github.io/zKnock/reference/knockoff.select.html</loc>
+  </url>
+  <url>
     <loc>https://guang-yu-zhu.github.io/zKnock/reference/knockoff.threshold.html</loc>
   </url>
   <url>
@@ -77,6 +86,9 @@
   </url>
   <url>
     <loc>https://guang-yu-zhu.github.io/zKnock/reference/stability_selection_importance.html</loc>
+  </url>
+  <url>
+    <loc>https://guang-yu-zhu.github.io/zKnock/reference/stat.SHAP.html</loc>
   </url>
   <url>
     <loc>https://guang-yu-zhu.github.io/zKnock/reference/stat.forward_selection.html</loc>
@@ -122,6 +134,9 @@
   </url>
   <url>
     <loc>https://guang-yu-zhu.github.io/zKnock/reference/stat.stability_selection.html</loc>
+  </url>
+  <url>
+    <loc>https://guang-yu-zhu.github.io/zKnock/reference/stat.xgboost.html</loc>
   </url>
   <url>
     <loc>https://guang-yu-zhu.github.io/zKnock/reference/stat_modelY_maxlam.html</loc>

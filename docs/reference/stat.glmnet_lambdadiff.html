@@ -163,6 +163,7 @@ optional parameter 'family'.</p>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other statistics: 
+<code><a href="stat.SHAP.html">stat.SHAP</a>()</code>,
 <code><a href="stat.forward_selection.html">stat.forward_selection</a>()</code>,
 <code><a href="stat.glmnet_coefdiff.html">stat.glmnet_coefdiff</a>()</code>,
 <code><a href="stat.lasso_coefdiff_bin.html">stat.lasso_coefdiff_bin</a>()</code>,
@@ -171,7 +172,8 @@ optional parameter 'family'.</p>
 <code><a href="stat.lasso_lambdadiff.html">stat.lasso_lambdadiff</a>()</code>,
 <code><a href="stat.random_forest.html">stat.random_forest</a>()</code>,
 <code><a href="stat.sqrt_lasso.html">stat.sqrt_lasso</a>()</code>,
-<code><a href="stat.stability_selection.html">stat.stability_selection</a>()</code></p></div>
+<code><a href="stat.stability_selection.html">stat.stability_selection</a>()</code>,
+<code><a href="stat.xgboost.html">stat.xgboost</a>()</code></p></div>
     </div>
 
     <div id="ref-examples">
@@ -188,16 +190,19 @@ optional parameter 'family'.</p>
 <span class="r-in"><span><span class="co"># Basic usage with default arguments</span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">=</span> <span class="fu"><a href="knockoff.filter.html">knockoff.filter</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, knockoffs<span class="op">=</span><span class="va">knockoffs</span>, </span></span>
 <span class="r-in"><span>                           statistic<span class="op">=</span><span class="va">stat.glmnet_lambdadiff</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --Calculate 1 knockoff statistics.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in glmnet::glmnet(X, y, lambda = lambda, intercept = intercept,     standardize = F, standardize.response = F, ...):</span> x has missing values; consider using makeX() to impute them</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">selected</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   6  31  35  44 114 119 133 155 157 171 177</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in h(simpleError(msg, call)):</span> error in evaluating the argument 'x' in selecting a method for function 'print': object 'result' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Advanced usage with custom arguments</span></span></span>
 <span class="r-in"><span><span class="va">foo</span> <span class="op">=</span> <span class="va">stat.glmnet_lambdadiff</span></span></span>
 <span class="r-in"><span><span class="va">k_stat</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">X</span>, <span class="va">X_k</span>, <span class="va">y</span><span class="op">)</span> <span class="fu">foo</span><span class="op">(</span><span class="va">X</span>, <span class="va">X_k</span>, <span class="va">y</span>, nlambda<span class="op">=</span><span class="fl">200</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">=</span> <span class="fu"><a href="knockoff.filter.html">knockoff.filter</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, knockoffs<span class="op">=</span><span class="va">knockoffs</span>, statistic<span class="op">=</span><span class="va">k_stat</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --Calculate 1 knockoff statistics.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in glmnet::glmnet(X, y, lambda = lambda, intercept = intercept,     standardize = F, standardize.response = F, ...):</span> x has missing values; consider using makeX() to impute them</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">selected</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   6  25  31  35  42  44  48  57  59  75  79 114 119 127 133 155 157 164 171</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20] 177 186 191 198</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in h(simpleError(msg, call)):</span> error in evaluating the argument 'x' in selecting a method for function 'print': object 'result' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

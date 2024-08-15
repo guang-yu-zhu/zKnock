@@ -93,19 +93,16 @@ beta=matrix(0,p,1)
 beta[Ac]=sample(c(-1,1)*scale,k,replace=TRUE)
 X = matrix(rnorm(n*p),n)\%*\%SigmaXhalf
 y = X \%*\% beta + rnorm(n)
-# Regular Usage
-result1 = knockoff.filter(X, y,statistic =stat.glmnet_coefdiff,offset = 0,fdr = 0.2)
-print(result1$selected)
+Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+res1 = knockoff.filter(X, y, Xk,statistic =stat.glmnet_coefdiff,offset = 1,fdr = 0.1)
+print(res1$s)
 
-# Generate Knockoffs Variables Firstly
-Xk = create.second_order(X)
-result1 = knockoff.filter(X, y, Xk,statistic =stat.glmnet_coefdiff,offset = 0,fdr = 0.2)
-print(result1$selected)
+
 # Logistics Regression
 pis <- plogis(X \%*\% beta)
 Y <- factor(rbinom(n, 1, pis))
-result2 =  knockoff.filter(X,Y,Xk,statistic =stat.glmnet_coefdiff,family='binomial',offset = 0,fdr = 0.2)
-print(result2$selected)
+res2 =  knockoff.filter(X,Y,Xk,statistic =stat.glmnet_coefdiff,family='binomial',offset = 0,fdr = 0.2)
+print(res2$s)
 
 }
 \references{

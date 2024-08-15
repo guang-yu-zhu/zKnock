@@ -176,16 +176,18 @@ property and should not be used with fixed-X knockoffs.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Basic usage with default arguments</span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">=</span> <span class="fu"><a href="knockoff.filter.html">knockoff.filter</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, knockoffs<span class="op">=</span><span class="va">create.fixed</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: Matrix</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loaded glmnet 4.1-8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --Calculate 1 knockoff statistics.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in glmnet(x, y, weights = weights, offset = offset, lambda = lambda,     trace.it = trace.it, ...):</span> x has missing values; consider using makeX() to impute them</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">selected</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> integer(0)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in print(result$selected):</span> object 'result' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Advanced usage with custom arguments</span></span></span>
 <span class="r-in"><span><span class="va">knockoffs</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="fu">create.fixed</span><span class="op">(</span><span class="va">X</span>, method<span class="op">=</span><span class="st">'equi'</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">=</span> <span class="fu"><a href="knockoff.filter.html">knockoff.filter</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, knockoffs<span class="op">=</span><span class="va">knockoffs</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --Calculate 1 knockoff statistics.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in glmnet(x, y, weights = weights, offset = offset, lambda = lambda,     trace.it = trace.it, ...):</span> x has missing values; consider using makeX() to impute them</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">selected</span><span class="op">)</span> </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  5  7  8 11 12 13 18 19 20 21 23 26 28 30 31 32 34 36 40 45 46 48</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in print(result$selected):</span> object 'result' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

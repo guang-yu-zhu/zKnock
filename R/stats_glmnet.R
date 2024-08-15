@@ -80,6 +80,7 @@ stat.glmnet_lambdadiff <- function(X, X_k, y, family='gaussian', ...) {
   
   # Correct for swapping of columns of X and Xk
   W = W * (1-2*swap)
+ W = as.vector(W)  return(W)
 }
 
 #' GLM statistics for knockoff
@@ -157,6 +158,8 @@ stat.glmnet_lambdasmax <- function(X, X_k, y, family='gaussian', ...) {
   
   # Correct for swapping of columns of X and Xk
   W = W * (1-2*swap)
+ W = as.vector(W)
+  return(W)
 }
 
 #' @keywords internal
