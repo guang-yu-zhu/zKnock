@@ -2,7 +2,8 @@
 % Please edit documentation in R/create.pc.knockoff.R
 \name{create.pc.knockoff}
 \alias{create.pc.knockoff}
-\title{Create PC Knockoffs}
+\title{Create PC Knockoffs
+A sequential algorithm to create non-parametric knockoffs based on principal component regression and residuals permutation.}
 \usage{
 create.pc.knockoff(X, pc.num)
 }
@@ -15,10 +16,34 @@ create.pc.knockoff(X, pc.num)
 A principal component knockoff matrix.
 }
 \description{
-Create non-parametric knockoffs based on principal component regression and residuals permutation.
+Create PC Knockoffs
+A sequential algorithm to create non-parametric knockoffs based on principal component regression and residuals permutation.
+}
+\details{
+For each original variable \eqn{\mathbf{x}_j}, where \eqn{j = 1, \ldots, p}, the following steps are performed to generate knockoff variables:
+\enumerate{
+\item Conduct PCA on the matrix \eqn{\left(\mathbf{X}_{-j}, \mathbf{Z}_{1: j-1}\right)}.
+\item For a fixed \eqn{K}, fit \eqn{\mathbf{x}_j} on \eqn{K} PCs. There is a tradeoff in that the larger the \eqn{K}, the more akin the knockoff will be to the original variables. This results in a smaller type 1 error but weaker power of the test.
+\item Compute a residual vector \eqn{\varepsilon_n=\left(\mathbf{x}_j-\hat{\mathbf{x}}_j\right)}.
+\item Permute \eqn{\varepsilon_n} randomly. Denote the permuted vector as \eqn{\varepsilon_n^*}.
+\item Set \eqn{\mathbf{z}_j=\hat{\mathbf{x}}_j+\varepsilon_n^*} and combine it with the current knockoff matrix \eqn{\mathbf{Z}_{1: j-1}}.
+}
 }
 \examples{
 set.seed(10)
 X <- matrix(rnorm(100), nrow = 10)
-tmp <- create.pc.knockoff(X = X, pc.num = 5)
+Xk <- create.pc.knockoff(X = X, pc.num = 5)
 }
+\references{
+Jiang, Tao, Yuanyuan Li, and Alison A. Motsinger-Reif. "Knockoff boosted tree for model-free variable selection." Bioinformatics 37.7 (2021): 976-983.
+
+Shen,A. et al. (2019) False discovery rate control in cancer biomarker selection using knockoffs. Cancers, 11, 744.
+}
+\seealso{
+Other create: 
+\code{\link{create.fixed}()},
+\code{\link{create.gaussian}()},
+\code{\link{create.knockoff}()},
+\code{\link{create.second_order}()}
+}
+\concept{create}

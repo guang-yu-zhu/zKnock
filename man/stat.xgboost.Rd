@@ -21,7 +21,7 @@ A vector of statistics \eqn{W} of length p.
 }
 \description{
 Computes the difference statistic
-  \deqn{W_j = |Z_j| - |\tilde{Z}_j|}
+\deqn{W_j = |Z_j| - |\tilde{Z}_j|}
 where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the xgboost feature importances
 of the jth variable and its knockoff, respectively.
 }
@@ -30,7 +30,7 @@ of the jth variable and its knockoff, respectively.
 }
 \examples{
 # Synthetic Data
-set.seed(2022)
+set.seed(2024)
 p=200; n=100; k=15
 mu = rep(0,p); Sigma = diag(p)
 X = matrix(rnorm(n*p),n)
@@ -41,6 +41,7 @@ y = X \%*\% beta + rnorm(n)
 # Knockoff Procedure
 Xk = create.knockoff(X = X, type = 'shrink', num = 2)
 res = knockoff.filter(X,y,Xk,statistic = stat.xgboost,family='gaussian')
+res$s
 
 }
 \seealso{

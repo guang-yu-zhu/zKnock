@@ -21,7 +21,7 @@ A vector of statistics \eqn{W} of length p.
 }
 \description{
 Computes the difference statistic
-  \deqn{W_j = |Z_j| - |\tilde{Z}_j|}
+\deqn{W_j = |Z_j| - |\tilde{Z}_j|}
 where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the random forest feature importances
 of the jth variable and its knockoff, respectively.
 }
@@ -32,11 +32,11 @@ in node impurities from splitting on that variable, averaged over all trees.
 For regression, the node impurity is measured by residual sum of squares.
 For classification, it is measured by the Gini index.
 
-For a complete list of the available additional arguments, see \code{\link[ranger]{ranger}}.
+For a complete list of the available additional arguments, see \code{\link[ranger:ranger]{ranger::ranger()}}.
 }
 \examples{
 # Synthetic Data
-set.seed(2022)
+set.seed(2024)
 p=200; n=100; k=15
 mu = rep(0,p); Sigma = diag(p)
 X = matrix(rnorm(n*p),n)
@@ -46,7 +46,8 @@ y = X \%*\% beta + rnorm(n)
 
 # Knockoff Procedure
 Xk = create.knockoff(X = X, type = 'shrink', num = 2)
-res1= knockoff.filter(X,y,Xk,statistic = stat.random_forest,family='gaussian')
+res= knockoff.filter(X,y,Xk,statistic = stat.random_forest,family='gaussian')
+res$s
 
 }
 \seealso{

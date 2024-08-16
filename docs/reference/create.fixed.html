@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zKnock</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
       </span>
     </div>
 
@@ -120,8 +120,8 @@ This determines the method that will be used to minimize the correlation between
 
 
 <dt>y</dt>
-<dd><p>vector of length n, containing the observed responses. 
-This is needed to estimate the noise level if the parameter <code>sigma</code> is not provided, 
+<dd><p>vector of length n, containing the observed responses.
+This is needed to estimate the noise level if the parameter <code>sigma</code> is not provided,
 in case \(p \leq n &lt; 2p\) (default: NULL).</p></dd>
 
 
@@ -133,64 +133,40 @@ in case \(p \leq n &lt; 2p\) (default: NULL).</p></dd>
     <h2>Value</h2>
     
 
-<p>An object of class "knockoff.variables". This is a list 
- containing at least the following components:</p>
+<p>An object of class "knockoff.variables". This is a list
+containing at least the following components:</p>
 <dl><dt>X</dt>
 <dd><p>n-by-p matrix of original variables (possibly augmented or transformed).</p></dd>
 
- <dt>Xk</dt>
+<dt>Xk</dt>
 <dd><p>n-by-p matrix of knockoff variables.</p></dd>
 
- <dt>y</dt>
+<dt>y</dt>
 <dd><p>vector of observed responses (possibly augmented).</p></dd>
 
 </dl></div>
     <div id="details">
     <h2>Details</h2>
     <p>Fixed-X knockoffs assume a homoscedastic linear regression model for \(Y|X\). Moreover, they only guarantee
-FDR control when used in combination with statistics satisfying the "sufficiency" property. 
-In particular, the default statistics based on the cross-validated lasso does not satisfy this 
+FDR control when used in combination with statistics satisfying the "sufficiency" property.
+In particular, the default statistics based on the cross-validated lasso does not satisfy this
 property and should not be used with fixed-X knockoffs.</p>
     </div>
     <div id="references">
     <h2>References</h2>
     <p>Barber and Candes,
-  Controlling the false discovery rate via knockoffs. 
-  Ann. Statist. 43 (2015), no. 5, 2055--2085.</p>
+Controlling the false discovery rate via knockoffs.
+Ann. Statist. 43 (2015), no. 5, 2055--2085.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other create: 
 <code><a href="create.gaussian.html">create.gaussian</a>()</code>,
+<code><a href="create.knockoff.html">create.knockoff</a>()</code>,
+<code><a href="create.pc.knockoff.html">create.pc.knockoff</a>()</code>,
 <code><a href="create.second_order.html">create.second_order</a>()</code></p></div>
     </div>
 
-    <div id="ref-examples">
-    <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">p</span><span class="op">=</span><span class="fl">50</span>; <span class="va">n</span><span class="op">=</span><span class="fl">100</span>; <span class="va">k</span><span class="op">=</span><span class="fl">15</span></span></span>
-<span class="r-in"><span><span class="va">X</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="va">p</span><span class="op">)</span>,<span class="va">n</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">nonzero</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">k</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">beta</span> <span class="op">=</span> <span class="fl">5.5</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">p</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">nonzero</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">y</span> <span class="op">=</span> <span class="va">X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">beta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Basic usage with default arguments</span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">=</span> <span class="fu"><a href="knockoff.filter.html">knockoff.filter</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, knockoffs<span class="op">=</span><span class="va">create.fixed</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --Calculate 1 knockoff statistics.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in glmnet(x, y, weights = weights, offset = offset, lambda = lambda,     trace.it = trace.it, ...):</span> x has missing values; consider using makeX() to impute them</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">selected</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in print(result$selected):</span> object 'result' not found</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Advanced usage with custom arguments</span></span></span>
-<span class="r-in"><span><span class="va">knockoffs</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="fu">create.fixed</span><span class="op">(</span><span class="va">X</span>, method<span class="op">=</span><span class="st">'equi'</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">=</span> <span class="fu"><a href="knockoff.filter.html">knockoff.filter</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, knockoffs<span class="op">=</span><span class="va">knockoffs</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --Calculate 1 knockoff statistics.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in glmnet(x, y, weights = weights, offset = offset, lambda = lambda,     trace.it = trace.it, ...):</span> x has missing values; consider using makeX() to impute them</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">selected</span><span class="op">)</span> </span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in print(result$selected):</span> object 'result' not found</span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
-    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

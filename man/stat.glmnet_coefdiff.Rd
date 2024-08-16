@@ -37,7 +37,7 @@ A vector of statistics \eqn{W} of length p.
 \description{
 Fits a generalized linear model via penalized maximum likelihood and cross-validation.
 Then, compute the difference statistic
-  \deqn{W_j = |Z_j| - |\tilde{Z}_j|}
+\deqn{W_j = |Z_j| - |\tilde{Z}_j|}
 where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the coefficient estimates for the
 jth variable and its knockoff, respectively. The value of the regularization
 parameter \eqn{\lambda} is selected by cross-validation and computed with \code{glmnet}.
@@ -62,12 +62,12 @@ where \code{p} is the number of columns of \code{X}.
 If the family is 'binomial' and a lambda sequence is not provided by the user,
 this function generates it on a log-linear scale before calling 'glmnet'.
 
-For a complete list of the available additional arguments, see \code{\link[glmnet]{cv.glmnet}}
-and \code{\link[glmnet]{glmnet}}.
+For a complete list of the available additional arguments, see \code{\link[glmnet:cv.glmnet]{glmnet::cv.glmnet()}}
+and \code{\link[glmnet:glmnet]{glmnet::glmnet()}}.
 }
 \examples{
 # Synthetic Data
-set.seed(2022)
+set.seed(2024)
 p=200; n=100; k=15
 mu = rep(0,p); Sigma = diag(p)
 X = matrix(rnorm(n*p),n)
@@ -78,6 +78,7 @@ y = X \%*\% beta + rnorm(n)
 # Knockoff Procedure
 Xk = create.knockoff(X = X, type = 'shrink', num = 2)
 res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_coefdiff,family='gaussian')
+res$s
 
 }
 \seealso{

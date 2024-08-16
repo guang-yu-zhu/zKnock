@@ -16,7 +16,7 @@ create.gaussian(X, mu, Sigma, method = c("asdp", "sdp", "equi"), diag_s = NULL)
 \item{method}{either "equi", "sdp" or "asdp" (default: "asdp").
 This determines the method that will be used to minimize the correlation between the original variables and the knockoffs.}
 
-\item{diag_s}{vector of length p, containing the pre-computed covariances between the original 
+\item{diag_s}{vector of length p, containing the pre-computed covariances between the original
 variables and the knockoffs. This will be computed according to \code{method}, if not supplied.}
 }
 \value{
@@ -25,35 +25,16 @@ A n-by-p matrix of knockoff variables.
 \description{
 Samples multivariate Gaussian model-X knockoff variables.
 }
-\examples{
-set.seed(2022)
-p=100; n=80; k=15
-rho = 0.4
-mu = rep(0,p); Sigma = toeplitz(rho^(0:(p-1)))
-X = matrix(rnorm(n*p),n) \%*\% chol(Sigma)
-nonzero = sample(p, k)
-beta = 3.5 * (1:p \%in\% nonzero)
-y = X \%*\% beta + rnorm(n)
-
-# Basic usage with default arguments
-knockoffs = function(X) create.gaussian(X, mu, Sigma)
-result = knockoff.filter(X, y, knockoffs=knockoffs)
-print(result$selected)
-
-# Advanced usage with custom arguments
-knockoffs = function(X) create.gaussian(X, mu, Sigma, method='equi')
-result = knockoff.filter(X, y, knockoffs=knockoffs)
-print(result$selected)
-
-}
 \references{
 Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
-  arXiv:1610.02351 (2016).
-  \href{https://web.stanford.edu/group/candes/knockoffs/index.html}{https://web.stanford.edu/group/candes/knockoffs/index.html}
+arXiv:1610.02351 (2016).
+\url{https://web.stanford.edu/group/candes/knockoffs/index.html}
 }
 \seealso{
 Other create: 
 \code{\link{create.fixed}()},
+\code{\link{create.knockoff}()},
+\code{\link{create.pc.knockoff}()},
 \code{\link{create.second_order}()}
 }
 \concept{create}

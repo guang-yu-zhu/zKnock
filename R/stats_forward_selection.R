@@ -7,13 +7,13 @@
 #' model.
 #' See the Details for information about forward selection.
 #' 
-#' In \emph{forward selection}, the variables are chosen iteratively to maximize
+#' In *forward selection*, the variables are chosen iteratively to maximize
 #' the inner product with the residual from the previous step. The initial
-#' residual is always \code{y}. In standard forward selection
-#' (\code{stat.forward_selection}), the next residual is the remainder after
+#' residual is always `y`. In standard forward selection
+#' (`stat.forward_selection`), the next residual is the remainder after
 #' regressing on the selected variable; when orthogonal matching pursuit
 #' is used, the next residual is the remainder
-#' after regressing on \emph{all} the previously selected variables.
+#' after regressing on *all* the previously selected variables.
 #' 
 #' @param X    n-by-p matrix of original variables.
 #' @param X_k  n-by-p matrix of knockoff variables.
@@ -24,25 +24,19 @@
 #' @family statistics
 #' 
 #' @examples
-#' set.seed(2022)
-#' p=100; n=100; k=15
+#' # Synthetic Data
+#' set.seed(2024)
+#' p=200; n=100; k=15
 #' mu = rep(0,p); Sigma = diag(p)
 #' X = matrix(rnorm(n*p),n)
-#' nonzero = sample(p, k)
+#' nonzero = 1:k
 #' beta = 3.5 * (1:p %in% nonzero)
 #' y = X %*% beta + rnorm(n)
-#' knockoffs = function(X) create.gaussian(X, mu, Sigma)
-#' 
-#' # Basic usage with default arguments
-#' result = knockoff.filter(X, y, knockoffs=knockoffs,
-#'                            statistic=stat.forward_selection)
-#' print(result$selected)
-#' 
-#' # Advanced usage with custom arguments
-#' foo = stat.forward_selection
-#' k_stat = function(X, X_k, y) foo(X, X_k, y, omp=TRUE)
-#' result = knockoff.filter(X, y, knockoffs=knockoffs, statistic=k_stat)
-#' print(result$selected)
+#'
+#' # Knockoff Procedure
+#' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+#' res = knockoff.filter(X,y,Xk,statistic = stat.forward_selection)
+#' res$s
 #' 
 #' @rdname stat.forward_selection
 #' @export

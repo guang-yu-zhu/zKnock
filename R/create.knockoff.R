@@ -8,25 +8,22 @@
 #' @param num.comp The number of pricial components to be used for generating knockoff matrices, the default is 10.
 #'
 #' @return A list of created knockoff matrices.
+#' @family create
 #'
 #' @export
-#' @import knockoff
-#' @import spcov
-#' @import stats
-#' @import Rdpack
 #'
 #' @examples
 #' set.seed(10)
 #' X <- matrix(rnorm(100), nrow = 10)
-#' Z <- generate.knockoff(X = X, type = "shrink", num = 5)
+#' Xk <- create.knockoff(X = X, type = "shrink", num = 5)
 #'
 #' @references
-create.knockoff <- function(X, type, num, num.comp = 10) {
+create.knockoff <- function(X, type, num, num.comp = 10,verbose=FALSE) {
   result <- vector(mode = "list", length = num)
 
   if (type == "shrink") {
     for (i in 1:num) {
-		cat('--Generate',i,'knockoffs\n')
+		if(verbose) cat('--Generate',i,'knockoffs\n')
       result[[i]] <- create.second_order(X = X, method = "sdp")
     }
   } else if (type == "sparse") {

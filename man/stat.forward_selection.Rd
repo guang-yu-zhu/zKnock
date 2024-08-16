@@ -20,9 +20,9 @@ A vector of statistics \eqn{W} of length p.
 }
 \description{
 Computes the statistic
-  \deqn{W_j = \max(Z_j, Z_{j+p}) \cdot \mathrm{sgn}(Z_j - Z_{j+p}),}
+\deqn{W_j = \max(Z_j, Z_{j+p}) \cdot \mathrm{sgn}(Z_j - Z_{j+p}),}
 where \eqn{Z_1,\dots,Z_{2p}} give the reverse order in which the 2p
-variables (the originals and the knockoffs) enter the forward selection 
+variables (the originals and the knockoffs) enter the forward selection
 model.
 See the Details for information about forward selection.
 }
@@ -36,25 +36,19 @@ is used, the next residual is the remainder
 after regressing on \emph{all} the previously selected variables.
 }
 \examples{
-set.seed(2022)
-p=100; n=100; k=15
+# Synthetic Data
+set.seed(2024)
+p=200; n=100; k=15
 mu = rep(0,p); Sigma = diag(p)
 X = matrix(rnorm(n*p),n)
-nonzero = sample(p, k)
+nonzero = 1:k
 beta = 3.5 * (1:p \%in\% nonzero)
 y = X \%*\% beta + rnorm(n)
-knockoffs = function(X) create.gaussian(X, mu, Sigma)
 
-# Basic usage with default arguments
-result = knockoff.filter(X, y, knockoffs=knockoffs,
-                           statistic=stat.forward_selection)
-print(result$selected)
-
-# Advanced usage with custom arguments
-foo = stat.forward_selection
-k_stat = function(X, X_k, y) foo(X, X_k, y, omp=TRUE)
-result = knockoff.filter(X, y, knockoffs=knockoffs, statistic=k_stat)
-print(result$selected)
+# Knockoff Procedure
+Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+res = knockoff.filter(X,y,Xk,statistic = stat.forward_selection)
+res$s
 
 }
 \seealso{

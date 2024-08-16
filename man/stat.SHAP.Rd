@@ -21,17 +21,21 @@ A vector of statistics \eqn{W} of length p.
 }
 \description{
 Computes the difference statistic
-  \deqn{W_j = |Z_j| - |\tilde{Z}_j|}
-where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the shap (Hapley Additive exPlanations)
+\deqn{W_j = |Z_j| - |\tilde{Z}_j|}
+where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the SHAP (SHapley Additive exPlanations)
 of the jth variable and its knockoff, respectively.
-saabas is a vector of an individualized heuristic feature attribution method, which can be considered as an approximation for shap.
 }
 \details{
-.
+\itemize{
+\item In XGBoost, SHAP (SHapley Additive exPlanations) values provide a way to interpret the model's predictions by breaking down the contribution of each feature to the final prediction.  SHAP values show how much each feature increases or decreases the prediction compared to the average.
+\item XGBoost uses the Tree SHAP algorithm, which efficiently computes these values for tree-based models. This helps in understanding both global feature importance (how features influence the model overall) and local explanations (how features impact individual predictions).
+\item Key benefits include transparency, detailed feature importance, and the ability to explain complex models in a clear, interpretable way.
+\item saabas is a vector of an individualized heuristic feature attribution method, which can be considered as an approximation for shap.
+}
 }
 \examples{
 # Synthetic Data
-set.seed(2022)
+set.seed(2024)
 p=200; n=100; k=15
 mu = rep(0,p); Sigma = diag(p)
 X = matrix(rnorm(n*p),n)
@@ -42,6 +46,7 @@ y = X \%*\% beta + rnorm(n)
 # Knockoff Procedure
 Xk = create.knockoff(X = X, type = 'shrink', num = 2)
 res = knockoff.filter(X,y,Xk,statistic = stat.SHAP)
+res$s
 
 }
 \seealso{

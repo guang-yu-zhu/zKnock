@@ -1,8 +1,8 @@
 Package: zKnock
 Type: Package
 Title: Knockoff Filter for Controlled Selection
-Version: 1.0.0
-Date: 2024-05-01
+Version: 1.0.1
+Date: 2024-08-01
 Authors@R: c(person("Guangyu", "Zhu", role = c("aut", "cre"), email = "guangyuzhu@uri.edu"))
 Description: 
 License: GPL-3
@@ -14,5 +14,5 @@ VignetteBuilder: knitr
 NeedsCompilation: no
 Github: https://github.com/guang-yu-zhu/zKnock
 Author: Guangyu Zhu [aut, cre] 
-
-
+Roxygen: list(markdown = TRUE)
+Encoding: UTF-8

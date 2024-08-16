@@ -5,8 +5,11 @@ file.edit('NAMESPACE')
 file.edit('DESCRIPTION')
 #-----
 library(pkgdown)
-#usethis::use_github_action("pkgdown")
-#usethis::use_pkgdown()
+#----
+#init
+usethis::use_roxygen_md()
+roxygen2md::roxygen2md()
+#----
 roxygen2::roxygenise(clean = TRUE)
 #build_home()
 build_site()

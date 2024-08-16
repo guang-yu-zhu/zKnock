@@ -7,7 +7,7 @@
 #' This determines the method that will be used to minimize the correlation between the original variables and the knockoffs.
 #' @param sigma the noise level, used to augment the data with extra rows if necessary (default: NULL).
 #' @param y vector of length n, containing the observed responses. 
-#' This is needed to estimate the noise level if the parameter \code{sigma} is not provided, 
+#' This is needed to estimate the noise level if the parameter `sigma` is not provided, 
 #' in case \eqn{p \leq n < 2p} (default: NULL).
 #' @param randomize whether the knockoffs are constructed deterministically or randomized (default: F).
 #' @return An object of class "knockoff.variables". This is a list 
@@ -29,22 +29,6 @@
 #' In particular, the default statistics based on the cross-validated lasso does not satisfy this 
 #' property and should not be used with fixed-X knockoffs.
 #' 
-#' @examples
-#' set.seed(2022)
-#' p=50; n=100; k=15
-#' X = matrix(rnorm(n*p),n)
-#' nonzero = sample(p, k)
-#' beta = 5.5 * (1:p %in% nonzero)
-#' y = X %*% beta + rnorm(n)
-#' 
-#' # Basic usage with default arguments
-#' result = knockoff.filter(X, y, knockoffs=create.fixed)
-#' print(result$selected)
-#' 
-#' # Advanced usage with custom arguments
-#' knockoffs = function(X) create.fixed(X, method='equi')
-#' result = knockoff.filter(X, y, knockoffs=knockoffs)
-#' print(result$selected) 
 #' 
 #' @export
 create.fixed <- function(X, method=c('sdp','equi'), sigma=NULL, y=NULL, randomize=F) {

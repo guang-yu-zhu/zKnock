@@ -13,36 +13,18 @@
 #' @family create
 #' 
 #' @details
-#' If the argument \code{shrink} is set to T, a James-Stein-type shrinkage estimator for
+#' If the argument `shrink` is set to T, a James-Stein-type shrinkage estimator for
 #' the covariance matrix is used instead of the traditional maximum-likelihood estimate. This option
-#' requires the package \code{corpcor}. See \code{\link[corpcor]{cov.shrink}} for more details.
+#' requires the package `corpcor`. See [corpcor::cov.shrink()] for more details.
 #' 
-#' Even if the argument \code{shrink} is set to F, in the case that the estimated covariance 
+#' Even if the argument `shrink` is set to F, in the case that the estimated covariance 
 #' matrix is not positive-definite, this function will apply some shrinkage.
 #' 
 #' @references 
 #'   Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
 #'   arXiv:1610.02351 (2016).
-#'   \href{https://web.stanford.edu/group/candes/knockoffs/index.html}{https://web.stanford.edu/group/candes/knockoffs/index.html}
-#'   
-#' @examples
-#' set.seed(2022)
-#' p=100; n=80; k=15
-#' rho = 0.4
-#' Sigma = toeplitz(rho^(0:(p-1)))
-#' X = matrix(rnorm(n*p),n) %*% chol(Sigma)
-#' nonzero = sample(p, k)
-#' beta = 3.5 * (1:p %in% nonzero)
-#' y = X %*% beta + rnorm(n)
-#' 
-#' # Basic usage with default arguments
-#' result = knockoff.filter(X, y, knockoffs=create.second_order)
-#' print(result$selected)
-#' 
-#' # Advanced usage with custom arguments
-#' knockoffs = function(X) create.second_order(X, method='equi')
-#' result = knockoff.filter(X, y, knockoffs=knockoffs)
-#' print(result$selected)   
+#'   [https://web.stanford.edu/group/candes/knockoffs/index.html](https://web.stanford.edu/group/candes/knockoffs/index.html)
+#'    
 #'   
 #' @export
 create.second_order <- function(X, method=c("asdp","equi","sdp"), shrink=F) {

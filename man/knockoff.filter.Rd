@@ -12,6 +12,7 @@ knockoff.filter(
   statistic = stat.glmnet_coefdiff,
   fdr = 0.1,
   offset = 1,
+  verbose = FALSE,
   ...
 )
 }
@@ -38,12 +39,12 @@ while an offset of 0 controls a modified FDR.}
 }
 \value{
 An object of class "knockoff.result". This object is a list
- containing at least the following components:
- \item{X}{matrix of original variables}
- \item{Xk}{matrix of knockoff variables}
- \item{statistic}{computed test statistics}
- \item{threshold}{computed selection threshold}
- \item{selected}{named vector of selected variables}
+containing at least the following components:
+\item{X}{matrix of original variables}
+\item{Xk}{matrix of knockoff variables}
+\item{statistic}{computed test statistics}
+\item{threshold}{computed selection threshold}
+\item{selected}{named vector of selected variables}
 }
 \description{
 This function runs the Knockoffs procedure from start to finish, selecting variables
@@ -53,8 +54,6 @@ relevant for predicting the outcome of interest.
 This function creates the knockoffs, computes the importance statistics,
 and selects variables.
 It is the main entry point for the knockoff package.
-
-
 
 The parameter \code{knockoffs} controls how knockoff variables are created.
 By default, the model-X scenario is assumed and a multivariate normal distribution
@@ -107,10 +106,10 @@ print(res2$s)
 }
 \references{
 Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
-  arXiv:1610.02351 (2016).
-  \href{https://web.stanford.edu/group/candes/knockoffs/index.html}{https://web.stanford.edu/group/candes/knockoffs/index.html}
+arXiv:1610.02351 (2016).
+\url{https://web.stanford.edu/group/candes/knockoffs/index.html}
 
-  Barber and Candes,
-  Controlling the false discovery rate via knockoffs.
-  Ann. Statist. 43 (2015), no. 5, 2055--2085.
+Barber and Candes,
+Controlling the false discovery rate via knockoffs.
+Ann. Statist. 43 (2015), no. 5, 2055--2085.
 }

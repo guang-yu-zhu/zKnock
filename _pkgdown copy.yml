@@ -1,4 +1,4 @@
-url: https://guang-yu-zhu.github.io/Zknock/
+url: https://guang-yu-zhu.github.io/zKnock/
 template:
   package: zpreferably
   bootstrap: 3
@@ -6,14 +6,14 @@ template:
     ganalytics:
     toggle: manual
 home:
-  title: ZYKnock
-  description: Controlled Variable Selection
+  title: zKnock
+  description: Controlled Feature Selection
 authors:
   Guangyu Zhu:
     href: https://guangyuzhu.rbind.io/
 repo:
   url:
-    home: https://github.com/guang-yu-zhu/ZKnock
+    home: https://github.com/guang-yu-zhu/zKnock
   branch: main
 navbar:
   structure:
@@ -36,24 +36,23 @@ navbar:
       href: http://guangyuzhu.rbind.io
     github:
       icon: fab fa-github fa-lg
-      href: https://github.com/guang-yu-zhu/YKnock
+      href: https://github.com/guang-yu-zhu/zKnock
 reference:
-- title: Generate Knockoffs
-  desc:
-  contents:
-	  - start_with("create.")
-
-- title: Calculate Knockoffs Statistics
-  desc: 
-  contents:
-	  - start_with("stat.")
-
 - title: Controlled Feature Selection
   desc:
   contents:
-  - start_with("knockoff.")
+  - starts_with("knockoff.")
   - print.knockoff.result
+- title: Generate Knockoffs
+  desc:
+  contents:
+  - starts_with("create.")
+
+- title: Calculate Knockoffs Statistics
+  desc:
+  contents:
+  - starts_with("stat.")
 footer:
   structure:
-    left: 
+    left:
     right:

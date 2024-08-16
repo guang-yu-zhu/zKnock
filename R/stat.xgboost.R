@@ -9,7 +9,7 @@
 #' @param X_k n-by-p matrix of knockoff variables.
 #' @param y vector of length n, containing the response variables. If a factor, classification is assumed,
 #' otherwise regression is assumed.
-#' @param ... additional arguments specific to \code{ranger} (see Details).
+#' @param ... additional arguments specific to `ranger` (see Details).
 #' @return A vector of statistics \eqn{W} of length p.
 #'
 #' @details .
@@ -18,7 +18,7 @@
 #'
 #' @examples
 #' # Synthetic Data
-#' set.seed(2022)
+#' set.seed(2024)
 #' p=200; n=100; k=15
 #' mu = rep(0,p); Sigma = diag(p)
 #' X = matrix(rnorm(n*p),n)
@@ -29,6 +29,7 @@
 #' # Knockoff Procedure
 #' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
 #' res = knockoff.filter(X,y,Xk,statistic = stat.xgboost,family='gaussian')
+#' res$s
 #'
 #' @rdname stat.xgboost
 #' @export

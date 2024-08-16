@@ -13,9 +13,9 @@ stat.stability_selection(X, X_k, y, fitfun = stabs::lars.lasso, ...)
 
 \item{y}{response vector (length n)}
 
-\item{fitfun}{fitfun a function that takes the arguments x, y as above, 
-and additionally the number of variables to include in each model q. 
-The function then needs to fit the model and to return a logical vector 
+\item{fitfun}{fitfun a function that takes the arguments x, y as above,
+and additionally the number of variables to include in each model q.
+The function then needs to fit the model and to return a logical vector
 that indicates which variable was selected (among the q selected variables).
 The name of the function should be prefixed by 'stabs::'.}
 
@@ -26,34 +26,34 @@ A vector of statistics \eqn{W} of length p.
 }
 \description{
 Computes the difference statistic
-  \deqn{W_j = |Z_j| - |\tilde{Z}_j|}
+\deqn{W_j = |Z_j| - |\tilde{Z}_j|}
 where \eqn{Z_j} and \eqn{\tilde{Z}_j} are measure the importance
-of the jth variable and its knockoff, respectively, based on the 
+of the jth variable and its knockoff, respectively, based on the
 stability of their selection upon subsampling of the data.
 }
 \details{
 This function uses the \code{stabs} package to compute
-variable selection stability. The selection stability of the j-th 
+variable selection stability. The selection stability of the j-th
 variable is defined as its probability of being selected upon random
-subsampling of the data. The default method for selecting variables 
-in each subsampled dataset is \code{\link[stabs]{lars.lasso}}.
+subsampling of the data. The default method for selecting variables
+in each subsampled dataset is \code{\link[stabs:fitfuns]{stabs::lars.lasso()}}.
 
-For a complete list of the available additional arguments, see \code{\link[stabs]{stabsel}}.
+For a complete list of the available additional arguments, see \code{\link[stabs:stabsel]{stabs::stabsel()}}.
 }
 \examples{
-set.seed(2022)
-p=50; n=50; k=15
+# Synthetic Data
+set.seed(2024)
+p=200; n=100; k=15
 mu = rep(0,p); Sigma = diag(p)
 X = matrix(rnorm(n*p),n)
-nonzero = sample(p, k)
+nonzero = 1:k
 beta = 3.5 * (1:p \%in\% nonzero)
 y = X \%*\% beta + rnorm(n)
-knockoffs = function(X) create.gaussian(X, mu, Sigma)
 
-# Basic usage with default arguments
-result = knockoff.filter(X, y, knockoffs=knockoffs,
-                         statistic=stat.stability_selection)
-print(result$selected)
+# Knockoff Procedure
+Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+res= knockoff.filter(X,y,Xk,statistic = stat.stability_selection)
+res$s
 
 
 }

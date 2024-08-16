@@ -2,7 +2,7 @@
 #' 
 #' This function solves a very simple optimization problem needed to create fixed-X and 
 #' Gaussian SDP knockoffs on the full the covariance matrix. This may be significantly
-#' less powerful than \code{\link{create.solve_sdp}}.
+#' less powerful than [create.solve_sdp()].
 #' 
 #' @param Sigma positive-definite p-by-p covariance matrix.
 #' @return The solution \eqn{s} to the optimization problem defined above.

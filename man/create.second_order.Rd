@@ -25,39 +25,21 @@ Then, Gaussian knockoffs are generated according to the estimated model.
 \details{
 If the argument \code{shrink} is set to T, a James-Stein-type shrinkage estimator for
 the covariance matrix is used instead of the traditional maximum-likelihood estimate. This option
-requires the package \code{corpcor}. See \code{\link[corpcor]{cov.shrink}} for more details.
+requires the package \code{corpcor}. See \code{\link[corpcor:cov.shrink]{corpcor::cov.shrink()}} for more details.
 
-Even if the argument \code{shrink} is set to F, in the case that the estimated covariance 
+Even if the argument \code{shrink} is set to F, in the case that the estimated covariance
 matrix is not positive-definite, this function will apply some shrinkage.
-}
-\examples{
-set.seed(2022)
-p=100; n=80; k=15
-rho = 0.4
-Sigma = toeplitz(rho^(0:(p-1)))
-X = matrix(rnorm(n*p),n) \%*\% chol(Sigma)
-nonzero = sample(p, k)
-beta = 3.5 * (1:p \%in\% nonzero)
-y = X \%*\% beta + rnorm(n)
-
-# Basic usage with default arguments
-result = knockoff.filter(X, y, knockoffs=create.second_order)
-print(result$selected)
-
-# Advanced usage with custom arguments
-knockoffs = function(X) create.second_order(X, method='equi')
-result = knockoff.filter(X, y, knockoffs=knockoffs)
-print(result$selected)   
-  
 }
 \references{
 Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
-  arXiv:1610.02351 (2016).
-  \href{https://web.stanford.edu/group/candes/knockoffs/index.html}{https://web.stanford.edu/group/candes/knockoffs/index.html}
+arXiv:1610.02351 (2016).
+\url{https://web.stanford.edu/group/candes/knockoffs/index.html}
 }
 \seealso{
 Other create: 
 \code{\link{create.fixed}()},
-\code{\link{create.gaussian}()}
+\code{\link{create.gaussian}()},
+\code{\link{create.knockoff}()},
+\code{\link{create.pc.knockoff}()}
 }
 \concept{create}

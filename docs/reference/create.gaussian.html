@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zKnock</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
       </span>
     </div>
 
@@ -118,7 +118,7 @@ This determines the method that will be used to minimize the correlation between
 
 
 <dt>diag_s</dt>
-<dd><p>vector of length p, containing the pre-computed covariances between the original 
+<dd><p>vector of length p, containing the pre-computed covariances between the original
 variables and the knockoffs. This will be computed according to <code>method</code>, if not supplied.</p></dd>
 
 </dl></div>
@@ -131,45 +131,18 @@ variables and the knockoffs. This will be computed according to <code>method</co
     <div id="references">
     <h2>References</h2>
     <p>Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
-  arXiv:1610.02351 (2016).
-  <a href="https://web.stanford.edu/group/candes/knockoffs/index.html" class="external-link">https://web.stanford.edu/group/candes/knockoffs/index.html</a></p>
+arXiv:1610.02351 (2016).
+<a href="https://web.stanford.edu/group/candes/knockoffs/index.html" class="external-link">https://web.stanford.edu/group/candes/knockoffs/index.html</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other create: 
 <code><a href="create.fixed.html">create.fixed</a>()</code>,
+<code><a href="create.knockoff.html">create.knockoff</a>()</code>,
+<code><a href="create.pc.knockoff.html">create.pc.knockoff</a>()</code>,
 <code><a href="create.second_order.html">create.second_order</a>()</code></p></div>
     </div>
 
-    <div id="ref-examples">
-    <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">p</span><span class="op">=</span><span class="fl">100</span>; <span class="va">n</span><span class="op">=</span><span class="fl">80</span>; <span class="va">k</span><span class="op">=</span><span class="fl">15</span></span></span>
-<span class="r-in"><span><span class="va">rho</span> <span class="op">=</span> <span class="fl">0.4</span></span></span>
-<span class="r-in"><span><span class="va">mu</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">p</span><span class="op">)</span>; <span class="va">Sigma</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/toeplitz.html" class="external-link">toeplitz</a></span><span class="op">(</span><span class="va">rho</span><span class="op">^</span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="op">(</span><span class="va">p</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">X</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="va">p</span><span class="op">)</span>,<span class="va">n</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/chol.html" class="external-link">chol</a></span><span class="op">(</span><span class="va">Sigma</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">nonzero</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">k</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">beta</span> <span class="op">=</span> <span class="fl">3.5</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">p</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">nonzero</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">y</span> <span class="op">=</span> <span class="va">X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">beta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Basic usage with default arguments</span></span></span>
-<span class="r-in"><span><span class="va">knockoffs</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="fu">create.gaussian</span><span class="op">(</span><span class="va">X</span>, <span class="va">mu</span>, <span class="va">Sigma</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">=</span> <span class="fu"><a href="knockoff.filter.html">knockoff.filter</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, knockoffs<span class="op">=</span><span class="va">knockoffs</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --Calculate 1 knockoff statistics.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in glmnet(x, y, weights = weights, offset = offset, lambda = lambda,     trace.it = trace.it, ...):</span> x has missing values; consider using makeX() to impute them</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">selected</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in print(result$selected):</span> object 'result' not found</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Advanced usage with custom arguments</span></span></span>
-<span class="r-in"><span><span class="va">knockoffs</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="fu">create.gaussian</span><span class="op">(</span><span class="va">X</span>, <span class="va">mu</span>, <span class="va">Sigma</span>, method<span class="op">=</span><span class="st">'equi'</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">=</span> <span class="fu"><a href="knockoff.filter.html">knockoff.filter</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, knockoffs<span class="op">=</span><span class="va">knockoffs</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --Calculate 1 knockoff statistics.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in glmnet(x, y, weights = weights, offset = offset, lambda = lambda,     trace.it = trace.it, ...):</span> x has missing values; consider using makeX() to impute them</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">selected</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in print(result$selected):</span> object 'result' not found</span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
-    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

@@ -17,33 +17,34 @@
 #' @param ... additional arguments specific to 'stabs' (see Details).
 #' @return A vector of statistics \eqn{W} of length p.
 #'   
-#' @details This function uses the \code{stabs} package to compute
+#' @details This function uses the `stabs` package to compute
 #' variable selection stability. The selection stability of the j-th 
 #' variable is defined as its probability of being selected upon random
 #' subsampling of the data. The default method for selecting variables 
-#' in each subsampled dataset is \code{\link[stabs]{lars.lasso}}.
+#' in each subsampled dataset is [stabs::lars.lasso()].
 #' 
-#' For a complete list of the available additional arguments, see \code{\link[stabs]{stabsel}}. 
+#' For a complete list of the available additional arguments, see [stabs::stabsel()]. 
 #' 
 #' @family statistics
 #' 
 #' @examples
-#' set.seed(2022)
-#' p=50; n=50; k=15
+#' # Synthetic Data
+#' set.seed(2024)
+#' p=200; n=100; k=15
 #' mu = rep(0,p); Sigma = diag(p)
 #' X = matrix(rnorm(n*p),n)
-#' nonzero = sample(p, k)
+#' nonzero = 1:k
 #' beta = 3.5 * (1:p %in% nonzero)
 #' y = X %*% beta + rnorm(n)
-#' knockoffs = function(X) create.gaussian(X, mu, Sigma)
-#' 
-#' # Basic usage with default arguments
-#' result = knockoff.filter(X, y, knockoffs=knockoffs,
-#'                          statistic=stat.stability_selection)
-#' print(result$selected)
+#'
+#' # Knockoff Procedure
+#' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+#' res= knockoff.filter(X,y,Xk,statistic = stat.stability_selection)
+#' res$s
 #' 
 #' 
 #' @rdname stat.stability_selection
+#' @import stabs
 #' @export
 stat.stability_selection <- function(X, X_k, y, fitfun = stabs::lars.lasso, ...) {
   if (!requireNamespace('stabs', quietly=T))

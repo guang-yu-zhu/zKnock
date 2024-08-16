@@ -2,13 +2,13 @@
 % Please edit documentation in R/solve_asdp.R
 \name{merge.clusters}
 \alias{merge.clusters}
-\title{Merge consecutive clusters of correlated variables while ensuring 
+\title{Merge consecutive clusters of correlated variables while ensuring
 that no cluster has size larger than max.size}
 \usage{
 \method{merge}{clusters}(clusters, max.size)
 }
 \description{
-Merge consecutive clusters of correlated variables while ensuring 
+Merge consecutive clusters of correlated variables while ensuring
 that no cluster has size larger than max.size
 }
 \keyword{internal}

@@ -4,7 +4,7 @@
 \alias{create.knockoff}
 \title{Generate Knockoff Matrix}
 \usage{
-create.knockoff(X, type, num, num.comp = 10)
+create.knockoff(X, type, num, num.comp = 10, verbose = FALSE)
 }
 \arguments{
 \item{X}{An input original design matrix.}
@@ -25,9 +25,17 @@ Generate different types of knockoff matrices given an original one.
 \examples{
 set.seed(10)
 X <- matrix(rnorm(100), nrow = 10)
-Z <- generate.knockoff(X = X, type = "shrink", num = 5)
+Xk <- create.knockoff(X = X, type = "shrink", num = 5)
 
 }
 \references{
 
 }
+\seealso{
+Other create: 
+\code{\link{create.fixed}()},
+\code{\link{create.gaussian}()},
+\code{\link{create.pc.knockoff}()},
+\code{\link{create.second_order}()}
+}
+\concept{create}

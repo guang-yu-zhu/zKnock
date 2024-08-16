@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zKnock</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create.knockoff</span><span class="op">(</span><span class="va">X</span>, <span class="va">type</span>, <span class="va">num</span>, num.comp <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create.knockoff</span><span class="op">(</span><span class="va">X</span>, <span class="va">type</span>, <span class="va">num</span>, num.comp <span class="op">=</span> <span class="fl">10</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -129,13 +129,20 @@
 
 
     </div>
+    <div id="see-also">
+    <h2>See also</h2>
+    <div class="dont-index"><p>Other create: 
+<code><a href="create.fixed.html">create.fixed</a>()</code>,
+<code><a href="create.gaussian.html">create.gaussian</a>()</code>,
+<code><a href="create.pc.knockoff.html">create.pc.knockoff</a>()</code>,
+<code><a href="create.second_order.html">create.second_order</a>()</code></p></div>
+    </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="fu">generate.knockoff</span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, type <span class="op">=</span> <span class="st">"shrink"</span>, num <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in generate.knockoff(X = X, type = "shrink", num = 5):</span> could not find function "generate.knockoff"</span>
+<span class="r-in"><span><span class="va">Xk</span> <span class="op">&lt;-</span> <span class="fu">create.knockoff</span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, type <span class="op">=</span> <span class="st">"shrink"</span>, num <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

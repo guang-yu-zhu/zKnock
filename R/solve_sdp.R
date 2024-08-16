@@ -1,7 +1,7 @@
 #' Optimization for fixed-X and Gaussian knockoffs
 #'
 #' This function solves the optimization problem needed to create fixed-X and Gaussian SDP knockoffs
-#' on the full covariance matrix. This will be more powerful than \code{\link{create.solve_asdp}},
+#' on the full covariance matrix. This will be more powerful than [create.solve_asdp()],
 #' but more computationally expensive.
 #' 
 #' @param Sigma positive-definite p-by-p covariance matrix.
@@ -17,7 +17,7 @@
 #'           \mathrm{subject} \; \mathrm{to}    0 \leq s \leq 1, \;
 #'                                  2\Sigma - \mathrm{diag}(s) \geq 0}
 #' 
-#' This problem is solved using the interior-point method implemented in \code{\link[Rdsdp]{dsdp}}.
+#' This problem is solved using the interior-point method implemented in [Rdsdp::dsdp()].
 #'
 #' If the matrix Sigma supplied by the user is a non-scaled covariance matrix 
 #' (i.e. its diagonal entries are not all equal to 1), then the appropriate scaling is applied before

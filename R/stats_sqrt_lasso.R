@@ -9,37 +9,32 @@
 #' @param X n-by-p matrix of original variables.
 #' @param X_k n-by-p matrix of knockoff variables.
 #' @param y vector of length n, containing the response variables of numeric type.
-#' @param ... additional arguments specific to \code{slim}.
+#' @param ... additional arguments specific to `slim`.
 #' @return A vector of statistics \eqn{W} of length p.
 #' 
-#' @details With default parameters, this function uses the package \code{RPtests}
+#' @details With default parameters, this function uses the package `RPtests`
 #' to run the SQRT lasso. By specifying the appropriate optional parameters, 
 #' one can use different Lasso variants including Dantzig Selector, LAD Lasso,
 #' SQRT Lasso and Lq Lasso for estimating high dimensional sparse linear models.
 #' 
-#' For a complete list of the available additional arguments, see \code{\link[RPtests]{sqrt_lasso}}.
+#' For a complete list of the available additional arguments, see [RPtests::sqrt_lasso()].
 #' 
 #' @family statistics
 #' 
 #' @examples
-#' set.seed(2022)
-#' p=50; n=50; k=10
+#' # Synthetic Data
+#' set.seed(2024)
+#' p=200; n=100; k=15
 #' mu = rep(0,p); Sigma = diag(p)
 #' X = matrix(rnorm(n*p),n)
-#' nonzero = sample(p, k)
+#' nonzero = 1:k
 #' beta = 3.5 * (1:p %in% nonzero)
 #' y = X %*% beta + rnorm(n)
-#' knockoffs = function(X) create.gaussian(X, mu, Sigma)
-#' 
-#' # Basic usage with default arguments
-#' result = knockoff.filter(X, y, knockoffs=knockoffs, statistic=stat.sqrt_lasso)
-#' print(result$selected)
-#' 
-#' # Advanced usage with custom arguments
-#' foo = stat.sqrt_lasso
-#' k_stat = function(X, X_k, y) foo(X, X_k, y, q=0.5)
-#' result = knockoff.filter(X, y, knockoffs=knockoffs, statistic=k_stat)
-#' print(result$selected)
+#'
+#' # Knockoff Procedure
+#' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+#' res= knockoff.filter(X,y,Xk,statistic = stat.sqrt_lasso)
+#' res$s
 #' 
 #' @rdname stat.sqrt_lasso
 #' @export

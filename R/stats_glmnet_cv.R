@@ -5,7 +5,7 @@
 #'   \deqn{W_j = |Z_j| - |\tilde{Z}_j|}
 #' where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the coefficient estimates for the
 #' jth variable and its knockoff, respectively. The value of the regularization
-#' parameter \eqn{\lambda} is selected by cross-validation and computed with \code{glmnet}.
+#' parameter \eqn{\lambda} is selected by cross-validation and computed with `glmnet`.
 #'
 #' @param X n-by-p matrix of original variables.
 #' @param X_k n-by-p matrix of knockoff variables.
@@ -25,10 +25,10 @@
 #' @param cores Number of cores used to compute the statistics by running cv.glmnet.
 #' Unless otherwise specified, the number of cores is set equal to two (if available).
 
-#' @param ... additional arguments specific to \code{glmnet} (see Details).
+#' @param ... additional arguments specific to `glmnet` (see Details).
 #' @return A vector of statistics \eqn{W} of length p.
 #'
-#' @details This function uses the \code{glmnet} package to fit a generalized linear model
+#' @details This function uses the `glmnet` package to fit a generalized linear model
 #' via penalized maximum likelihood.
 #'
 #' The statistics \eqn{W_j} are constructed by taking the difference
@@ -40,21 +40,21 @@
 #' Different response families (e.g. 'binomial') can be specified by passing an
 #' optional parameter 'family'.
 #'
-#' The optional \code{nlambda} parameter can be used to control the granularity of the
-#' grid of \eqn{\lambda}'s. The default value of \code{nlambda} is \code{500},
-#' where \code{p} is the number of columns of \code{X}.
+#' The optional `nlambda` parameter can be used to control the granularity of the
+#' grid of \eqn{\lambda}'s. The default value of `nlambda` is `500`,
+#' where `p` is the number of columns of `X`.
 #'
 #' If the family is 'binomial' and a lambda sequence is not provided by the user,
 #' this function generates it on a log-linear scale before calling 'glmnet'.
 #'
-#' For a complete list of the available additional arguments, see \code{\link[glmnet]{cv.glmnet}}
-#' and \code{\link[glmnet]{glmnet}}.
+#' For a complete list of the available additional arguments, see [glmnet::cv.glmnet()]
+#' and [glmnet::glmnet()].
 #'
 #' @family statistics
 #'
 #' @examples
 #' # Synthetic Data
-#' set.seed(2022)
+#' set.seed(2024)
 #' p=200; n=100; k=15
 #' mu = rep(0,p); Sigma = diag(p)
 #' X = matrix(rnorm(n*p),n)
@@ -65,6 +65,7 @@
 #' # Knockoff Procedure
 #' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
 #' res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_coefdiff,family='gaussian')
+#' res$s
 #'
 #' @rdname stat.glmnet_coefdiff
 #' @export

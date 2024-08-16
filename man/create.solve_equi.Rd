@@ -13,13 +13,13 @@ create.solve_equi(Sigma)
 The solution \eqn{s} to the optimization problem defined above.
 }
 \description{
-This function solves a very simple optimization problem needed to create fixed-X and 
+This function solves a very simple optimization problem needed to create fixed-X and
 Gaussian SDP knockoffs on the full the covariance matrix. This may be significantly
-less powerful than \code{\link{create.solve_sdp}}.
+less powerful than \code{\link[=create.solve_sdp]{create.solve_sdp()}}.
 }
 \details{
 Computes the closed-form solution to the semidefinite programming problem:
- \deqn{ \mathrm{maximize}  \; s \quad
+\deqn{ \mathrm{maximize}  \; s \quad
        \mathrm{subject} \; \mathrm{to:}   \; 0 \leq s \leq 1, \;
        2\Sigma - sI \geq 0 }
 used to generate equi-correlated knockoffs.

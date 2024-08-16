@@ -29,27 +29,27 @@ The solution \eqn{s} to the semidefinite program defined above.
 \description{
 This function solves the optimization problem needed to create fixed-X and Gaussian SDP knockoffs
 on a block-diagonal approximation of the covariance matrix. This will be less
-powerful than \code{\link{create.solve_sdp}}, but more computationally efficient.
+powerful than \code{\link[=create.solve_sdp]{create.solve_sdp()}}, but more computationally efficient.
 }
 \details{
 Solves the following two-step semidefinite program:
 
-  (step 1)  \deqn{ \mathrm{maximize}     \; \mathrm{sum}(s) \quad
+(step 1)  \deqn{ \mathrm{maximize}     \; \mathrm{sum}(s) \quad
                    \mathrm{subject} \; \mathrm{to:}  \; 0 \leq s \leq 1, \;
                                          2 \Sigma_{\mathrm{approx}} - \mathrm{diag}(s) \geq 0}
-                             
-  (step 2) \deqn{ \mathrm{maximize}      \; \gamma \quad
+
+(step 2) \deqn{ \mathrm{maximize}      \; \gamma \quad
                   \mathrm{subject} \; \mathrm{to:}    \; \mathrm{diag}(\gamma s) \leq 2 \Sigma}
 
-Each smaller SDP is solved using the interior-point method implemented in \code{\link[Rdsdp]{dsdp}}.
+Each smaller SDP is solved using the interior-point method implemented in \code{\link[Rdsdp:dsdp]{Rdsdp::dsdp()}}.
 
 The parameter max.size controls the size of the largest semidefinite program that needs to be solved.
 A larger value of max.size will increase the computation cost, while yielding a solution closer to
 that of the original semidefinite program.
 
-If the matrix Sigma supplied by the user is a non-scaled covariance matrix 
+If the matrix Sigma supplied by the user is a non-scaled covariance matrix
 (i.e. its diagonal entries are not all equal to 1), then the appropriate scaling is applied before
-solving the SDP defined above. The result is then scaled back before being returned, as to match 
+solving the SDP defined above. The result is then scaled back before being returned, as to match
 the original scaling of the covariance matrix supplied by the user.
 }
 \seealso{

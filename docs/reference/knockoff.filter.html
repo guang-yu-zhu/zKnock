@@ -30,7 +30,7 @@ relevant for predicting the outcome of interest."><meta property="og:image" cont
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zKnock</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
       </span>
     </div>
 
@@ -105,6 +105,7 @@ relevant for predicting the outcome of interest.</p>
 <span>  statistic <span class="op">=</span> <span class="va">stat.glmnet_coefdiff</span>,</span>
 <span>  fdr <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>  offset <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -150,20 +151,20 @@ while an offset of 0 controls a modified FDR.</p></dd>
     
 
 <p>An object of class "knockoff.result". This object is a list
- containing at least the following components:</p>
+containing at least the following components:</p>
 <dl><dt>X</dt>
 <dd><p>matrix of original variables</p></dd>
 
- <dt>Xk</dt>
+<dt>Xk</dt>
 <dd><p>matrix of knockoff variables</p></dd>
 
- <dt>statistic</dt>
+<dt>statistic</dt>
 <dd><p>computed test statistics</p></dd>
 
- <dt>threshold</dt>
+<dt>threshold</dt>
 <dd><p>computed selection threshold</p></dd>
 
- <dt>selected</dt>
+<dt>selected</dt>
 <dd><p>named vector of selected variables</p></dd>
 
 </dl></div>
@@ -172,8 +173,6 @@ while an offset of 0 controls a modified FDR.</p></dd>
     <p>This function creates the knockoffs, computes the importance statistics,
 and selects variables.
 It is the main entry point for the knockoff package.</p>
-
-
 <p>The parameter <code>knockoffs</code> controls how knockoff variables are created.
 By default, the model-X scenario is assumed and a multivariate normal distribution
 is fitted to the original variables \(X\). The estimated mean vector and the covariance
@@ -198,11 +197,11 @@ or the importance statistics. Some examples can be found in the vignette.</p>
     <div id="references">
     <h2>References</h2>
     <p>Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
-  arXiv:1610.02351 (2016).
-  <a href="https://web.stanford.edu/group/candes/knockoffs/index.html" class="external-link">https://web.stanford.edu/group/candes/knockoffs/index.html</a></p>
+arXiv:1610.02351 (2016).
+<a href="https://web.stanford.edu/group/candes/knockoffs/index.html" class="external-link">https://web.stanford.edu/group/candes/knockoffs/index.html</a></p>
 <p>Barber and Candes,
-  Controlling the false discovery rate via knockoffs.
-  Ann. Statist. 43 (2015), no. 5, 2055--2085.</p>
+Controlling the false discovery rate via knockoffs.
+Ann. Statist. 43 (2015), no. 5, 2055--2085.</p>
     </div>
 
     <div id="ref-examples">
@@ -218,13 +217,9 @@ or the importance statistics. Some examples can be found in the vignette.</p>
 <span class="r-in"><span><span class="va">X</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="va">p</span><span class="op">)</span>,<span class="va">n</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span><span class="va">SigmaXhalf</span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">=</span> <span class="va">X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">beta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">Xk</span> <span class="op">=</span> <span class="fu"><a href="create.knockoff.html">create.knockoff</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, type <span class="op">=</span> <span class="st">'shrink'</span>, num <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --Generate 1 knockoffs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --Generate 2 knockoffs</span>
 <span class="r-in"><span><span class="va">res1</span> <span class="op">=</span> <span class="fu">knockoff.filter</span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, <span class="va">Xk</span>,statistic <span class="op">=</span><span class="va">stat.glmnet_coefdiff</span>,offset <span class="op">=</span> <span class="fl">1</span>,fdr <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --Calculate 1 knockoff statistics.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: Matrix</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loaded glmnet 4.1-8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --Calculate 2 knockoff statistics.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res1</span><span class="op">$</span><span class="va">s</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1  2  3  4  5  6  7  8  9 10</span>
 <span class="r-in"><span></span></span>
@@ -233,10 +228,8 @@ or the importance statistics. Some examples can be found in the vignette.</p>
 <span class="r-in"><span><span class="va">pis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Logistic.html" class="external-link">plogis</a></span><span class="op">(</span><span class="va">X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">beta</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">1</span>, <span class="va">pis</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res2</span> <span class="op">=</span>  <span class="fu">knockoff.filter</span><span class="op">(</span><span class="va">X</span>,<span class="va">Y</span>,<span class="va">Xk</span>,statistic <span class="op">=</span><span class="va">stat.glmnet_coefdiff</span>,family<span class="op">=</span><span class="st">'binomial'</span>,offset <span class="op">=</span> <span class="fl">0</span>,fdr <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --Calculate 1 knockoff statistics.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --Calculate 2 knockoff statistics.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res2</span><span class="op">$</span><span class="va">s</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> integer(0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  1  2  4  5  6  7  8 10 49</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -8,7 +8,7 @@
 #' @param method either "equi", "sdp" or "asdp" (default: "asdp").
 #' This determines the method that will be used to minimize the correlation between the original variables and the knockoffs.
 #' @param diag_s vector of length p, containing the pre-computed covariances between the original 
-#' variables and the knockoffs. This will be computed according to \code{method}, if not supplied. 
+#' variables and the knockoffs. This will be computed according to `method`, if not supplied. 
 #' @return A n-by-p matrix of knockoff variables.
 #' 
 #' @family create
@@ -16,27 +16,8 @@
 #' @references 
 #'   Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
 #'   arXiv:1610.02351 (2016).
-#'   \href{https://web.stanford.edu/group/candes/knockoffs/index.html}{https://web.stanford.edu/group/candes/knockoffs/index.html}
+#'   [https://web.stanford.edu/group/candes/knockoffs/index.html](https://web.stanford.edu/group/candes/knockoffs/index.html)
 #' 
-#' @examples
-#' set.seed(2022)
-#' p=100; n=80; k=15
-#' rho = 0.4
-#' mu = rep(0,p); Sigma = toeplitz(rho^(0:(p-1)))
-#' X = matrix(rnorm(n*p),n) %*% chol(Sigma)
-#' nonzero = sample(p, k)
-#' beta = 3.5 * (1:p %in% nonzero)
-#' y = X %*% beta + rnorm(n)
-#' 
-#' # Basic usage with default arguments
-#' knockoffs = function(X) create.gaussian(X, mu, Sigma)
-#' result = knockoff.filter(X, y, knockoffs=knockoffs)
-#' print(result$selected)
-#' 
-#' # Advanced usage with custom arguments
-#' knockoffs = function(X) create.gaussian(X, mu, Sigma, method='equi')
-#' result = knockoff.filter(X, y, knockoffs=knockoffs)
-#' print(result$selected)
 #' 
 #' @export
 create.gaussian <- function(X, mu, Sigma, method=c("asdp","sdp","equi"), diag_s=NULL) {

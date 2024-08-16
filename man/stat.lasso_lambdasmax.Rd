@@ -20,8 +20,8 @@ A vector of statistics \eqn{W} of length p.
 }
 \description{
 Computes the signed maximum statistic
-  \deqn{W_j = \max(Z_j, \tilde{Z}_j) \cdot \mathrm{sgn}(Z_j - \tilde{Z}_j),}
-where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the maximum values of 
+\deqn{W_j = \max(Z_j, \tilde{Z}_j) \cdot \mathrm{sgn}(Z_j - \tilde{Z}_j),}
+where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the maximum values of
 \eqn{\lambda} at which the jth variable and its knockoff, respectively,
 enter the penalized linear regression model.
 }
@@ -29,36 +29,31 @@ enter the penalized linear regression model.
 This function uses \code{glmnet} to compute the regularization path
 on a fine grid of \eqn{\lambda}'s.
 
-The additional \code{nlambda} 
-parameter can be used to control the granularity of the grid of \eqn{\lambda} values. 
+The additional \code{nlambda}
+parameter can be used to control the granularity of the grid of \eqn{\lambda} values.
 The default value of \code{nlambda} is \code{500}.
 
-Unless a lambda sequence is provided by the user, this function generates it on a 
+Unless a lambda sequence is provided by the user, this function generates it on a
 log-linear scale before calling \code{glmnet} (default 'nlambda': 500).
 
-This function is a wrapper around the more general 
-\code{\link{stat.glmnet_lambdadiff}}.
+This function is a wrapper around the more general
+\code{\link[=stat.glmnet_lambdadiff]{stat.glmnet_lambdadiff()}}.
 
-For a complete list of the available additional arguments, see \code{\link[glmnet]{glmnet}}.
+For a complete list of the available additional arguments, see \code{\link[glmnet:glmnet]{glmnet::glmnet()}}.
 }
 \examples{
+# Synthetic Data
+set.seed(2024)
 p=200; n=100; k=15
 mu = rep(0,p); Sigma = diag(p)
 X = matrix(rnorm(n*p),n)
-nonzero = sample(p, k)
+nonzero = 1:k
 beta = 3.5 * (1:p \%in\% nonzero)
 y = X \%*\% beta + rnorm(n)
-knockoffs = function(X) create.gaussian(X, mu, Sigma)
 
-# Basic usage with default arguments
-result = knockoff.filter(X, y, knockoff=knockoffs,
-                           statistic=stat.lasso_lambdasmax)
-print(result$selected)
-
-# Advanced usage with custom arguments
-foo = stat.lasso_lambdasmax
-k_stat = function(X, X_k, y) foo(X, X_k, y, nlambda=200)
-result = knockoff.filter(X, y, knockoffs=knockoffs, statistic=k_stat)
-print(result$selected)
+# Knockoff Procedure
+Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+res = knockoff.filter(X,y,Xk,statistic = stat.lasso_lambdasmax)
+res$s
 
 }

@@ -11,10 +11,10 @@ stat.lasso_lambdadiff_bin(X, X_k, y, ...)
 
 \item{X_k}{n-by-p matrix of knockoff variables.}
 
-\item{y}{vector of length n, containing the response variables. It should be either a factor with two levels, 
-or a two-column matrix of counts or proportions 
-(the second column is treated as the target class; for a factor, the last level 
-in alphabetical order is the target class). If y is presented as a vector, 
+\item{y}{vector of length n, containing the response variables. It should be either a factor with two levels,
+or a two-column matrix of counts or proportions
+(the second column is treated as the target class; for a factor, the last level
+in alphabetical order is the target class). If y is presented as a vector,
 it will be coerced into a factor.}
 
 \item{...}{additional arguments specific to \code{glmnet} (see Details).}
@@ -24,25 +24,25 @@ A vector of statistics \eqn{W} of length p.
 }
 \description{
 Fit the lasso path and computes the difference statistic
-  \deqn{W_j = Z_j - \tilde{Z}_j}
-where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the maximum values of the 
-regularization parameter \eqn{\lambda} at which the jth variable 
+\deqn{W_j = Z_j - \tilde{Z}_j}
+where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the maximum values of the
+regularization parameter \eqn{\lambda} at which the jth variable
 and its knockoff enter the penalized logistic regression model, respectively.
 }
 \details{
 This function uses \code{glmnet} to compute the lasso path
 on a fine grid of \eqn{\lambda}'s.
 
-The \code{nlambda} parameter can be used to control the granularity of the 
+The \code{nlambda} parameter can be used to control the granularity of the
 grid of \eqn{\lambda}'s. The default value of \code{nlambda} is \code{500}.
 
-This function is a wrapper around the more general \code{\link{stat.glmnet_lambdadiff}}.
+This function is a wrapper around the more general \code{\link[=stat.glmnet_lambdadiff]{stat.glmnet_lambdadiff()}}.
 
-For a complete list of the available additional arguments, see \code{\link[glmnet]{glmnet}}
-or \code{\link[lars]{lars}}.
+For a complete list of the available additional arguments, see \code{\link[glmnet:glmnet]{glmnet::glmnet()}}
+or \code{\link[lars:lars]{lars::lars()}}.
 }
 \examples{
-set.seed(2022)
+set.seed(2024)
 p=200; n=100; k=15
 mu = rep(0,p); Sigma = diag(p)
 X = matrix(rnorm(n*p),n)

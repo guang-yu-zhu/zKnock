@@ -9,22 +9,22 @@
 #' @param X_k n-by-p matrix of knockoff variables.
 #' @param y vector of length n, containing the response variables. If a factor, classification is assumed,
 #' otherwise regression is assumed.
-#' @param ... additional arguments specific to \code{ranger} (see Details).
+#' @param ... additional arguments specific to `ranger` (see Details).
 #' @return A vector of statistics \eqn{W} of length p.
 #'
-#' @details This function uses the \code{ranger} package to compute variable
+#' @details This function uses the `ranger` package to compute variable
 #' importance measures. The importance of a variable is measured as the total decrease
 #' in node impurities from splitting on that variable, averaged over all trees.
 #' For regression, the node impurity is measured by residual sum of squares.
 #' For classification, it is measured by the Gini index.
 #'
-#' For a complete list of the available additional arguments, see \code{\link[ranger]{ranger}}.
+#' For a complete list of the available additional arguments, see [ranger::ranger()].
 #'
 #' @family statistics
 #'
 #' @examples
 #' # Synthetic Data
-#' set.seed(2022)
+#' set.seed(2024)
 #' p=200; n=100; k=15
 #' mu = rep(0,p); Sigma = diag(p)
 #' X = matrix(rnorm(n*p),n)
@@ -34,7 +34,8 @@
 #'
 #' # Knockoff Procedure
 #' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
-#' res1= knockoff.filter(X,y,Xk,statistic = stat.random_forest,family='gaussian')
+#' res= knockoff.filter(X,y,Xk,statistic = stat.random_forest,family='gaussian')
+#' res$s
 #'
 #' @rdname stat.random_forest
 #' @export
