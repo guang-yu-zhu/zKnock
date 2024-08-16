@@ -26,3 +26,4 @@ containing at least the following components:
 \description{
 Select Variables based on knockoff statistics
 }
+\keyword{internal}

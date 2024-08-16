@@ -8,7 +8,7 @@ library(pkgdown)
 #----
 #init
 usethis::use_roxygen_md()
-roxygen2md::roxygen2md()
+roxygen2md::roxygen2md() # Convert roxygen to Markdown
 #----
 roxygen2::roxygenise(clean = TRUE)
 #build_home()

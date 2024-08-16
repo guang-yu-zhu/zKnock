@@ -84,14 +84,14 @@ NULL
 #' y = X %*% beta + rnorm(n)
 #' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
 #' res1 = knockoff.filter(X, y, Xk,statistic =stat.glmnet_coefdiff,offset = 1,fdr = 0.1)
-#' print(res1$s)
+#' print(res1$shat)
 #'
 #'
 #' # Logistics Regression
 #' pis <- plogis(X %*% beta)
 #' Y <- factor(rbinom(n, 1, pis))
 #' res2 =  knockoff.filter(X,Y,Xk,statistic =stat.glmnet_coefdiff,family='binomial',offset = 0,fdr = 0.2)
-#' print(res2$s)
+#' print(res2$shat)
 #'
 #' @export
 knockoff.filter <- function(X,y,Xk=NULL,
@@ -111,6 +111,8 @@ knockoff.filter <- function(X,y,Xk=NULL,
   } else {
     stop('Input X must be a numeric matrix or data frame')
   }
+
+
   if (!is.numeric(X)) stop('Input X must be a numeric matrix or data frame')
 
   if (!is.factor(y) && !is.numeric(y)) {
@@ -132,7 +134,7 @@ knockoff.filter <- function(X,y,Xk=NULL,
   if(is.matrix(Xk)){
     Xk=list(Xk)
   }
-
+  if(is.null(X.names)) X.names = 1:p
   # If fixed-design knockoffs are being used, provive them with the response vector
   # in order to augment the data with new rows if necessary
   if( identical(knockoffs, create.fixed) )
@@ -163,22 +165,42 @@ knockoff.filter <- function(X,y,Xk=NULL,
     if(verbose) cat('--Calculate',i,'knockoff statistics.\n')
     Ws[[i]] <- statistic(X, Xk[[i]],y,...)
   }
-  # Run the knockoff filter
-  res = knockoff.select(Ws,fdr = fdr,offset =offset)
-  s = res$s
-  if (!is.null(X.names))
-    names(selected) = X.names[selected]
+
+  # Run average filtering
+  Ws_mat <- matrix(unlist(Ws), ncol = length(Ws[[1]]), byrow = TRUE)
+  #colnames(Ws_mat)<-X.names
+  W = colMeans(Ws_mat)
+  thre <- knockoff.threshold(W,fdr,offset)
+  shat <- which(W >= thre)
+
 
   # Package up the results.
+  if(length(Ws)==1){
   structure(list(call = match.call(),
-                 #X = X,
-                 #Xk = Xk,
-                 #y = y,
-                 W = res$W,
-                 Ws = res$Ws,
-                 t =res$t,
-                 s = s),
+                 W = W,
+                 thre = thre,
+                 shat = shat),
             class = 'knockoff.filter')
+  }else{ #multiple knockoffs
+    # Run separate filtering
+    thres=mapply(Ws,FUN = knockoff.threshold,fdr,offset)
+    shat.mat<-(Ws_mat>thres%*%matrix(1,1,p))*1
+    shat.list <- apply(shat.mat,1,function(vec) which(vec==1),simplify = FALSE)
+
+    # shat.list <- list()
+    # for (l in 1:length(Ws)){
+    #   shat.list[[l]] <- which(Ws[[l]] >= thres[l])
+    # }
+    structure(list(call = match.call(),
+                   W = W,
+                   thre = thre,
+                   shat = shat,
+                   Ws = Ws_mat,
+                   thres = thres,
+                   shat.list = shat.list,
+                   shat.mat = shat.mat),
+              class = 'knockoff.filter')
+  }
 }
 
 #' Threshold for the knockoff filter
@@ -220,25 +242,24 @@ knockoff.threshold <- function(W, fdr=0.10, offset=1) {
 #'  \item{thre}{computed selection threshold}
 #'  \item{index}{index of selected variables}
 #'
-#' @export
+#' @keywords internal
 knockoff.select <- function(Ws, fdr=0.10, offset=1) {
-  if(is.list(Ws)){
-    Ws <- matrix(unlist(Ws), ncol = length(Ws[[1]]), byrow = TRUE)
-  }
+  X.names = colnames(Ws)
   if(is.vector(Ws)){
     W = Ws
   }else{
-    W = colMeans(Ws)
+    W = colMeans(Ws_mat)
   }
   if(offset!=1 && offset!=0) {
     stop('Input offset must be either 0 or 1')
   }
-  ts = sort(c(0, abs(W)))
-  ratio = sapply(ts, function(t)
-    (offset + sum(W <= -t)) / max(1, sum(W >= t)))
-  ok = which(ratio <= fdr)
-  thre = ifelse(length(ok) > 0, ts[ok[1]], Inf)
+
+  # filter
+  thre <- knockoff.threshold(W,fdr,offset)
   s <- which(W >= thre)
+  if (!is.null(X.names))
+    names(s) = X.names[s]
+
   structure(list(W = W,
                  Ws = Ws,
                  t = thre,
@@ -254,13 +275,13 @@ knockoff.select <- function(Ws, fdr=0.10, offset=1) {
 #' @param x the output of a call to knockoff.filter
 #' @param ... unused
 #'
-#' @method print knockoff.result
+#' @method print knockoff.filter
 #' @export
-print.knockoff.result <- function(x, ...) {
+print.knockoff.filter <- function(x, ...) {
   cat('Call:\n')
   print(x$call)
   cat('\nSelected variables:\n')
-  print(x$selected)
+  print(x$shat)
 }
 
 #' Verify dependencies for chosen statistics

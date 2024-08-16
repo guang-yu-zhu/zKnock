@@ -42,7 +42,7 @@ reference:
   desc:
   contents:
   - starts_with("knockoff.")
-  - print.knockoff.result
+  - print.knockoff.filter
 - title: Generate Knockoffs
   desc:
   contents:

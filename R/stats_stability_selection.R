@@ -40,7 +40,7 @@
 #' # Knockoff Procedure
 #' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
 #' res= knockoff.filter(X,y,Xk,statistic = stat.stability_selection)
-#' res$s
+#' res$shat
 #' 
 #' 
 #' @rdname stat.stability_selection

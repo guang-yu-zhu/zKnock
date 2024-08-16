@@ -94,14 +94,14 @@ X = matrix(rnorm(n*p),n)\%*\%SigmaXhalf
 y = X \%*\% beta + rnorm(n)
 Xk = create.knockoff(X = X, type = 'shrink', num = 2)
 res1 = knockoff.filter(X, y, Xk,statistic =stat.glmnet_coefdiff,offset = 1,fdr = 0.1)
-print(res1$s)
+print(res1$shat)
 
 
 # Logistics Regression
 pis <- plogis(X \%*\% beta)
 Y <- factor(rbinom(n, 1, pis))
 res2 =  knockoff.filter(X,Y,Xk,statistic =stat.glmnet_coefdiff,family='binomial',offset = 0,fdr = 0.2)
-print(res2$s)
+print(res2$shat)
 
 }
 \references{

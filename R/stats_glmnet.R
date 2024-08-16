@@ -54,10 +54,11 @@
 #'
 #' # Knockoff Procedure
 #' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
-#' res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_lambdadiff)
-#' res$s
+#' res = knockoff.filter(X,y,Xk,statistic = tat.glmnet_lambdadiff)
+#' res$shat
 #' 
 #' @rdname stat.glmnet_lambdadiff
+#' @import glmnet
 #' @export
 stat.glmnet_lambdadiff <- function(X, X_k, y, family='gaussian', ...) {
   # Randomly swap columns of X and Xk
@@ -74,7 +75,8 @@ stat.glmnet_lambdadiff <- function(X, X_k, y, family='gaussian', ...) {
   
   # Correct for swapping of columns of X and Xk
   W = W * (1-2*swap)
- W = as.vector(W)  return(W)
+  W = as.vector(W)
+  return(W)
 }
 
 #' GLM statistics for knockoff
@@ -127,8 +129,8 @@ stat.glmnet_lambdadiff <- function(X, X_k, y, family='gaussian', ...) {
 #'
 #' # Knockoff Procedure
 #' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
-#' res = knockoff.filter(X,y,Xk,statistic = stat.lambdasmax)
-#' res$s
+#' res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_lambdasmax)
+#' res$shat
 #' 
 #' @rdname stat.glmnet_lambdasmax
 #' @export
@@ -147,9 +149,10 @@ stat.glmnet_lambdasmax <- function(X, X_k, y, family='gaussian', ...) {
   
   # Correct for swapping of columns of X and Xk
   W = W * (1-2*swap)
- W = as.vector(W)
+  W = as.vector(W)
   return(W)
 }
+
 
 #' @keywords internal
 lasso_max_lambda_lars <- function(X, y, ...) {

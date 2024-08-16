@@ -7,7 +7,7 @@ Authors@R: c(person("Guangyu", "Zhu", role = c("aut", "cre"), email = "guangyuzh
 Description: 
 License: GPL-3
 Depends: methods, stats
-Imports: Rdsdp, Matrix, corpcor, glmnet, RSpectra, gtools, utils
+Imports: Rdsdp, Matrix, corpcor, glmnet, RSpectra, gtools, utils, RPtests, xgboost
 Suggests: knitr, testthat, rmarkdown, lars, ranger, stabs
 RoxygenNote: 7.1.2
 VignetteBuilder: knitr

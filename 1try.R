@@ -1,6 +1,6 @@
 #  ---
 set.seed(2022)
-p=30; n=100; k=15
+p=30; n=200; k=15
 mu = rep(0,p); Sigma = diag(p)
 X = matrix(rnorm(n*p),n)
 nonzero = 1:k
@@ -15,8 +15,29 @@ metric_fun = function(selected){
 }
 
 # Knockoff Procedure
-Xk = create.knockoff(X = X, type = 'shrink', num = 1)
-res1 = knockoff.filter(X,y,Xk,statistic = stat.glmnet_coefdiff,family='gaussian')
+Xk = create.knockoff(X = X, type = 'shrink', num = 5)
+res1 = knockoff.filter(X,y,Xk,statistic = stat.glmnet_coefdiff,family='gaussian',verbose = 1)
+res1$shat.list
+colMeans(res1$shat.mat)
+
+library(tidyverse)
+Ws_df<-Ws%>%as_tibble()%>%rownames_to_column('Row')%>%
+  pivot_longer(
+    cols = -Row,               # Exclude the Row column from pivoting
+    names_to = "Column",       # New column for the original column names
+    values_to = "Value"        # New column for the values
+  )%>%mutate(Column=as.numeric(Column))
+ggplot(Ws_df, aes(x = Column, y = Value, group = Row, color = factor(Row))) +
+  geom_line() +
+  labs(title = "Lines Representing Each Row of Matrix Ws",
+       x = "Column",
+       y = "Value",
+       color = "Row") +
+  theme_minimal()
+thres=mapply(Ws,FUN = knockoff.threshold,fdr=0.1,offset=1)
+Ws>thres%*%matrix(1,1,p)
+
+
 res2 = knockoff.filter(X,y,Xk,statistic = stat.random_forest,family='gaussian')
 res3 = knockoff.filter(X,y,Xk,statistic = stat.xgboost)
 metric_fun(res1$s)

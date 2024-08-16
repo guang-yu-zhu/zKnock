@@ -34,9 +34,10 @@
 #' # Knockoff Procedure
 #' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
 #' res= knockoff.filter(X,y,Xk,statistic = stat.sqrt_lasso)
-#' res$s
+#' res$shat
 #' 
 #' @rdname stat.sqrt_lasso
+#' @import RPtests
 #' @export
 stat.sqrt_lasso <- function(X, X_k, y, ...) {
   if (!requireNamespace('RPtests', quietly=T))
@@ -60,6 +61,6 @@ stat.sqrt_lasso <- function(X, X_k, y, ...) {
   
   # Correct for swapping of columns of X and Xk
   W = W * (1-2*swap)
- W = as.vector(W)
+  W = as.vector(W)
   return(W)
 }

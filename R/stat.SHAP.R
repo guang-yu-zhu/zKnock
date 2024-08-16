@@ -35,9 +35,10 @@
 #' # Knockoff Procedure
 #' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
 #' res = knockoff.filter(X,y,Xk,statistic = stat.SHAP)
-#' res$s
+#' res$shat
 #'
 #' @rdname stat.SHAP
+#' @import xgboost
 #' @export
 stat.SHAP<-function(X, X_k, y,nrounds=2){
   # Randomly swap columns of X and Xk

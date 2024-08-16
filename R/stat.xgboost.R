@@ -29,7 +29,7 @@
 #' # Knockoff Procedure
 #' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
 #' res = knockoff.filter(X,y,Xk,statistic = stat.xgboost,family='gaussian')
-#' res$s
+#' res$shat
 #'
 #' @rdname stat.xgboost
 #' @export

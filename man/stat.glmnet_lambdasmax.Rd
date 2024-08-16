@@ -63,7 +63,7 @@ y = X \%*\% beta + rnorm(n)
 
 # Knockoff Procedure
 Xk = create.knockoff(X = X, type = 'shrink', num = 2)
-res = knockoff.filter(X,y,Xk,statistic = stat.lambdasmax)
-res$s
+res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_lambdasmax)
+res$shat
 
 }

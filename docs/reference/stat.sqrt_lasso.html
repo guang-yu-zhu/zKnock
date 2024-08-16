@@ -136,7 +136,7 @@ enter the SQRT lasso model.</p>
 to run the SQRT lasso. By specifying the appropriate optional parameters,
 one can use different Lasso variants including Dantzig Selector, LAD Lasso,
 SQRT Lasso and Lq Lasso for estimating high dimensional sparse linear models.</p>
-<p>For a complete list of the available additional arguments, see <code>RPtests::sqrt_lasso()</code>.</p>
+<p>For a complete list of the available additional arguments, see <code><a href="https://rdrr.io/pkg/RPtests/man/sqrt_lasso.html" class="external-link">RPtests::sqrt_lasso()</a></code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -145,10 +145,6 @@ SQRT Lasso and Lq Lasso for estimating high dimensional sparse linear models.</p
 <code><a href="stat.forward_selection.html">stat.forward_selection</a>()</code>,
 <code><a href="stat.glmnet_coefdiff.html">stat.glmnet_coefdiff</a>()</code>,
 <code><a href="stat.glmnet_lambdadiff.html">stat.glmnet_lambdadiff</a>()</code>,
-<code><a href="stat.lasso_coefdiff_bin.html">stat.lasso_coefdiff_bin</a>()</code>,
-<code><a href="stat.lasso_coefdiff.html">stat.lasso_coefdiff</a>()</code>,
-<code><a href="stat.lasso_lambdadiff_bin.html">stat.lasso_lambdadiff_bin</a>()</code>,
-<code><a href="stat.lasso_lambdadiff.html">stat.lasso_lambdadiff</a>()</code>,
 <code><a href="stat.random_forest.html">stat.random_forest</a>()</code>,
 <code><a href="stat.stability_selection.html">stat.stability_selection</a>()</code>,
 <code><a href="stat.xgboost.html">stat.xgboost</a>()</code></p></div>
@@ -168,9 +164,8 @@ SQRT Lasso and Lq Lasso for estimating high dimensional sparse linear models.</p
 <span class="r-in"><span><span class="co"># Knockoff Procedure</span></span></span>
 <span class="r-in"><span><span class="va">Xk</span> <span class="op">=</span> <span class="fu"><a href="create.knockoff.html">create.knockoff</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, type <span class="op">=</span> <span class="st">'shrink'</span>, num <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span><span class="op">=</span> <span class="fu"><a href="knockoff.filter.html">knockoff.filter</a></span><span class="op">(</span><span class="va">X</span>,<span class="va">y</span>,<span class="va">Xk</span>,statistic <span class="op">=</span> <span class="va">stat.sqrt_lasso</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> RPtests is not installed</span>
-<span class="r-in"><span><span class="va">res</span><span class="op">$</span><span class="va">s</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'res' not found</span>
+<span class="r-in"><span><span class="va">res</span><span class="op">$</span><span class="va">shat</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> integer(0)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
