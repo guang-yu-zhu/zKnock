@@ -147,24 +147,28 @@ statistics. The value 1 yields a slightly more conservative procedure ("knockoff
 controls the false discovery rate (FDR) according to the usual definition,
 while an offset of 0 controls a modified FDR.</p></dd>
 
+
+<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
+<dd><p>Logical; if TRUE, prints progress messages during the generation of knockoff matrices. Default is FALSE.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>An object of class "knockoff.result". This object is a list
-containing at least the following components:</p>
+ containing at least the following components:</p>
 <dl><dt>X</dt>
 <dd><p>matrix of original variables</p></dd>
 
-<dt>Xk</dt>
+ <dt>Xk</dt>
 <dd><p>matrix of knockoff variables</p></dd>
 
-<dt>statistic</dt>
+ <dt>statistic</dt>
 <dd><p>computed test statistics</p></dd>
 
-<dt>threshold</dt>
+ <dt>threshold</dt>
 <dd><p>computed selection threshold</p></dd>
 
-<dt>selected</dt>
+ <dt>selected</dt>
 <dd><p>named vector of selected variables</p></dd>
 
 </dl></div>
@@ -173,35 +177,37 @@ containing at least the following components:</p>
     <p>This function creates the knockoffs, computes the importance statistics,
 and selects variables.
 It is the main entry point for the knockoff package.</p>
-<p>The parameter <code>knockoffs</code> controls how knockoff variables are created.
+
+
+<p>The parameter `knockoffs` controls how knockoff variables are created.
 By default, the model-X scenario is assumed and a multivariate normal distribution
 is fitted to the original variables \(X\). The estimated mean vector and the covariance
 matrix are used to generate second-order approximate Gaussian knockoffs.
-In general, the function <code>knockoffs</code> should take a n-by-p matrix of
+In general, the function `knockoffs` should take a n-by-p matrix of
 observed variables \(X\) as input and return a n-by-p matrix of knockoffs.
 Two default functions for creating knockoffs are provided with this package.</p>
 <p>In the model-X scenario, under the assumption that the rows of \(X\) are distributed
 as a multivariate Gaussian with known parameters, then the function
-<code>create.gaussian</code> can be used to generate Gaussian knockoffs,
+`create.gaussian` can be used to generate Gaussian knockoffs,
 as shown in the examples below.</p>
 <p>In the fixed-X scenario, one can create the knockoffs using the function
-<code>create.fixed</code>. This requires \(n \geq p\) and it assumes
+`create.fixed`. This requires \(n \geq p\) and it assumes
 that the response \(Y\) follows a homoscedastic linear regression model.</p>
-<p>For more information about creating knockoffs, type <code>??create</code>.</p>
-<p>The default importance statistic is <a href="stat.glmnet_coefdiff.html">stat.glmnet_coefdiff</a>.
+<p>For more information about creating knockoffs, type `??create`.</p>
+<p>The default importance statistic is [stat.glmnet_coefdiff].
 For a complete list of the statistics provided with this package,
-type <code>??stat</code>.</p>
+type `??stat`.</p>
 <p>It is possible to provide custom functions for the knockoff constructions
 or the importance statistics. Some examples can be found in the vignette.</p>
     </div>
     <div id="references">
     <h2>References</h2>
     <p>Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
-arXiv:1610.02351 (2016).
-<a href="https://web.stanford.edu/group/candes/knockoffs/index.html" class="external-link">https://web.stanford.edu/group/candes/knockoffs/index.html</a></p>
+  arXiv:1610.02351 (2016).
+  [https://web.stanford.edu/group/candes/knockoffs/index.html](https://web.stanford.edu/group/candes/knockoffs/index.html)</p>
 <p>Barber and Candes,
-Controlling the false discovery rate via knockoffs.
-Ann. Statist. 43 (2015), no. 5, 2055–2085.</p>
+  Controlling the false discovery rate via knockoffs.
+  Ann. Statist. 43 (2015), no. 5, 2055–2085.</p>
     </div>
 
     <div id="ref-examples">

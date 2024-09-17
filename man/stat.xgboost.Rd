@@ -25,7 +25,7 @@ A vector of statistics \eqn{W} of length p.
 }
 \description{
 Computes the difference statistic
-\deqn{W_j = |Z_j| - |\tilde{Z}_j|}
+  \deqn{W_j = |Z_j| - |\tilde{Z}_j|}
 where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the xgboost feature importances
 of the jth variable and its knockoff, respectively.
 }

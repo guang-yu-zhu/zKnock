@@ -12,7 +12,7 @@
     );
   }
 </script><title>Importance statistics based on stability selection — stat.stability_selection • zKnock</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><meta property="og:title" content="Importance statistics based on stability selection — stat.stability_selection"><meta property="og:description" content="Computes the difference statistic
-$$W_j = |Z_j| - |\tilde{Z}_j|$$
+  $$W_j = |Z_j| - |\tilde{Z}_j|$$
 where \(Z_j\) and \(\tilde{Z}_j\) are measure the importance
 of the jth variable and its knockoff, respectively, based on the
 stability of their selection upon subsampling of the data."><meta property="og:image" content="https://guang-yu-zhu.github.io/zKnock/logo.png"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -96,7 +96,7 @@ stability of their selection upon subsampling of the data."><meta property="og:i
 
     <div class="ref-description">
     <p>Computes the difference statistic
-$$W_j = |Z_j| - |\tilde{Z}_j|$$
+  $$W_j = |Z_j| - |\tilde{Z}_j|$$
 where \(Z_j\) and \(\tilde{Z}_j\) are measure the importance
 of the jth variable and its knockoff, respectively, based on the
 stability of their selection upon subsampling of the data.</p>
@@ -140,12 +140,12 @@ The name of the function should be prefixed by 'stabs::'.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>This function uses the <code>stabs</code> package to compute
+    <p>This function uses the `stabs` package to compute
 variable selection stability. The selection stability of the j-th
 variable is defined as its probability of being selected upon random
 subsampling of the data. The default method for selecting variables
-in each subsampled dataset is <code><a href="https://rdrr.io/pkg/stabs/man/fitfuns.html" class="external-link">stabs::lars.lasso()</a></code>.</p>
-<p>For a complete list of the available additional arguments, see <code><a href="https://rdrr.io/pkg/stabs/man/stabsel.html" class="external-link">stabs::stabsel()</a></code>.</p>
+in each subsampled dataset is [stabs::lars.lasso()].</p>
+<p>For a complete list of the available additional arguments, see [stabs::stabsel()].</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -155,8 +155,7 @@ in each subsampled dataset is <code><a href="https://rdrr.io/pkg/stabs/man/fitfu
 <code><a href="stat.glmnet_coefdiff.html">stat.glmnet_coefdiff</a>()</code>,
 <code><a href="stat.glmnet_lambdadiff.html">stat.glmnet_lambdadiff</a>()</code>,
 <code><a href="stat.random_forest.html">stat.random_forest</a>()</code>,
-<code><a href="stat.sqrt_lasso.html">stat.sqrt_lasso</a>()</code>,
-<code><a href="stat.xgboost.html">stat.xgboost</a>()</code></p></div>
+<code><a href="stat.sqrt_lasso.html">stat.sqrt_lasso</a>()</code></p></div>
     </div>
 
     <div id="ref-examples">

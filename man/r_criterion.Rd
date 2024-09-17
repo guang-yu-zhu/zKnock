@@ -29,3 +29,4 @@ Fan Y, Lv J, Sharifvaghefi M et al. IPAD: Stable Interpretable Forecasting with 
 
 Bai J, Ng S. Determining the Number of Factors in Approximate Factor Models. Econometrica 2002;70:191–221.
 }
+\keyword{internal}

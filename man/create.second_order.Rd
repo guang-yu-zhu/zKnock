@@ -23,17 +23,17 @@ First, a multivariate Gaussian distribution is fitted to the observations of X.
 Then, Gaussian knockoffs are generated according to the estimated model.
 }
 \details{
-If the argument \code{shrink} is set to T, a James-Stein-type shrinkage estimator for
+If the argument `shrink` is set to T, a James-Stein-type shrinkage estimator for
 the covariance matrix is used instead of the traditional maximum-likelihood estimate. This option
-requires the package \code{corpcor}. See \code{\link[corpcor:cov.shrink]{corpcor::cov.shrink()}} for more details.
+requires the package `corpcor`. See [corpcor::cov.shrink()] for more details.
 
-Even if the argument \code{shrink} is set to F, in the case that the estimated covariance
+Even if the argument `shrink` is set to F, in the case that the estimated covariance 
 matrix is not positive-definite, this function will apply some shrinkage.
 }
 \references{
 Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
-arXiv:1610.02351 (2016).
-\url{https://web.stanford.edu/group/candes/knockoffs/index.html}
+  arXiv:1610.02351 (2016).
+  [https://web.stanford.edu/group/candes/knockoffs/index.html](https://web.stanford.edu/group/candes/knockoffs/index.html)
 }
 \seealso{
 Other create: 

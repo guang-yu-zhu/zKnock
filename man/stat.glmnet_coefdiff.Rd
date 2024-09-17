@@ -21,7 +21,7 @@ y is a matrix of quantitative responses.}
 
 \item{cores}{Number of cores to use for parallel computation. Defaults to 2 if available.}
 
-\item{...}{Additional arguments specific to \code{glmnet} (see Details).}
+\item{...}{Additional arguments specific to `glmnet` (see Details).}
 }
 \value{
 A vector of statistics \eqn{W} of length p.
@@ -29,19 +29,19 @@ A vector of statistics \eqn{W} of length p.
 \description{
 Fits a generalized linear model via penalized maximum likelihood with cross-validation
 and computes the difference statistic
-\deqn{W_j = |Z_j| - |\tilde{Z}_j|}
+  \deqn{W_j = |Z_j| - |\tilde{Z}_j|}
 where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the coefficient estimates for the
 jth variable and its knockoff, respectively. The regularization parameter
-\eqn{\lambda} is selected by cross-validation and computed with \code{glmnet}.
+\eqn{\lambda} is selected by cross-validation and computed with `glmnet`.
 }
 \details{
-This function uses the \code{glmnet} package to fit a GLM model via penalized maximum likelihood.
+This function uses the `glmnet` package to fit a GLM model via penalized maximum likelihood.
 The value of \eqn{\lambda} is chosen by 10-fold cross-validation unless specified otherwise.
 
-The optional \code{nlambda} parameter can control the number of \eqn{\lambda} values, and the default
+The optional `nlambda` parameter can control the number of \eqn{\lambda} values, and the default
 is 500. For family="binomial", if the lambda sequence isn't provided, a log-linear sequence is generated.
 
-For more details, see \code{\link[glmnet:cv.glmnet]{glmnet::cv.glmnet()}} and \code{\link[glmnet:glmnet]{glmnet::glmnet()}}.
+For more details, see [glmnet::cv.glmnet()] and [glmnet::glmnet()].
 }
 \examples{
 # Synthetic Data

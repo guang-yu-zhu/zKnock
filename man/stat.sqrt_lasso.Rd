@@ -13,25 +13,25 @@ stat.sqrt_lasso(X, X_k, y, ...)
 
 \item{y}{vector of length n, containing the response variables of numeric type.}
 
-\item{...}{additional arguments specific to \code{slim}.}
+\item{...}{additional arguments specific to `slim`.}
 }
 \value{
 A vector of statistics \eqn{W} of length p.
 }
 \description{
 Computes the signed maximum statistic
-\deqn{W_j = \max(Z_j, \tilde{Z}_j) \cdot \mathrm{sgn}(Z_j - \tilde{Z}_j),}
-where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the maximum values of
+  \deqn{W_j = \max(Z_j, \tilde{Z}_j) \cdot \mathrm{sgn}(Z_j - \tilde{Z}_j),}
+where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the maximum values of 
 \eqn{\lambda} at which the jth variable and its knockoff, respectively,
 enter the SQRT lasso model.
 }
 \details{
-With default parameters, this function uses the package \code{RPtests}
-to run the SQRT lasso. By specifying the appropriate optional parameters,
+With default parameters, this function uses the package `RPtests`
+to run the SQRT lasso. By specifying the appropriate optional parameters, 
 one can use different Lasso variants including Dantzig Selector, LAD Lasso,
 SQRT Lasso and Lq Lasso for estimating high dimensional sparse linear models.
 
-For a complete list of the available additional arguments, see \code{\link[RPtests:sqrt_lasso]{RPtests::sqrt_lasso()}}.
+For a complete list of the available additional arguments, see [RPtests::sqrt_lasso()].
 }
 \examples{
 # Synthetic Data

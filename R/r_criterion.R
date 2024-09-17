@@ -14,9 +14,7 @@
 #'
 #' @references Fan Y, Lv J, Sharifvaghefi M et al. IPAD: Stable Interpretable Forecasting with Knockoffs Inference. Journal of the American Statistical Association 2020;115:1822–34.
 #' @references Bai J, Ng S. Determining the Number of Factors in Approximate Factor Models. Econometrica 2002;70:191–221.
-
-
-#' @export
+#' @keywords internal
 #'
 r_criterion <- function(X, rmax = 10){
   # Number of observations (n) and variables (p)

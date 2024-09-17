@@ -17,11 +17,11 @@ controls the FDR according to the usual definition, while an offset of 0 control
 }
 \value{
 An object of class "knockoff.select. This object is a list
-containing at least the following components:
-\item{W}{computed test statistics}
-\item{Ws}{matrix of computed test statistics}
-\item{thre}{computed selection threshold}
-\item{index}{index of selected variables}
+ containing at least the following components:
+ \item{W}{computed test statistics}
+ \item{Ws}{matrix of computed test statistics}
+ \item{thre}{computed selection threshold}
+ \item{index}{index of selected variables}
 }
 \description{
 Select Variables based on knockoff statistics

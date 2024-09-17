@@ -125,17 +125,17 @@ This determines the method that will be used to minimize the correlation between
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>If the argument <code>shrink</code> is set to T, a James-Stein-type shrinkage estimator for
+    <p>If the argument `shrink` is set to T, a James-Stein-type shrinkage estimator for
 the covariance matrix is used instead of the traditional maximum-likelihood estimate. This option
-requires the package <code>corpcor</code>. See <code><a href="https://rdrr.io/pkg/corpcor/man/cov.shrink.html" class="external-link">corpcor::cov.shrink()</a></code> for more details.</p>
-<p>Even if the argument <code>shrink</code> is set to F, in the case that the estimated covariance
+requires the package `corpcor`. See [corpcor::cov.shrink()] for more details.</p>
+<p>Even if the argument `shrink` is set to F, in the case that the estimated covariance
 matrix is not positive-definite, this function will apply some shrinkage.</p>
     </div>
     <div id="references">
     <h2>References</h2>
     <p>Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
-arXiv:1610.02351 (2016).
-<a href="https://web.stanford.edu/group/candes/knockoffs/index.html" class="external-link">https://web.stanford.edu/group/candes/knockoffs/index.html</a></p>
+  arXiv:1610.02351 (2016).
+  [https://web.stanford.edu/group/candes/knockoffs/index.html](https://web.stanford.edu/group/candes/knockoffs/index.html)</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

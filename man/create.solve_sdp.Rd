@@ -20,21 +20,21 @@ The solution \eqn{s} to the semidefinite programming problem defined above.
 }
 \description{
 This function solves the optimization problem needed to create fixed-X and Gaussian SDP knockoffs
-on the full covariance matrix. This will be more powerful than \code{\link[=create.solve_asdp]{create.solve_asdp()}},
+on the full covariance matrix. This will be more powerful than [create.solve_asdp()],
 but more computationally expensive.
 }
 \details{
 Solves the semidefinite programming problem:
 
-\deqn{ \mathrm{maximize}      \; \mathrm{sum}(s) \quad
+  \deqn{ \mathrm{maximize}      \; \mathrm{sum}(s) \quad
           \mathrm{subject} \; \mathrm{to}    0 \leq s \leq 1, \;
                                  2\Sigma - \mathrm{diag}(s) \geq 0}
 
-This problem is solved using the interior-point method implemented in \code{\link[Rdsdp:dsdp]{Rdsdp::dsdp()}}.
+This problem is solved using the interior-point method implemented in [Rdsdp::dsdp()].
 
-If the matrix Sigma supplied by the user is a non-scaled covariance matrix
+If the matrix Sigma supplied by the user is a non-scaled covariance matrix 
 (i.e. its diagonal entries are not all equal to 1), then the appropriate scaling is applied before
-solving the SDP defined above. The result is then scaled back before being returned, as to match
+solving the SDP defined above. The result is then scaled back before being returned, as to match 
 the original scaling of the covariance matrix supplied by the user.
 }
 \seealso{

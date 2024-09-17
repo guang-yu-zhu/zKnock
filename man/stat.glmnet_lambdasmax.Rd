@@ -11,45 +11,45 @@ stat.glmnet_lambdasmax(X, X_k, y, family = "gaussian", ...)
 
 \item{X_k}{n-by-p matrix of knockoff variables.}
 
-\item{y}{vector of length n, containing the response variables. Quantitative for family="gaussian",
-or family="poisson" (non-negative counts). For family="binomial"
-should be either a factor with two levels, or a two-column matrix of counts
-or proportions (the second column is treated as the target class; for a factor,
-the last level in alphabetical order is the target class). For family="multinomial",
-can be a nc>=2 level factor, or a matrix with nc columns of counts or proportions.
-For either "binomial" or "multinomial", if y is presented as a vector, it will
-be coerced into a factor. For family="cox", y should be a two-column matrix with
-columns named 'time' and 'status'. The latter is a binary variable, with '1'
-indicating death, and '0' indicating right censored. The function Surv() in
-package survival produces such a matrix. For family="mgaussian", y is a matrix
+\item{y}{vector of length n, containing the response variables. Quantitative for family="gaussian", 
+or family="poisson" (non-negative counts). For family="binomial" 
+should be either a factor with two levels, or a two-column matrix of counts 
+or proportions (the second column is treated as the target class; for a factor, 
+the last level in alphabetical order is the target class). For family="multinomial", 
+can be a nc>=2 level factor, or a matrix with nc columns of counts or proportions. 
+For either "binomial" or "multinomial", if y is presented as a vector, it will 
+be coerced into a factor. For family="cox", y should be a two-column matrix with 
+columns named 'time' and 'status'. The latter is a binary variable, with '1' 
+indicating death, and '0' indicating right censored. The function Surv() in 
+package survival produces such a matrix. For family="mgaussian", y is a matrix 
 of quantitative responses.}
 
 \item{family}{response type (see above).}
 
-\item{...}{additional arguments specific to \code{glmnet} (see Details).}
+\item{...}{additional arguments specific to `glmnet` (see Details).}
 }
 \value{
 A vector of statistics \eqn{W} of length p.
 }
 \description{
 Computes the signed maximum statistic
-\deqn{W_j = \max(Z_j, \tilde{Z}_j) \cdot \mathrm{sgn}(Z_j - \tilde{Z}_j),}
-where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the maximum values of
+  \deqn{W_j = \max(Z_j, \tilde{Z}_j) \cdot \mathrm{sgn}(Z_j - \tilde{Z}_j),}
+where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the maximum values of 
 \eqn{\lambda} at which the jth variable and its knockoff, respectively,
 enter the generalized linear model.
 }
 \details{
-This function uses \code{glmnet} to compute the regularization path
+This function uses `glmnet` to compute the regularization path
 on a fine grid of \eqn{\lambda}'s.
 
-The additional \code{nlambda}
-parameter can be used to control the granularity of the grid of \eqn{\lambda} values.
-The default value of \code{nlambda} is \code{500}.
+The additional `nlambda` 
+parameter can be used to control the granularity of the grid of \eqn{\lambda} values. 
+The default value of `nlambda` is `500`.
 
-If the family is 'binomial' and a lambda sequence is not provided by the user,
+If the family is 'binomial' and a lambda sequence is not provided by the user, 
 this function generates it on a log-linear scale before calling 'glmnet'.
 
-For a complete list of the available additional arguments, see \code{\link[glmnet:glmnet]{glmnet::glmnet()}}.
+For a complete list of the available additional arguments, see [glmnet::glmnet()].
 }
 \examples{
 # Synthetic Data
