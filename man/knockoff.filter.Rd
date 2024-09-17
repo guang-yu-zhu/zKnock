@@ -36,6 +36,8 @@ a lasso statistic with cross-validation is used. See the Details section for mor
 statistics. The value 1 yields a slightly more conservative procedure ("knockoffs+") that
 controls the false discovery rate (FDR) according to the usual definition,
 while an offset of 0 controls a modified FDR.}
+
+\item{verbose}{Logical; if TRUE, prints progress messages during the generation of knockoff matrices. Default is FALSE.}
 }
 \value{
 An object of class "knockoff.result". This object is a list

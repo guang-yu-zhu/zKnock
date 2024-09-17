@@ -9,12 +9,16 @@ create.knockoff(X, type, num, num.comp = 10, verbose = FALSE)
 \arguments{
 \item{X}{An input original design matrix.}
 
-\item{type}{The knockoff type to be generated. There are three choices available: (1) "shrink" for the shrink Gaussian knockoff;
-(2) "sparse" for the sparse Gaussian knockoff; and (3) "pc" for the pricial component knockoff.}
+\item{type}{The knockoff type to be generated. There are three choices available:
+(1) "shrink" for the shrink Gaussian knockoff;
+(2) "sparse" for the sparse Gaussian knockoff; and
+(3) "pc" for the principal component knockoff.}
 
 \item{num}{The number of knockoff matrices to be created.}
 
-\item{num.comp}{The number of pricial components to be used for generating knockoff matrices, the default is 10.}
+\item{num.comp}{The number of principal components to be used for generating knockoff matrices, the default is 10.}
+
+\item{verbose}{Logical; if TRUE, messages about the progress are printed. Default is FALSE.}
 }
 \value{
 A list of created knockoff matrices.
@@ -26,9 +30,6 @@ Generate different types of knockoff matrices given an original one.
 set.seed(10)
 X <- matrix(rnorm(100), nrow = 10)
 Xk <- create.knockoff(X = X, type = "shrink", num = 5)
-
-}
-\references{
 
 }
 \seealso{

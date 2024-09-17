@@ -1,54 +1,31 @@
 #' Importance statistics based on a GLM with cross-validation
 #'
-#' Fits a generalized linear model via penalized maximum likelihood and cross-validation.
-#' Then, compute the difference statistic
+#' Fits a generalized linear model via penalized maximum likelihood with cross-validation
+#' and computes the difference statistic
 #'   \deqn{W_j = |Z_j| - |\tilde{Z}_j|}
 #' where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the coefficient estimates for the
-#' jth variable and its knockoff, respectively. The value of the regularization
-#' parameter \eqn{\lambda} is selected by cross-validation and computed with `glmnet`.
+#' jth variable and its knockoff, respectively. The regularization parameter
+#' \eqn{\lambda} is selected by cross-validation and computed with `glmnet`.
 #'
 #' @param X n-by-p matrix of original variables.
 #' @param X_k n-by-p matrix of knockoff variables.
-#' @param y vector of length n, containing the response variables. Quantitative for family="gaussian",
-#' or family="poisson" (non-negative counts). For family="binomial"
-#' should be either a factor with two levels, or a two-column matrix of counts
-#' or proportions (the second column is treated as the target class; for a factor,
-#' the last level in alphabetical order is the target class). For family="multinomial",
-#' can be a nc>=2 level factor, or a matrix with nc columns of counts or proportions.
-#' For either "binomial" or "multinomial", if y is presented as a vector, it will
-#' be coerced into a factor. For family="cox", y should be a two-column matrix with
-#' columns named 'time' and 'status'. The latter is a binary variable, with '1'
-#' indicating death, and '0' indicating right censored. The function Surv() in
-#' package survival produces such a matrix. For family="mgaussian", y is a matrix
-#' of quantitative responses.
-#' @param family response type (see above).
-#' @param cores Number of cores used to compute the statistics by running cv.glmnet.
-#' Unless otherwise specified, the number of cores is set equal to two (if available).
-
-#' @param ... additional arguments specific to `glmnet` (see Details).
+#' @param y Response variable vector of length n. Quantitative for family="gaussian" or "poisson".
+#' For family="binomial", y should be either a two-level factor, a two-column matrix of counts,
+#' or proportions. For family="multinomial", y can be a factor with at least two levels or a matrix.
+#' For family="cox", y should be a two-column matrix with 'time' and 'status'. For family="mgaussian",
+#' y is a matrix of quantitative responses.
+#' @param family Response type, one of 'gaussian', 'binomial', 'multinomial', 'cox', or 'mgaussian'.
+#' @param cores Number of cores to use for parallel computation. Defaults to 2 if available.
+#' @param ... Additional arguments specific to `glmnet` (see Details).
 #' @return A vector of statistics \eqn{W} of length p.
 #'
-#' @details This function uses the `glmnet` package to fit a generalized linear model
-#' via penalized maximum likelihood.
+#' @details This function uses the `glmnet` package to fit a GLM model via penalized maximum likelihood.
+#' The value of \eqn{\lambda} is chosen by 10-fold cross-validation unless specified otherwise.
 #'
-#' The statistics \eqn{W_j} are constructed by taking the difference
-#' between the coefficient of the j-th variable and its knockoff.
+#' The optional `nlambda` parameter can control the number of \eqn{\lambda} values, and the default
+#' is 500. For family="binomial", if the lambda sequence isn't provided, a log-linear sequence is generated.
 #'
-#' By default, the value of the regularization parameter is chosen by 10-fold cross-validation.
-#'
-#' The default response family is 'gaussian', for a linear regression model.
-#' Different response families (e.g. 'binomial') can be specified by passing an
-#' optional parameter 'family'.
-#'
-#' The optional `nlambda` parameter can be used to control the granularity of the
-#' grid of \eqn{\lambda}'s. The default value of `nlambda` is `500`,
-#' where `p` is the number of columns of `X`.
-#'
-#' If the family is 'binomial' and a lambda sequence is not provided by the user,
-#' this function generates it on a log-linear scale before calling 'glmnet'.
-#'
-#' For a complete list of the available additional arguments, see [glmnet::cv.glmnet()]
-#' and [glmnet::glmnet()].
+#' For more details, see [glmnet::cv.glmnet()] and [glmnet::glmnet()].
 #'
 #' @family statistics
 #'
@@ -64,80 +41,77 @@
 #'
 #' # Knockoff Procedure
 #' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
-#' res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_coefdiff,family='gaussian')
+#' res = knockoff.filter(X, y, Xk, statistic = stat.glmnet_coefdiff, family='gaussian')
 #' res$shat
 #'
+#' @importFrom glmnet cv.glmnet glmnet
+#' @importFrom parallel detectCores
+#' @importFrom doParallel registerDoParallel stopImplicitCluster
 #' @rdname stat.glmnet_coefdiff
 #' @export
-stat.glmnet_coefdiff <- function(X, X_k, y, family='gaussian', cores=2, ...) {
-  if (!requireNamespace('glmnet', quietly=T))
-    stop('glmnet is not installed', call.=F)
-  parallel=T
-  if (!requireNamespace('doParallel', quietly=T)) {
-    warning('doParallel is not installed. Without parallelization, the statistics will be slower to compute', call.=F,immediate.=T)
-    parallel=F
-  }
-  if (!requireNamespace('parallel', quietly=T)) {
-    warning('parallel is not installed. Without parallelization, the statistics will be slower to compute.', call.=F,immediate.=T)
-    parallel=F
+stat.glmnet_coefdiff <- function(X, X_k, y, family = 'gaussian', cores = 2, ...) {
+  # Ensure glmnet is installed
+  if (!requireNamespace('glmnet', quietly = TRUE)) {
+    stop('glmnet is not installed', call. = FALSE)
   }
 
-  # Register cores for parallel computation
+  # Set up parallelization
+  parallel <- TRUE
+  if (!requireNamespace('doParallel', quietly = TRUE)) {
+    warning('doParallel is not installed. Statistics will be slower without parallelization.', call. = FALSE, immediate. = TRUE)
+    parallel <- FALSE
+  }
+  if (!requireNamespace('parallel', quietly = TRUE)) {
+    warning('parallel is not installed. Statistics will be slower without parallelization.', call. = FALSE, immediate. = TRUE)
+    parallel <- FALSE
+  }
+
+  # Detect available cores and adjust if necessary
   if (parallel) {
-    ncores = parallel::detectCores(all.tests = TRUE, logical = TRUE)
-    if( cores==2 ) {
-      cores = min(2,ncores)
-    }
-    else {
-      if (cores > ncores ) {
-        warning(paste("The requested number of cores is not available. Using instead",ncores,"cores"),immediate.=T)
-        cores = ncores
-      }
-    }
-    if (cores>1) {
-      doParallel::registerDoParallel(cores=cores)
-      parallel = TRUE
-    }
-    else {
-      parallel = FALSE
+    ncores <- parallel::detectCores(all.tests = TRUE, logical = TRUE)
+    cores <- min(cores, ncores)
+    if (cores > 1) {
+      doParallel::registerDoParallel(cores = cores)
+    } else {
+      parallel <- FALSE
     }
   }
 
-  # Randomly swap columns of X and Xk
-  swap = rbinom(ncol(X),1,0.5)
-  swap.M = matrix(swap,nrow=nrow(X),ncol=length(swap),byrow=TRUE)
-  X.swap  = X * (1-swap.M) + X_k * swap.M
-  Xk.swap = X * swap.M + X_k * (1-swap.M)
+  # Randomly swap columns of X and X_k
+  swap <- rbinom(ncol(X), 1, 0.5)
+  swap.M <- matrix(swap, nrow = nrow(X), ncol = length(swap), byrow = TRUE)
+  X.swap <- X * (1 - swap.M) + X_k * swap.M
+  Xk.swap <- X * swap.M + X_k * (1 - swap.M)
 
-  p = ncol(X)
+  p <- ncol(X)
 
-  # Compute statistics
-  glmnet.coefs = cv_coeffs_glmnet(cbind(X.swap, Xk.swap), y, family=family, parallel=parallel, ...)
-  if(family=="multinomial") {
-    Z <- abs(glmnet.coefs[[1]][2:(2*p+1)])
-    for(b in 2:length(glmnet.coefs)) {
-      Z <- Z + abs(glmnet.coefs[[b]][2:(2*p+1)])
+  # Compute GLM coefficients using cross-validation
+  glmnet.coefs <- cv_coeffs_glmnet(cbind(X.swap, Xk.swap), y, family = family, parallel = parallel, ...)
+
+  # Extract coefficients and compute statistics
+  if (family == "multinomial") {
+    Z <- abs(glmnet.coefs[[1]][2:(2 * p + 1)])
+    for (b in 2:length(glmnet.coefs)) {
+      Z <- Z + abs(glmnet.coefs[[b]][2:(2 * p + 1)])
     }
-  } else if (family=="cox") {
-    Z <- glmnet.coefs[1:(2*p)]
+  } else if (family == "cox") {
+    Z <- glmnet.coefs[1:(2 * p)]
   } else {
-    Z <- glmnet.coefs[2:(2*p+1)]
+    Z <- glmnet.coefs[2:(2 * p + 1)]
   }
-  orig = 1:p
-  W = abs(Z[orig]) - abs(Z[orig+p])
 
-  # Correct for swapping of columns of X and Xk
-  W = W * (1-2*swap)
+  # Calculate the difference statistics W
+  W <- abs(Z[1:p]) - abs(Z[(p + 1):(2 * p)])
+  W <- W * (1 - 2 * swap)
 
-  # Stop the parallel cluster (if applicable)
-  if (parallel) {
-    if (cores>1) {
-      doParallel::stopImplicitCluster()
-    }
+  # Stop parallel cluster if applicable
+  if (parallel && cores > 1) {
+    doParallel::stopImplicitCluster()
   }
-  W = as.vector(W)
-  return(W)
+
+  return(as.vector(W))
 }
+
 
 #' @keywords internal
 cv_coeffs_glmnet <- function(X, y, nlambda=500, intercept=T, parallel=T, ...) {

@@ -33,6 +33,7 @@ For each original variable \eqn{\mathbf{x}_j}, where \eqn{j = 1, \ldots, p}, the
 set.seed(10)
 X <- matrix(rnorm(100), nrow = 10)
 Xk <- create.pc.knockoff(X = X, pc.num = 5)
+
 }
 \references{
 Jiang, Tao, Yuanyuan Li, and Alison A. Motsinger-Reif. "Knockoff boosted tree for model-free variable selection." Bioinformatics 37.7 (2021): 976-983.

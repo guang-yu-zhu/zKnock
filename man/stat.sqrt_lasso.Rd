@@ -56,7 +56,6 @@ Other statistics:
 \code{\link{stat.glmnet_coefdiff}()},
 \code{\link{stat.glmnet_lambdadiff}()},
 \code{\link{stat.random_forest}()},
-\code{\link{stat.stability_selection}()},
-\code{\link{stat.xgboost}()}
+\code{\link{stat.stability_selection}()}
 }
 \concept{statistics}

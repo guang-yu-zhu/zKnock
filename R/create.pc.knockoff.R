@@ -20,13 +20,14 @@
 #'
 #' Shen,A. et al. (2019) False discovery rate control in cancer biomarker selection using knockoffs. Cancers, 11, 744.
 #' @family create
-#' @export
 #' @import stats
 #'
 #' @examples
 #' set.seed(10)
 #' X <- matrix(rnorm(100), nrow = 10)
 #' Xk <- create.pc.knockoff(X = X, pc.num = 5)
+#'
+#' @export
 create.pc.knockoff <- function(X, pc.num) {
   p <- ncol(X)
   n <- nrow(X)

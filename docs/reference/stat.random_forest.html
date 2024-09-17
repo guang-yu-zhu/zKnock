@@ -18,7 +18,7 @@ of the jth variable and its knockoff, respectively."><meta property="og:image" c
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -40,20 +40,20 @@ of the jth variable and its knockoff, respectively."><meta property="og:image" c
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fas fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
     <span class="fa fa-file-code-o"></span>
-     
+
     Functions
   </a>
 </li>
 <li>
   <a href="../news/index.html">
     <span class="fa fa-newspaper-o"></span>
-     
+
     Changelog
   </a>
 </li>
@@ -62,34 +62,34 @@ of the jth variable and its knockoff, respectively."><meta property="og:image" c
             <span class="fas fa-adjust fa-lg"></span>
           </a>
         </li>
-        
+
         <li>
   <a href="http://guangyuzhu.rbind.io" class="external-link">
     <span class="fa fa-user"></span>
-     
+
   </a>
 </li>
 <li>
   <a href="https://github.com/guang-yu-zhu/zKnock" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
-        
-        
+
+
 
 
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Importance statistics based on random forests</h1>
-    
+
     <div class="hidden name"><code>stat.random_forest.Rd</code></div>
     </div>
 
@@ -106,28 +106,28 @@ of the jth variable and its knockoff, respectively.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>X</dt>
+
+
+<dl><dt id="arg-x">X<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>n-by-p matrix of original variables.</p></dd>
 
 
-<dt>X_k</dt>
+<dt id="arg-x-k">X_k<a class="anchor" aria-label="anchor" href="#arg-x-k"></a></dt>
 <dd><p>n-by-p matrix of knockoff variables.</p></dd>
 
 
-<dt>y</dt>
+<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
 <dd><p>vector of length n, containing the response variables. If a factor, classification is assumed,
 otherwise regression is assumed.</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>additional arguments specific to <code>ranger</code> (see Details).</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>A vector of statistics \(W\) of length p.</p>
+    <p>A vector of statistics \(W\) of length p.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -136,11 +136,11 @@ importance measures. The importance of a variable is measured as the total decre
 in node impurities from splitting on that variable, averaged over all trees.
 For regression, the node impurity is measured by residual sum of squares.
 For classification, it is measured by the Gini index.</p>
-<p>For a complete list of the available additional arguments, see <code><a href="https://rdrr.io/pkg/ranger/man/ranger.html" class="external-link">ranger::ranger()</a></code>.</p>
+<p>For a complete list of the available additional arguments, see <code><a href="http://imbs-hl.github.io/ranger/reference/ranger.html" class="external-link">ranger::ranger()</a></code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p>Other statistics: 
+    <div class="dont-index"><p>Other statistics:
 <code><a href="stat.SHAP.html">stat.SHAP</a>()</code>,
 <code><a href="stat.forward_selection.html">stat.forward_selection</a>()</code>,
 <code><a href="stat.glmnet_coefdiff.html">stat.glmnet_coefdiff</a>()</code>,
@@ -185,10 +185,10 @@ For classification, it is measured by the Gini index.</p>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

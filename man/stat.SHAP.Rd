@@ -2,9 +2,9 @@
 % Please edit documentation in R/stat.SHAP.R
 \name{stat.SHAP}
 \alias{stat.SHAP}
-\title{Importance statistics based on xgboost}
+\title{Importance statistics based on XGBoost}
 \usage{
-stat.SHAP(X, X_k, y, nrounds = 2)
+stat.SHAP(X, X_k, y, nrounds = 2, ...)
 }
 \arguments{
 \item{X}{n-by-p matrix of original variables.}
@@ -14,7 +14,9 @@ stat.SHAP(X, X_k, y, nrounds = 2)
 \item{y}{vector of length n, containing the response variables. If a factor, classification is assumed,
 otherwise regression is assumed.}
 
-\item{...}{additional arguments specific to \code{ranger} (see Details).}
+\item{nrounds}{Number of boosting rounds for training the XGBoost model. Default is 2.}
+
+\item{...}{additional arguments specific to \code{xgboost} (see Details).}
 }
 \value{
 A vector of statistics \eqn{W} of length p.
@@ -27,25 +29,25 @@ of the jth variable and its knockoff, respectively.
 }
 \details{
 \itemize{
-\item In XGBoost, SHAP (SHapley Additive exPlanations) values provide a way to interpret the model's predictions by breaking down the contribution of each feature to the final prediction.  SHAP values show how much each feature increases or decreases the prediction compared to the average.
+\item In XGBoost, SHAP (SHapley Additive exPlanations) values provide a way to interpret the model's predictions by breaking down the contribution of each feature to the final prediction. SHAP values show how much each feature increases or decreases the prediction compared to the average.
 \item XGBoost uses the Tree SHAP algorithm, which efficiently computes these values for tree-based models. This helps in understanding both global feature importance (how features influence the model overall) and local explanations (how features impact individual predictions).
 \item Key benefits include transparency, detailed feature importance, and the ability to explain complex models in a clear, interpretable way.
-\item saabas is a vector of an individualized heuristic feature attribution method, which can be considered as an approximation for shap.
+\item saabas is a vector of an individualized heuristic feature attribution method, which can be considered as an approximation for SHAP.
 }
 }
 \examples{
 # Synthetic Data
 set.seed(2024)
-p=200; n=100; k=15
-mu = rep(0,p); Sigma = diag(p)
-X = matrix(rnorm(n*p),n)
+p = 200; n = 100; k = 15
+mu = rep(0, p); Sigma = diag(p)
+X = matrix(rnorm(n * p), n)
 nonzero = 1:k
 beta = 3.5 * (1:p \%in\% nonzero)
 y = X \%*\% beta + rnorm(n)
 
 # Knockoff Procedure
 Xk = create.knockoff(X = X, type = 'shrink', num = 2)
-res = knockoff.filter(X,y,Xk,statistic = stat.SHAP)
+res = knockoff.filter(X, y, Xk, statistic = stat.SHAP)
 res$shat
 
 }
@@ -56,7 +58,6 @@ Other statistics:
 \code{\link{stat.glmnet_lambdadiff}()},
 \code{\link{stat.random_forest}()},
 \code{\link{stat.sqrt_lasso}()},
-\code{\link{stat.stability_selection}()},
-\code{\link{stat.xgboost}()}
+\code{\link{stat.stability_selection}()}
 }
 \concept{statistics}

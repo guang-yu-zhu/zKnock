@@ -11,59 +11,37 @@ stat.glmnet_coefdiff(X, X_k, y, family = "gaussian", cores = 2, ...)
 
 \item{X_k}{n-by-p matrix of knockoff variables.}
 
-\item{y}{vector of length n, containing the response variables. Quantitative for family="gaussian",
-or family="poisson" (non-negative counts). For family="binomial"
-should be either a factor with two levels, or a two-column matrix of counts
-or proportions (the second column is treated as the target class; for a factor,
-the last level in alphabetical order is the target class). For family="multinomial",
-can be a nc>=2 level factor, or a matrix with nc columns of counts or proportions.
-For either "binomial" or "multinomial", if y is presented as a vector, it will
-be coerced into a factor. For family="cox", y should be a two-column matrix with
-columns named 'time' and 'status'. The latter is a binary variable, with '1'
-indicating death, and '0' indicating right censored. The function Surv() in
-package survival produces such a matrix. For family="mgaussian", y is a matrix
-of quantitative responses.}
+\item{y}{Response variable vector of length n. Quantitative for family="gaussian" or "poisson".
+For family="binomial", y should be either a two-level factor, a two-column matrix of counts,
+or proportions. For family="multinomial", y can be a factor with at least two levels or a matrix.
+For family="cox", y should be a two-column matrix with 'time' and 'status'. For family="mgaussian",
+y is a matrix of quantitative responses.}
 
-\item{family}{response type (see above).}
+\item{family}{Response type, one of 'gaussian', 'binomial', 'multinomial', 'cox', or 'mgaussian'.}
 
-\item{cores}{Number of cores used to compute the statistics by running cv.glmnet.
-Unless otherwise specified, the number of cores is set equal to two (if available).}
+\item{cores}{Number of cores to use for parallel computation. Defaults to 2 if available.}
 
-\item{...}{additional arguments specific to \code{glmnet} (see Details).}
+\item{...}{Additional arguments specific to \code{glmnet} (see Details).}
 }
 \value{
 A vector of statistics \eqn{W} of length p.
 }
 \description{
-Fits a generalized linear model via penalized maximum likelihood and cross-validation.
-Then, compute the difference statistic
+Fits a generalized linear model via penalized maximum likelihood with cross-validation
+and computes the difference statistic
 \deqn{W_j = |Z_j| - |\tilde{Z}_j|}
 where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the coefficient estimates for the
-jth variable and its knockoff, respectively. The value of the regularization
-parameter \eqn{\lambda} is selected by cross-validation and computed with \code{glmnet}.
+jth variable and its knockoff, respectively. The regularization parameter
+\eqn{\lambda} is selected by cross-validation and computed with \code{glmnet}.
 }
 \details{
-This function uses the \code{glmnet} package to fit a generalized linear model
-via penalized maximum likelihood.
+This function uses the \code{glmnet} package to fit a GLM model via penalized maximum likelihood.
+The value of \eqn{\lambda} is chosen by 10-fold cross-validation unless specified otherwise.
 
-The statistics \eqn{W_j} are constructed by taking the difference
-between the coefficient of the j-th variable and its knockoff.
+The optional \code{nlambda} parameter can control the number of \eqn{\lambda} values, and the default
+is 500. For family="binomial", if the lambda sequence isn't provided, a log-linear sequence is generated.
 
-By default, the value of the regularization parameter is chosen by 10-fold cross-validation.
-
-The default response family is 'gaussian', for a linear regression model.
-Different response families (e.g. 'binomial') can be specified by passing an
-optional parameter 'family'.
-
-The optional \code{nlambda} parameter can be used to control the granularity of the
-grid of \eqn{\lambda}'s. The default value of \code{nlambda} is \code{500},
-where \code{p} is the number of columns of \code{X}.
-
-If the family is 'binomial' and a lambda sequence is not provided by the user,
-this function generates it on a log-linear scale before calling 'glmnet'.
-
-For a complete list of the available additional arguments, see \code{\link[glmnet:cv.glmnet]{glmnet::cv.glmnet()}}
-and \code{\link[glmnet:glmnet]{glmnet::glmnet()}}.
+For more details, see \code{\link[glmnet:cv.glmnet]{glmnet::cv.glmnet()}} and \code{\link[glmnet:glmnet]{glmnet::glmnet()}}.
 }
 \examples{
 # Synthetic Data
@@ -77,7 +55,7 @@ y = X \%*\% beta + rnorm(n)
 
 # Knockoff Procedure
 Xk = create.knockoff(X = X, type = 'shrink', num = 2)
-res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_coefdiff,family='gaussian')
+res = knockoff.filter(X, y, Xk, statistic = stat.glmnet_coefdiff, family='gaussian')
 res$shat
 
 }
@@ -88,7 +66,6 @@ Other statistics:
 \code{\link{stat.glmnet_lambdadiff}()},
 \code{\link{stat.random_forest}()},
 \code{\link{stat.sqrt_lasso}()},
-\code{\link{stat.stability_selection}()},
-\code{\link{stat.xgboost}()}
+\code{\link{stat.stability_selection}()}
 }
 \concept{statistics}

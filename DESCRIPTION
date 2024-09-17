@@ -1,18 +1,17 @@
 Package: zKnock
-Type: Package
 Title: Knockoff Filter for Controlled Selection
 Version: 1.0.1
-Date: 2024-08-01
-Authors@R: c(person("Guangyu", "Zhu", role = c("aut", "cre"), email = "guangyuzhu@uri.edu"))
-Description: 
+Date: 2024-09-16
+Authors@R: 
+  c(person("Guangyu", "Zhu", role = c("aut", "cre"), email = "guangyuzhu@uri.edu"))
+Description: Implements knockoff filter techniques for controlled variable selection in high-dimensional data analysis. The package provides efficient and flexible methods for feature selection while controlling the false discovery rate.
 License: GPL-3
-Depends: methods, stats
-Imports: Rdsdp, Matrix, corpcor, glmnet, RSpectra, gtools, utils, RPtests, xgboost
-Suggests: knitr, testthat, rmarkdown, lars, ranger, stabs
-RoxygenNote: 7.1.2
+Imports: 
+  Rdsdp, Matrix, corpcor, glmnet, lars, RSpectra, gtools, utils, RPtests, xgboost, mixOmics, doParallel, spcov, stabs, methods, dplyr, tibble, magrittr
+Suggests: 
+  knitr, testthat, rmarkdown, ranger
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 NeedsCompilation: no
-Github: https://github.com/guang-yu-zhu/zKnock
-Author: Guangyu Zhu [aut, cre] 
-Roxygen: list(markdown = TRUE)
+GitHub: https://github.com/guang-yu-zhu/zKnock
 Encoding: UTF-8

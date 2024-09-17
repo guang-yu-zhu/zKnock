@@ -5,17 +5,16 @@ file.edit('NAMESPACE')
 file.edit('DESCRIPTION')
 #-----
 library(pkgdown)
-#----
-#init
-usethis::use_roxygen_md()
-roxygen2md::roxygen2md() # Convert roxygen to Markdown
+# init  ----
+#usethis::use_roxygen_md()
+#roxygen2md::roxygen2md() # Convert roxygen to Markdown
 #----
 roxygen2::roxygenise(clean = TRUE)
 #build_home()
 build_site()
 preview_site()
-# run once when you have your logo.png
-# build_favicons(overwrite = TRUE)
+# run once when you have your logo.png stored in package root folder
+#build_favicons(overwrite = TRUE)
 #  usethis -----
 library(usethis)
 use_description(fields = list(Language = "es"))

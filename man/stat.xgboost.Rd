@@ -4,7 +4,7 @@
 \alias{stat.xgboost}
 \title{Importance statistics based on xgboost}
 \usage{
-stat.xgboost(X, X_k, y, family = "gaussian", nrounds = 10)
+stat.xgboost(X, X_k, y, family = "gaussian", nrounds = 10, ...)
 }
 \arguments{
 \item{X}{n-by-p matrix of original variables.}
@@ -14,7 +14,11 @@ stat.xgboost(X, X_k, y, family = "gaussian", nrounds = 10)
 \item{y}{vector of length n, containing the response variables. If a factor, classification is assumed,
 otherwise regression is assumed.}
 
-\item{...}{additional arguments specific to \code{ranger} (see Details).}
+\item{family}{specifies the type of model to be fit: 'gaussian' for regression or 'binomial' for classification.}
+
+\item{nrounds}{number of boosting rounds for xgboost.}
+
+\item{...}{additional arguments specific to xgboost (see Details).}
 }
 \value{
 A vector of statistics \eqn{W} of length p.
@@ -25,33 +29,3 @@ Computes the difference statistic
 where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the xgboost feature importances
 of the jth variable and its knockoff, respectively.
 }
-\details{
-.
-}
-\examples{
-# Synthetic Data
-set.seed(2024)
-p=200; n=100; k=15
-mu = rep(0,p); Sigma = diag(p)
-X = matrix(rnorm(n*p),n)
-nonzero = 1:k
-beta = 3.5 * (1:p \%in\% nonzero)
-y = X \%*\% beta + rnorm(n)
-
-# Knockoff Procedure
-Xk = create.knockoff(X = X, type = 'shrink', num = 2)
-res = knockoff.filter(X,y,Xk,statistic = stat.xgboost,family='gaussian')
-res$shat
-
-}
-\seealso{
-Other statistics: 
-\code{\link{stat.SHAP}()},
-\code{\link{stat.forward_selection}()},
-\code{\link{stat.glmnet_coefdiff}()},
-\code{\link{stat.glmnet_lambdadiff}()},
-\code{\link{stat.random_forest}()},
-\code{\link{stat.sqrt_lasso}()},
-\code{\link{stat.stability_selection}()}
-}
-\concept{statistics}

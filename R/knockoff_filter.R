@@ -1,8 +1,3 @@
-#' @docType package
-#' @name knockoff
-#' @import stats methods
-NULL
-
 #' The Knockoff Filter
 #'
 #' This function runs the Knockoffs procedure from start to finish, selecting variables
@@ -25,6 +20,7 @@ NULL
 #' statistics. The value 1 yields a slightly more conservative procedure ("knockoffs+") that
 #' controls the false discovery rate (FDR) according to the usual definition,
 #' while an offset of 0 controls a modified FDR.
+#' @param verbose Logical; if TRUE, prints progress messages during the generation of knockoff matrices. Default is FALSE.
 #'
 #' @return An object of class "knockoff.result". This object is a list
 #'  containing at least the following components:
@@ -61,7 +57,7 @@ NULL
 #'
 #' It is possible to provide custom functions for the knockoff constructions
 #' or the importance statistics. Some examples can be found in the vignette.
-#'
+#' @importFrom methods is
 #' @references
 #'   Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
 #'   arXiv:1610.02351 (2016).
@@ -144,7 +140,7 @@ knockoff.filter <- function(X,y,Xk=NULL,
   if(is.null(Xk)){
     knock_variables = knockoffs(X)
     # If fixed-design knockoffs are being used, update X and Y with the augmented observations (if present)
-    if (is(knock_variables,"knockoff.variables")){
+    if (methods::is(knock_variables,"knockoff.variables")){
       X  = knock_variables$X
       Xk = knock_variables$Xk
       if(!is.null(knock_variables$y)) y  = knock_variables$y
@@ -176,11 +172,11 @@ knockoff.filter <- function(X,y,Xk=NULL,
 
   # Package up the results.
   if(length(Ws)==1){
-  structure(list(call = match.call(),
-                 W = W,
-                 thre = thre,
-                 shat = shat),
-            class = 'knockoff.filter')
+    structure(list(call = match.call(),
+                   W = W,
+                   thre = thre,
+                   shat = shat),
+              class = 'knockoff.filter')
   }else{ #multiple knockoffs
     # Run separate filtering
     thres=mapply(Ws,FUN = knockoff.threshold,fdr,offset)
@@ -248,7 +244,7 @@ knockoff.select <- function(Ws, fdr=0.10, offset=1) {
   if(is.vector(Ws)){
     W = Ws
   }else{
-    W = colMeans(Ws_mat)
+    W = colMeans(Ws)
   }
   if(offset!=1 && offset!=0) {
     stop('Input offset must be either 0 or 1')

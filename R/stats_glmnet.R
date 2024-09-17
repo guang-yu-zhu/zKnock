@@ -54,7 +54,7 @@
 #'
 #' # Knockoff Procedure
 #' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
-#' res = knockoff.filter(X,y,Xk,statistic = tat.glmnet_lambdadiff)
+#' res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_lambdadiff)
 #' res$shat
 #' 
 #' @rdname stat.glmnet_lambdadiff

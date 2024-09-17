@@ -67,7 +67,7 @@ y = X \%*\% beta + rnorm(n)
 
 # Knockoff Procedure
 Xk = create.knockoff(X = X, type = 'shrink', num = 2)
-res = knockoff.filter(X,y,Xk,statistic = tat.glmnet_lambdadiff)
+res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_lambdadiff)
 res$shat
 
 }
@@ -78,7 +78,6 @@ Other statistics:
 \code{\link{stat.glmnet_coefdiff}()},
 \code{\link{stat.random_forest}()},
 \code{\link{stat.sqrt_lasso}()},
-\code{\link{stat.stability_selection}()},
-\code{\link{stat.xgboost}()}
+\code{\link{stat.stability_selection}()}
 }
 \concept{statistics}
