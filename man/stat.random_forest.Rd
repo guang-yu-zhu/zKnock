@@ -14,25 +14,25 @@ stat.random_forest(X, X_k, y, ...)
 \item{y}{vector of length n, containing the response variables. If a factor, classification is assumed,
 otherwise regression is assumed.}
 
-\item{...}{additional arguments specific to `ranger` (see Details).}
+\item{...}{additional arguments specific to \code{ranger} (see Details).}
 }
 \value{
 A vector of statistics \eqn{W} of length p.
 }
 \description{
 Computes the difference statistic
-  \deqn{W_j = |Z_j| - |\tilde{Z}_j|}
+\deqn{W_j = |Z_j| - |\tilde{Z}_j|}
 where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the random forest feature importances
 of the jth variable and its knockoff, respectively.
 }
 \details{
-This function uses the `ranger` package to compute variable
+This function uses the \code{ranger} package to compute variable
 importance measures. The importance of a variable is measured as the total decrease
 in node impurities from splitting on that variable, averaged over all trees.
 For regression, the node impurity is measured by residual sum of squares.
 For classification, it is measured by the Gini index.
 
-For a complete list of the available additional arguments, see [ranger::ranger()].
+For a complete list of the available additional arguments, see \code{\link[ranger:ranger]{ranger::ranger()}}.
 }
 \examples{
 # Synthetic Data

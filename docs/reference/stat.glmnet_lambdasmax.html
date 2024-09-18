@@ -12,7 +12,7 @@
     );
   }
 </script><title>GLM statistics for knockoff — stat.glmnet_lambdasmax • zKnock</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><meta property="og:title" content="GLM statistics for knockoff — stat.glmnet_lambdasmax"><meta property="og:description" content="Computes the signed maximum statistic
-  $$W_j = \max(Z_j, \tilde{Z}_j) \cdot \mathrm{sgn}(Z_j - \tilde{Z}_j),$$
+$$W_j = \max(Z_j, \tilde{Z}_j) \cdot \mathrm{sgn}(Z_j - \tilde{Z}_j),$$
 where \(Z_j\) and \(\tilde{Z}_j\) are the maximum values of
 \(\lambda\) at which the jth variable and its knockoff, respectively,
 enter the generalized linear model."><meta property="og:image" content="https://guang-yu-zhu.github.io/zKnock/logo.png"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -96,7 +96,7 @@ enter the generalized linear model."><meta property="og:image" content="https://
 
     <div class="ref-description">
     <p>Computes the signed maximum statistic
-  $$W_j = \max(Z_j, \tilde{Z}_j) \cdot \mathrm{sgn}(Z_j - \tilde{Z}_j),$$
+$$W_j = \max(Z_j, \tilde{Z}_j) \cdot \mathrm{sgn}(Z_j - \tilde{Z}_j),$$
 where \(Z_j\) and \(\tilde{Z}_j\) are the maximum values of
 \(\lambda\) at which the jth variable and its knockoff, respectively,
 enter the generalized linear model.</p>
@@ -138,7 +138,7 @@ of quantitative responses.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>additional arguments specific to `glmnet` (see Details).</p></dd>
+<dd><p>additional arguments specific to <code>glmnet</code> (see Details).</p></dd>
 
 </dl></div>
     <div id="value">
@@ -147,14 +147,14 @@ of quantitative responses.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>This function uses `glmnet` to compute the regularization path
+    <p>This function uses <code>glmnet</code> to compute the regularization path
 on a fine grid of \(\lambda\)'s.</p>
-<p>The additional `nlambda`
+<p>The additional <code>nlambda</code>
 parameter can be used to control the granularity of the grid of \(\lambda\) values.
-The default value of `nlambda` is `500`.</p>
+The default value of <code>nlambda</code> is <code>500</code>.</p>
 <p>If the family is 'binomial' and a lambda sequence is not provided by the user,
 this function generates it on a log-linear scale before calling 'glmnet'.</p>
-<p>For a complete list of the available additional arguments, see [glmnet::glmnet()].</p>
+<p>For a complete list of the available additional arguments, see <code><a href="https://glmnet.stanford.edu/reference/glmnet.html" class="external-link">glmnet::glmnet()</a></code>.</p>
     </div>
 
     <div id="ref-examples">

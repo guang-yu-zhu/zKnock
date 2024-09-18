@@ -39,7 +39,7 @@
 #' res$shat
 #' 
 #' @rdname stat.forward_selection
-#' @export
+#' @export#' @md
 stat.forward_selection <- function(X, X_k, y, omp=F) {
   if( is.numeric(y) ){
     y = as.vector(y)

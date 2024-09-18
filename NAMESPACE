@@ -2,12 +2,12 @@
 
 S3method(print,knockoff.filter)
 export("%>%")
-export(create.fixed)
 export(create.gaussian)
 export(create.knockoff)
 export(create.pc.knockoff)
 export(create.pls.knockoff)
 export(create.second_order)
+export(create.zpls.knockoff)
 export(knockoff.filter)
 export(knockoff.threshold)
 export(stat.SHAP)

@@ -89,7 +89,7 @@
 #' res2 =  knockoff.filter(X,Y,Xk,statistic =stat.glmnet_coefdiff,family='binomial',offset = 0,fdr = 0.2)
 #' print(res2$shat)
 #'
-#' @export
+#' @export#' @md
 knockoff.filter <- function(X,y,Xk=NULL,
                             knockoffs=create.second_order,
                             statistic=stat.glmnet_coefdiff,
@@ -210,7 +210,7 @@ knockoff.filter <- function(X,y,Xk=NULL,
 #' controls the FDR according to the usual definition, while an offset of 0 controls a modified FDR.
 #' @return The threshold for variable selection.
 #'
-#' @export
+#' @export#' @md
 knockoff.threshold <- function(W, fdr=0.10, offset=1) {
   if(offset!=1 && offset!=0) {
     stop('Input offset must be either 0 or 1')
@@ -272,7 +272,7 @@ knockoff.select <- function(Ws, fdr=0.10, offset=1) {
 #' @param ... unused
 #'
 #' @method print knockoff.filter
-#' @export
+#' @export#' @md
 print.knockoff.filter <- function(x, ...) {
   cat('Call:\n')
   print(x$call)

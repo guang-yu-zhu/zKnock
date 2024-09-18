@@ -25,8 +25,7 @@ optimal_r <- r_criterion(X)
 
 }
 \references{
-Fan Y, Lv J, Sharifvaghefi M et al. IPAD: Stable Interpretable Forecasting with Knockoffs Inference. Journal of the American Statistical Association 2020;115:1822–34.
-
-Bai J, Ng S. Determining the Number of Factors in Approximate Factor Models. Econometrica 2002;70:191–221.
+- Fan Y, Lv J, Sharifvaghefi M et al. IPAD: Stable Interpretable Forecasting with Knockoffs Inference. Journal of the American Statistical Association 2020;115:1822–34.
+- Bai J, Ng S. Determining the Number of Factors in Approximate Factor Models. Econometrica 2002;70:191–221.
 }
 \keyword{internal}

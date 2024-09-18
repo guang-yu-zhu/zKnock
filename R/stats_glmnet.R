@@ -59,7 +59,7 @@
 #' 
 #' @rdname stat.glmnet_lambdadiff
 #' @import glmnet
-#' @export
+#' @export#' @md
 stat.glmnet_lambdadiff <- function(X, X_k, y, family='gaussian', ...) {
   # Randomly swap columns of X and Xk
   swap = rbinom(ncol(X),1,0.5)
@@ -133,7 +133,7 @@ stat.glmnet_lambdadiff <- function(X, X_k, y, family='gaussian', ...) {
 #' res$shat
 #' 
 #' @rdname stat.glmnet_lambdasmax
-#' @export
+#' @export#' @md
 stat.glmnet_lambdasmax <- function(X, X_k, y, family='gaussian', ...) {
   # Randomly swap columns of X and Xk
   swap = rbinom(ncol(X),1,0.5)

@@ -4,19 +4,24 @@
 \alias{create.knockoff}
 \title{Generate Knockoff Matrix}
 \usage{
-create.knockoff(X, type, num, num.comp = 10, verbose = FALSE)
+create.knockoff(X, type, num, num.comp = 5, verbose = FALSE)
 }
 \arguments{
 \item{X}{An input original design matrix.}
 
-\item{type}{The knockoff type to be generated. There are three choices available:
-(1) "shrink" for the shrink Gaussian knockoff;
-(2) "sparse" for the sparse Gaussian knockoff; and
-(3) "pc" for the principal component knockoff.}
+\item{type}{The knockoff type to be generated.
+Available options for \code{type} are:
+\enumerate{
+\item "shrink" for the shrink Gaussian knockoff;
+\item "sparse" for the sparse Gaussian knockoff;
+\item "pc" for the principal component (PC) knockoff;
+\item "pls" for the partial least squares (PLS) knockoff;
+\item "zpls" for the GZ's sparse partial least squares knockoff.
+}}
 
 \item{num}{The number of knockoff matrices to be created.}
 
-\item{num.comp}{The number of principal components to be used for generating knockoff matrices, the default is 10.}
+\item{num.comp}{The number of principal components to be used for generating knockoff matrices. Default is 10.}
 
 \item{verbose}{Logical; if TRUE, messages about the progress are printed. Default is FALSE.}
 }

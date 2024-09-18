@@ -7,10 +7,10 @@
 #' of the jth variable and its knockoff, respectively.
 #'
 #' @details
-#' - In XGBoost, SHAP (SHapley Additive exPlanations) values provide a way to interpret the model's predictions by breaking down the contribution of each feature to the final prediction. SHAP values show how much each feature increases or decreases the prediction compared to the average.
-#' - XGBoost uses the Tree SHAP algorithm, which efficiently computes these values for tree-based models. This helps in understanding both global feature importance (how features influence the model overall) and local explanations (how features impact individual predictions).
-#' - Key benefits include transparency, detailed feature importance, and the ability to explain complex models in a clear, interpretable way.
-#' - saabas is a vector of an individualized heuristic feature attribution method, which can be considered as an approximation for SHAP.
+#'  - In XGBoost, SHAP (SHapley Additive exPlanations) values provide a way to interpret the model's predictions by breaking down the contribution of each feature to the final prediction. SHAP values show how much each feature increases or decreases the prediction compared to the average.
+#'  - XGBoost uses the Tree SHAP algorithm, which efficiently computes these values for tree-based models. This helps in understanding both global feature importance (how features influence the model overall) and local explanations (how features impact individual predictions).
+#'  - Key benefits include transparency, detailed feature importance, and the ability to explain complex models in a clear, interpretable way.
+#'  - saabas is a vector of an individualized heuristic feature attribution method, which can be considered as an approximation for SHAP.
 #'
 #' @param X n-by-p matrix of original variables.
 #' @param X_k n-by-p matrix of knockoff variables.
@@ -25,7 +25,7 @@
 #' @examples
 #' # Synthetic Data
 #' set.seed(2024)
-#' p = 200; n = 100; k = 15
+#' p=30; n=200; k=15
 #' mu = rep(0, p); Sigma = diag(p)
 #' X = matrix(rnorm(n * p), n)
 #' nonzero = 1:k
@@ -40,6 +40,7 @@
 #' @rdname stat.SHAP
 #' @import xgboost
 #' @export
+#' @md
 stat.SHAP <- function(X, X_k, y, nrounds = 2, ...) {
   # Randomly swap columns of X and Xk
   swap = rbinom(ncol(X), 1, 0.5)

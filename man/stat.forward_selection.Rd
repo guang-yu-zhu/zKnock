@@ -20,20 +20,20 @@ A vector of statistics \eqn{W} of length p.
 }
 \description{
 Computes the statistic
-  \deqn{W_j = \max(Z_j, Z_{j+p}) \cdot \mathrm{sgn}(Z_j - Z_{j+p}),}
+\deqn{W_j = \max(Z_j, Z_{j+p}) \cdot \mathrm{sgn}(Z_j - Z_{j+p}),}
 where \eqn{Z_1,\dots,Z_{2p}} give the reverse order in which the 2p
-variables (the originals and the knockoffs) enter the forward selection 
+variables (the originals and the knockoffs) enter the forward selection
 model.
 See the Details for information about forward selection.
 }
 \details{
-In *forward selection*, the variables are chosen iteratively to maximize
+In \emph{forward selection}, the variables are chosen iteratively to maximize
 the inner product with the residual from the previous step. The initial
-residual is always `y`. In standard forward selection
-(`stat.forward_selection`), the next residual is the remainder after
+residual is always \code{y}. In standard forward selection
+(\code{stat.forward_selection}), the next residual is the remainder after
 regressing on the selected variable; when orthogonal matching pursuit
 is used, the next residual is the remainder
-after regressing on *all* the previously selected variables.
+after regressing on \emph{all} the previously selected variables.
 }
 \examples{
 # Synthetic Data

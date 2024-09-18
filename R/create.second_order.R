@@ -26,7 +26,7 @@
 #'   [https://web.stanford.edu/group/candes/knockoffs/index.html](https://web.stanford.edu/group/candes/knockoffs/index.html)
 #'    
 #'   
-#' @export
+#' @export#' @md
 create.second_order <- function(X, method=c("asdp","equi","sdp"), shrink=F) {
   method = match.arg(method)
   

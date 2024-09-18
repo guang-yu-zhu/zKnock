@@ -1,4 +1,9 @@
 #' Generate a knockoff variable set with PLSKO using PLS regression
+#' @details
+#' Neighborhood Generation:
+#'  - If `threshold.abs` is given: That absolute value is used directly.
+#'  - If `threshold.q` is given: The threshold is set based on the quantile of the absolute correlation values.
+#'  - If neither is provided: The function defaults to the 90th percentile of the absolute correlation values, which corresponds to using the strongest 10% of correlations to define neighborhoods.
 #'
 #' @param X A numeric matrix or data frame. The original design data matrix with \eqn{n} observations as rows and \eqn{p} variables as columns.
 #' @param nb.list Optional. A list of length \eqn{p} or adjacency matrix of \eqn{p \times p} that defines the neighbourship of variables.
@@ -23,8 +28,9 @@
 #' set.seed(10)
 #' X <- matrix(rnorm(100), nrow = 10)
 #' Xk <- create.pls.knockoff(X = X, ncomp = 3)
-#' @export#' @md
-create.pls.knockoff <- function(X, nb.list = NULL, threshold.abs = NULL, threshold.q = 0.9, ncomp = NULL, sparsity = 1) {
+#' @export
+#' @md
+create.zpls.knockoff <- function(X, nb.list = NULL, threshold.abs = NULL, threshold.q = 0.9, ncomp = NULL, sparsity = 1) {
   # nb.list = NULL; threshold.abs = NULL; threshold.q = 0.9; ncomp = NULL; sparsity =
   n <- nrow(X)
   p <- ncol(X)

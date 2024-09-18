@@ -41,12 +41,12 @@ while an offset of 0 controls a modified FDR.}
 }
 \value{
 An object of class "knockoff.result". This object is a list
- containing at least the following components:
- \item{X}{matrix of original variables}
- \item{Xk}{matrix of knockoff variables}
- \item{statistic}{computed test statistics}
- \item{threshold}{computed selection threshold}
- \item{selected}{named vector of selected variables}
+containing at least the following components:
+\item{X}{matrix of original variables}
+\item{Xk}{matrix of knockoff variables}
+\item{statistic}{computed test statistics}
+\item{threshold}{computed selection threshold}
+\item{selected}{named vector of selected variables}
 }
 \description{
 This function runs the Knockoffs procedure from start to finish, selecting variables
@@ -57,30 +57,28 @@ This function creates the knockoffs, computes the importance statistics,
 and selects variables.
 It is the main entry point for the knockoff package.
 
-
-
-The parameter `knockoffs` controls how knockoff variables are created.
+The parameter \code{knockoffs} controls how knockoff variables are created.
 By default, the model-X scenario is assumed and a multivariate normal distribution
 is fitted to the original variables \eqn{X}. The estimated mean vector and the covariance
 matrix are used to generate second-order approximate Gaussian knockoffs.
-In general, the function `knockoffs` should take a n-by-p matrix of
+In general, the function \code{knockoffs} should take a n-by-p matrix of
 observed variables \eqn{X} as input and return a n-by-p matrix of knockoffs.
 Two default functions for creating knockoffs are provided with this package.
 
 In the model-X scenario, under the assumption that the rows of \eqn{X} are distributed
 as a multivariate Gaussian with known parameters, then the function
-`create.gaussian` can be used to generate Gaussian knockoffs,
+\code{create.gaussian} can be used to generate Gaussian knockoffs,
 as shown in the examples below.
 
 In the fixed-X scenario, one can create the knockoffs using the function
-`create.fixed`. This requires \eqn{n \geq p} and it assumes
+\code{create.fixed}. This requires \eqn{n \geq p} and it assumes
 that the response \eqn{Y} follows a homoscedastic linear regression model.
 
-For more information about creating knockoffs, type `??create`.
+For more information about creating knockoffs, type \code{??create}.
 
-The default importance statistic is [stat.glmnet_coefdiff].
+The default importance statistic is \link{stat.glmnet_coefdiff}.
 For a complete list of the statistics provided with this package,
-type `??stat`.
+type \code{??stat}.
 
 It is possible to provide custom functions for the knockoff constructions
 or the importance statistics. Some examples can be found in the vignette.
@@ -110,10 +108,10 @@ print(res2$shat)
 }
 \references{
 Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
-  arXiv:1610.02351 (2016).
-  [https://web.stanford.edu/group/candes/knockoffs/index.html](https://web.stanford.edu/group/candes/knockoffs/index.html)
+arXiv:1610.02351 (2016).
+\url{https://web.stanford.edu/group/candes/knockoffs/index.html}
 
-  Barber and Candes,
-  Controlling the false discovery rate via knockoffs.
-  Ann. Statist. 43 (2015), no. 5, 2055--2085.
+Barber and Candes,
+Controlling the false discovery rate via knockoffs.
+Ann. Statist. 43 (2015), no. 5, 2055--2085.
 }

@@ -48,7 +48,7 @@
 #' @importFrom parallel detectCores
 #' @importFrom doParallel registerDoParallel stopImplicitCluster
 #' @rdname stat.glmnet_coefdiff
-#' @export
+#' @export#' @md
 stat.glmnet_coefdiff <- function(X, X_k, y, family = 'gaussian', cores = 2, ...) {
   # Ensure glmnet is installed
   if (!requireNamespace('glmnet', quietly = TRUE)) {

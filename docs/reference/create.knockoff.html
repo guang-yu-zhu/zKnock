@@ -95,7 +95,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create.knockoff</span><span class="op">(</span><span class="va">X</span>, <span class="va">type</span>, <span class="va">num</span>, num.comp <span class="op">=</span> <span class="fl">10</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create.knockoff</span><span class="op">(</span><span class="va">X</span>, <span class="va">type</span>, <span class="va">num</span>, num.comp <span class="op">=</span> <span class="fl">5</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -107,10 +107,13 @@
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>The knockoff type to be generated. There are three choices available:
-(1) "shrink" for the shrink Gaussian knockoff;
-(2) "sparse" for the sparse Gaussian knockoff; and
-(3) "pc" for the principal component knockoff.</p></dd>
+<dd><p>The knockoff type to be generated.
+Available options for <code>type</code> are:</p><ol><li><p>"shrink" for the shrink Gaussian knockoff;</p></li>
+<li><p>"sparse" for the sparse Gaussian knockoff;</p></li>
+<li><p>"pc" for the principal component (PC) knockoff;</p></li>
+<li><p>"pls" for the partial least squares (PLS) knockoff;</p></li>
+<li><p>"zpls" for the GZ's sparse partial least squares knockoff.</p></li>
+</ol></dd>
 
 
 <dt id="arg-num">num<a class="anchor" aria-label="anchor" href="#arg-num"></a></dt>
@@ -118,7 +121,7 @@
 
 
 <dt id="arg-num-comp">num.comp<a class="anchor" aria-label="anchor" href="#arg-num-comp"></a></dt>
-<dd><p>The number of principal components to be used for generating knockoff matrices, the default is 10.</p></dd>
+<dd><p>The number of principal components to be used for generating knockoff matrices. Default is 10.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>

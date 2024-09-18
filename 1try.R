@@ -15,10 +15,10 @@ metric_fun = function(selected){
 }
 
 # Knockoff Procedure
-Xk = create.knockoff(X = X, type = 'shrink', num = 5)
+Xk = create.knockoff(X = X, type = 'pls', num = 1)
 res1 = knockoff.filter(X,y,Xk,statistic = stat.glmnet_coefdiff,family='gaussian',verbose = 1)
-res1$shat.list
-colMeans(res1$shat.mat)
+res1$shat
+metric_fun(res1$s)
 
 library(tidyverse)
 Ws_df<-Ws%>%as_tibble()%>%rownames_to_column('Row')%>%
@@ -39,7 +39,7 @@ Ws>thres%*%matrix(1,1,p)
 
 
 res2 = knockoff.filter(X,y,Xk,statistic = stat.random_forest,family='gaussian')
-res3 = knockoff.filter(X,y,Xk,statistic = stat.xgboost)
+res3 = knockoff.filter(X,y,Xk,statistic = stat.SHAP)
 metric_fun(res1$s)
 metric_fun(res2$s)
 metric_fun(res3$s)

@@ -38,7 +38,7 @@
 #' res$shat
 #'
 #' @rdname stat.random_forest
-#' @export
+#' @export#' @md
 stat.random_forest <- function(X, X_k, y, ...) {
   if (!requireNamespace('ranger', quietly=T))
     stop('ranger is not installed', call.=F)

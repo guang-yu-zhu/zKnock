@@ -123,7 +123,7 @@ This determines the method that will be used to minimize the correlation between
 
 <dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
 <dd><p>vector of length n, containing the observed responses.
-This is needed to estimate the noise level if the parameter `sigma` is not provided,
+This is needed to estimate the noise level if the parameter <code>sigma</code> is not provided,
 in case \(p \leq n &lt; 2p\) (default: NULL).</p></dd>
 
 
@@ -134,14 +134,14 @@ in case \(p \leq n &lt; 2p\) (default: NULL).</p></dd>
     <div id="value">
     <h2>Value</h2>
     <p>An object of class "knockoff.variables". This is a list
- containing at least the following components:</p>
+containing at least the following components:</p>
 <dl><dt>X</dt>
 <dd><p>n-by-p matrix of original variables (possibly augmented or transformed).</p></dd>
 
- <dt>Xk</dt>
+<dt>Xk</dt>
 <dd><p>n-by-p matrix of knockoff variables.</p></dd>
 
- <dt>y</dt>
+<dt>y</dt>
 <dd><p>vector of observed responses (possibly augmented).</p></dd>
 
 </dl></div>
@@ -155,8 +155,8 @@ property and should not be used with fixed-X knockoffs.</p>
     <div id="references">
     <h2>References</h2>
     <p>Barber and Candes,
-  Controlling the false discovery rate via knockoffs.
-  Ann. Statist. 43 (2015), no. 5, 2055–2085.</p>
+Controlling the false discovery rate via knockoffs.
+Ann. Statist. 43 (2015), no. 5, 2055–2085.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

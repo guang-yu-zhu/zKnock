@@ -38,7 +38,7 @@
 #' 
 #' @rdname stat.sqrt_lasso
 #' @import RPtests
-#' @export
+#' @export#' @md
 stat.sqrt_lasso <- function(X, X_k, y, ...) {
   if (!requireNamespace('RPtests', quietly=T))
     stop('RPtests is not installed', call.=F)

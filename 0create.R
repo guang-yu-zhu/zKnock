@@ -11,8 +11,8 @@ library(pkgdown)
 #----
 roxygen2::roxygenise(clean = TRUE)
 #build_home()
-build_site()
-preview_site()
+pkgdown::build_site()
+pkgdown::preview_site()
 # run once when you have your logo.png stored in package root folder
 #build_favicons(overwrite = TRUE)
 #  usethis -----

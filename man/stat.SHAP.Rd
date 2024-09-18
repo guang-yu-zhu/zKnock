@@ -16,27 +16,29 @@ otherwise regression is assumed.}
 
 \item{nrounds}{Number of boosting rounds for training the XGBoost model. Default is 2.}
 
-\item{...}{additional arguments specific to `xgboost` (see Details).}
+\item{...}{additional arguments specific to \code{xgboost} (see Details).}
 }
 \value{
 A vector of statistics \eqn{W} of length p.
 }
 \description{
 Computes the difference statistic
-  \deqn{W_j = |Z_j| - |\tilde{Z}_j|}
+\deqn{W_j = |Z_j| - |\tilde{Z}_j|}
 where \eqn{Z_j} and \eqn{\tilde{Z}_j} are the SHAP (SHapley Additive exPlanations)
 of the jth variable and its knockoff, respectively.
 }
 \details{
-- In XGBoost, SHAP (SHapley Additive exPlanations) values provide a way to interpret the model's predictions by breaking down the contribution of each feature to the final prediction. SHAP values show how much each feature increases or decreases the prediction compared to the average.
-- XGBoost uses the Tree SHAP algorithm, which efficiently computes these values for tree-based models. This helps in understanding both global feature importance (how features influence the model overall) and local explanations (how features impact individual predictions).
-- Key benefits include transparency, detailed feature importance, and the ability to explain complex models in a clear, interpretable way.
-- saabas is a vector of an individualized heuristic feature attribution method, which can be considered as an approximation for SHAP.
+\itemize{
+\item In XGBoost, SHAP (SHapley Additive exPlanations) values provide a way to interpret the model's predictions by breaking down the contribution of each feature to the final prediction. SHAP values show how much each feature increases or decreases the prediction compared to the average.
+\item XGBoost uses the Tree SHAP algorithm, which efficiently computes these values for tree-based models. This helps in understanding both global feature importance (how features influence the model overall) and local explanations (how features impact individual predictions).
+\item Key benefits include transparency, detailed feature importance, and the ability to explain complex models in a clear, interpretable way.
+\item saabas is a vector of an individualized heuristic feature attribution method, which can be considered as an approximation for SHAP.
+}
 }
 \examples{
 # Synthetic Data
 set.seed(2024)
-p = 200; n = 100; k = 15
+p=30; n=200; k=15
 mu = rep(0, p); Sigma = diag(p)
 X = matrix(rnorm(n * p), n)
 nonzero = 1:k

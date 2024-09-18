@@ -45,7 +45,7 @@
 #' 
 #' @rdname stat.stability_selection
 #' @import stabs
-#' @export
+#' @export#' @md
 stat.stability_selection <- function(X, X_k, y, fitfun = stabs::lars.lasso, ...) {
   if (!requireNamespace('stabs', quietly=T))
     stop('stabs is not installed', call.=F)

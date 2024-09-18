@@ -27,7 +27,7 @@
 #' X <- matrix(rnorm(100), nrow = 10)
 #' Xk <- create.pc.knockoff(X = X, pc.num = 5)
 #'
-#' @export
+#' @export#' @md
 create.pc.knockoff <- function(X, pc.num) {
   p <- ncol(X)
   n <- nrow(X)
