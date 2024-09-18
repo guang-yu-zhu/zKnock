@@ -152,7 +152,6 @@ If not provided or NULL, the neighborhoods are determined based on correlations.
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">Xk</span> <span class="op">&lt;-</span> <span class="fu">create.pls.knockoff</span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, ncomp <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in pls.recovery.generator(Y, X.run, ncomp = this.ncomp, keepX = keepX):</span> could not find function "pls.recovery.generator"</span>
 </code></pre></div>
     </div>
   </div>

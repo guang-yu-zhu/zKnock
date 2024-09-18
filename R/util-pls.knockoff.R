@@ -1,3 +1,37 @@
+#' Calculate \eqn{\hat{X}} by fitting PLS regression on its neighbours
+#'
+#' @rdname pls.recovery.generator
+#' @keywords internal
+#'
+pls.recovery.generator <- function(Y, X, ncomp, keepX = rep(ncol(X))){
+  X <- as.data.frame(X)
+  #X <- X[!duplicated(as.list(X))]
+  n <- nrow(X)
+  p <- ncol(X)
+  pls <- spls(X, Y, ncomp = ncomp, scale = F, keepX = keepX, mode = "regression")
+  Y.hat <- predict(pls, X)$predict[1:n, 1, ncomp]
+  return(Y.hat)
+}
+
+#' Calculate \eqn{\hat{X}} by fitting OLS regression on its neighbours
+#'
+#' @rdname linear.regression.generator
+#' @keywords internal
+#'
+linear.regression.generator <- function(Y, X){
+  X <- as.data.frame(X)
+  X <- X[!duplicated(as.list(X))]
+  X <- as.matrix(X)
+  betas <- solve(crossprod(X))%*% t(X) %*% Y
+  Y.hat <- X %*% betas
+  return(Y.hat)
+}
+
+
+
+
+
+
 #' Calculate the Empirical Number of Components for PLS Regression
 #'
 #' This function calculates the empirical number of components used for PLS regression
@@ -7,16 +41,12 @@
 #' @param rmax An integer specifying the maximum number of factors to consider. Default is 10.
 #'
 #' @return An integer representing the optimal number of components based on the \eqn{PC_p1} criterion.
-#' @examples
-#' set.seed(123)
-#' X <- matrix(rnorm(100*10), 100, 10)
-#' optimal_r <- r_criterion(X)
 #'
 #' @references
 #' - Fan Y, Lv J, Sharifvaghefi M et al. IPAD: Stable Interpretable Forecasting with Knockoffs Inference. Journal of the American Statistical Association 2020;115:1822–34.
 #' - Bai J, Ng S. Determining the Number of Factors in Approximate Factor Models. Econometrica 2002;70:191–221.
 #' @keywords internal
-#'
+#' @md
 r_criterion <- function(X, rmax = 10){
   # Number of observations (n) and variables (p)
   n = nrow(X)

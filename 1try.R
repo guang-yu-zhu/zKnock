@@ -1,4 +1,4 @@
-#  ---
+#  ss -----
 set.seed(2022)
 p=30; n=200; k=15
 mu = rep(0,p); Sigma = diag(p)
@@ -15,7 +15,7 @@ metric_fun = function(selected){
 }
 
 # Knockoff Procedure
-Xk = create.knockoff(X = X, type = 'pls', num = 1)
+Xk = create.knockoff(X = X, type = 'zpls', num = 1)
 res1 = knockoff.filter(X,y,Xk,statistic = stat.glmnet_coefdiff,family='gaussian',verbose = 1)
 res1$shat
 metric_fun(res1$s)

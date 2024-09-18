@@ -10,9 +10,13 @@ URL: https://guang-yu-zhu.github.io/zKnock
 Imports: 
   Rdsdp, Matrix, corpcor, glmnet, lars, RSpectra, gtools, utils, RPtests, xgboost, mixOmics, doParallel, spcov, stabs, methods, dplyr, tibble, magrittr
 Suggests: 
-  knitr, testthat, rmarkdown, ranger
+    knitr,
+    testthat (>= 3.0.0),
+    rmarkdown,
+    ranger
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 NeedsCompilation: no
 GitHub: https://github.com/guang-yu-zhu/zKnock
 Encoding: UTF-8
+Config/testthat/edition: 3

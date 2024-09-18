@@ -23,7 +23,8 @@
 #' set.seed(10)
 #' X <- matrix(rnorm(100), nrow = 10)
 #' Xk <- create.pls.knockoff(X = X, ncomp = 3)
-#' @export#' @md
+#' @export
+#' @md
 create.pls.knockoff <- function(X, nb.list = NULL, threshold.abs = NULL, threshold.q = 0.9, ncomp = NULL, sparsity = 1) {
   # nb.list = NULL; threshold.abs = NULL; threshold.q = 0.9; ncomp = NULL; sparsity =
   n <- nrow(X)
@@ -139,3 +140,6 @@ create.pls.knockoff <- function(X, nb.list = NULL, threshold.abs = NULL, thresho
 
   return(X_k)
 }
+
+
+

@@ -5,3 +5,7 @@
 - Add function `create.knockoff` which can generate multiple knockoffs samples.
 - Add function `create.pc.knockoff`, which can generate knockoffs using a principal component construction algorithm.
 - Add function `stat.SHAP`, 
+
+# ZKnock 1.0.2 (2024-09-17)
+- Add function `create.pls.knockoff` and `create.zpls.knockoff`.
+
