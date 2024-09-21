@@ -1,3 +1,20 @@
+#' Calculate \eqn{\hat{X}} by fitting spls
+#'
+#' @rdname spls.recovery.generator
+#' @keywords internal
+#'
+spls.recovery.generator <- function(Y, X, ncomp, eta) {
+  X <- as.data.frame(X)
+  # Fit the sparse PLS model
+  #cv <- spls::cv.spls(X, Y, K = ncomp, eta = seq(0.1,0.9,0.1))
+  fit <- spls::spls(X, Y, K = ncomp, eta = eta)
+  # Predict the values of Y using the fitted model
+  Y.hat <- predict(fit)
+  return(Y.hat)
+}
+
+
+
 #' Calculate \eqn{\hat{X}} by fitting PLS regression on its neighbours
 #'
 #' @rdname pls.recovery.generator
@@ -8,8 +25,8 @@ pls.recovery.generator <- function(Y, X, ncomp, keepX = rep(ncol(X))){
   #X <- X[!duplicated(as.list(X))]
   n <- nrow(X)
   p <- ncol(X)
-  pls <- spls(X, Y, ncomp = ncomp, scale = F, keepX = keepX, mode = "regression")
-  Y.hat <- predict(pls, X)$predict[1:n, 1, ncomp]
+  pls <- mixOmics::spls(X, Y, ncomp = ncomp, scale = F, keepX = keepX, mode = "regression")
+  Y.hat <- predict(pls, X)$predict[1:n, 1, ncomp] # the prediction use all ncomp
   return(Y.hat)
 }
 

@@ -8,6 +8,9 @@
 ## Installation
 
 ```R
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("mixOmics")
 devtools::install_github('guang-yu-zhu/zKnock')
 ```
 

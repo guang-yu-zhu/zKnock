@@ -1,22 +1,35 @@
 file.edit('.gitignore')
-#file.edit('.github/workflows/_pkgdown.yml')
+file.edit('.github/workflows/pkgdown.yaml')
+file.edit('.github/workflows/release.yml')
 file.edit('_pkgdown.yml')
 file.edit('NAMESPACE')
 file.edit('DESCRIPTION')
+file.edit('README.md')
 #-----
+# pkgdown::build_favicons() # run once when you have your man/figures/logo.png
 library(pkgdown)
-# init  ----
-#usethis::use_roxygen_md()
-#roxygen2md::roxygen2md() # Convert roxygen to Markdown
-#----
-roxygen2::roxygenise(clean = TRUE)
+library(roxygen2)
+roxygenise(clean = TRUE)
 #build_home()
-pkgdown::build_site()
-pkgdown::preview_site()
-# run once when you have your logo.png stored in package root folder
-#build_favicons(overwrite = TRUE)
+#build_reference()
+build_site()
+preview_site()
+
+# git commit and push  ------
+# commit all changes
+system('git add .')
+system('git commit -m "version 1.0.0"')
+# Create the tag
+system('git tag -a v1.0.0 -m "Release version 1.0.0"')
+# Push both the commit and the tag to the remote repository
+ststem('git push')
+ststem('git push origin v1.0.0')
+
+
+
 #  usethis -----
 library(usethis)
+use_pipe()
 use_description(fields = list(Language = "es"))
 edit_r_profile(scope = c("user", "project"))
 use_mit_license()       # need a LICENSE file

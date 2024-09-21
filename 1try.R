@@ -5,7 +5,7 @@ mu = rep(0,p); Sigma = diag(p)
 X = matrix(rnorm(n*p),n)
 nonzero = 1:k
 beta = 3.5 * (1:p %in% nonzero)
-y = X %*% beta + rnorm(n)
+Y = X %*% beta + rnorm(n)
 Ac = 1:k
 Ic = setdiff(1:p,Ac)
 metric_fun = function(selected){

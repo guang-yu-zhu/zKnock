@@ -14,6 +14,7 @@
 #'
 #' @return A matrix of generated knockoff variables of \eqn{n \times p}.
 #'
+#' @family create
 #' @references
 #' Yang, Guannan, et al. "PLSKO: a robust knockoff generator to control false discovery rate in omics variable selection." bioRxiv (2024): 2024-08.
 #'

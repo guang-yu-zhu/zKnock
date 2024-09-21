@@ -26,7 +26,7 @@
 #'
 #' @export
 #' @md
-create.knockoff <- function(X, type, num, num.comp = 5, verbose = FALSE) {
+create.knockoff <- function(X, type, num, ncomp = 5, verbose = FALSE,...) {
   # Initialize result list to store knockoff matrices
   result <- vector(mode = "list", length = num)
 
@@ -57,19 +57,19 @@ create.knockoff <- function(X, type, num, num.comp = 5, verbose = FALSE) {
   } else if (type == "pc") {
     for (i in 1:num) {
       if (verbose) cat('--Generate', i, 'knockoffs\n')
-      result[[i]] <- create.pc.knockoff(X = X, pc.num = num.comp)
+      result[[i]] <- create.pc.knockoff(X = X, pc.num = ncomp)
     }
 
     # Type "pls" for partial least squares knockoffs
   } else if (type == "pls") {
     for (i in 1:num) {
       if (verbose) cat('--Generate', i, 'knockoffs\n')
-      result[[i]] <- create.pls.knockoff(X = X, ncomp = num.comp)
+      result[[i]] <- create.pls.knockoff(X = X, ncomp = ncomp)
     }
   } else if (type == "zpls") {
     for (i in 1:num) {
       if (verbose) cat('--Generate', i, 'knockoffs\n')
-      result[[i]] <- create.zpls.knockoff(X = X, ncomp = num.comp)
+      result[[i]] <- create.zpls.knockoff(X = X, ncomp = ncomp,...)
     }
     # Stop if the type is invalid
   } else {

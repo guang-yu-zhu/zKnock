@@ -1,9 +1,10 @@
-#' Generate a knockoff variable set with PLSKO using PLS regression
+#' Generate a knockoff variable set with spls regression
 #' @details
 #' Neighborhood Generation:
 #'  - If `threshold.abs` is given: That absolute value is used directly.
 #'  - If `threshold.q` is given: The threshold is set based on the quantile of the absolute correlation values.
 #'  - If neither is provided: The function defaults to the 90th percentile of the absolute correlation values, which corresponds to using the strongest 10% of correlations to define neighborhoods.
+#' Calculate the fitted value of \eqn{X_j} with  `spls::spls`, see [spls::spls()] for more details.
 #'
 #' @param X A numeric matrix or data frame. The original design data matrix with \eqn{n} observations as rows and \eqn{p} variables as columns.
 #' @param nb.list Optional. A list of length \eqn{p} or adjacency matrix of \eqn{p \times p} that defines the neighbourship of variables.
@@ -19,19 +20,20 @@
 #'
 #' @return A matrix of generated knockoff variables of \eqn{n \times p}.
 #'
+#' @family create
 #' @references
 #' Yang, Guannan, et al. "PLSKO: a robust knockoff generator to control false discovery rate in omics variable selection." bioRxiv (2024): 2024-08.
 #'
-#' @importFrom mixOmics spls
+#' @import spls
 #'
 #' @examples
 #' set.seed(10)
 #' X <- matrix(rnorm(100), nrow = 10)
-#' Xk <- create.pls.knockoff(X = X, ncomp = 3)
+#' Xk <- create.zpls.knockoff(X = X, ncomp = 3,eta=0.3)
 #' @export
 #' @md
-create.zpls.knockoff <- function(X, nb.list = NULL, threshold.abs = NULL, threshold.q = 0.9, ncomp = NULL, sparsity = 1) {
-  # nb.list = NULL; threshold.abs = NULL; threshold.q = 0.9; ncomp = NULL; sparsity =
+create.zpls.knockoff <- function(X,ncomp = NULL, eta=0.3, nb.list = NULL, threshold.abs = NULL, threshold.q = 0.9) {
+  #nb.list = NULL; threshold.abs = NULL; threshold.q = 0.9; ncomp = 4; sparsity = 1
   n <- nrow(X)
   p <- ncol(X)
 
@@ -54,8 +56,6 @@ create.zpls.knockoff <- function(X, nb.list = NULL, threshold.abs = NULL, thresh
     X <- X %*% sample.order.mat
 
     mu <- colMeans(X)
-    call <- list(thres.abs = threshold.abs, thres.q = threshold.q, ncomp = ncomp, sparsity = sparsity)
-
     X <- scale(X, center = TRUE, scale = FALSE)
 
     # Calculate the correlation matrix and replace diagonal with 0
@@ -124,8 +124,9 @@ create.zpls.knockoff <- function(X, nb.list = NULL, threshold.abs = NULL, thresh
         ncomp <- ceiling(min(ncol(X.nb) / 2, r_emp))
       }
       this.ncomp <- min(ncomp, ncol(X.run) - 1)
-      keepX <- rep(round(sparsity * ncol(X.run)), this.ncomp)
-      Y.hat <- pls.recovery.generator(Y, X.run, ncomp = this.ncomp, keepX = keepX)
+      #keepX <- rep(round(sparsity * ncol(X.run)), this.ncomp)
+      #cat('this.ncomp:',this.ncomp,',  eta:',eta,'\n')
+      Y.hat <- spls.recovery.generator(Y, X.run, ncomp = this.ncomp, eta=eta)
     }
 
     # Calculate residuals and permute

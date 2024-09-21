@@ -45,10 +45,6 @@
 #' `create.gaussian` can be used to generate Gaussian knockoffs,
 #' as shown in the examples below.
 #'
-#' In the fixed-X scenario, one can create the knockoffs using the function
-#' `create.fixed`. This requires \eqn{n \geq p} and it assumes
-#' that the response \eqn{Y} follows a homoscedastic linear regression model.
-#'
 #' For more information about creating knockoffs, type `??create`.
 #'
 #' The default importance statistic is [stat.glmnet_coefdiff].
@@ -59,13 +55,10 @@
 #' or the importance statistics. Some examples can be found in the vignette.
 #' @importFrom methods is
 #' @references
-#'   Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
+#'   - Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
 #'   arXiv:1610.02351 (2016).
 #'   [https://web.stanford.edu/group/candes/knockoffs/index.html](https://web.stanford.edu/group/candes/knockoffs/index.html)
 #'
-#'   Barber and Candes,
-#'   Controlling the false discovery rate via knockoffs.
-#'   Ann. Statist. 43 (2015), no. 5, 2055--2085.
 #'
 #' @examples
 #' # Linear Regression
@@ -89,7 +82,8 @@
 #' res2 =  knockoff.filter(X,Y,Xk,statistic =stat.glmnet_coefdiff,family='binomial',offset = 0,fdr = 0.2)
 #' print(res2$shat)
 #'
-#' @export#' @md
+#' @export
+#' @md
 knockoff.filter <- function(X,y,Xk=NULL,
                             knockoffs=create.second_order,
                             statistic=stat.glmnet_coefdiff,
@@ -210,7 +204,8 @@ knockoff.filter <- function(X,y,Xk=NULL,
 #' controls the FDR according to the usual definition, while an offset of 0 controls a modified FDR.
 #' @return The threshold for variable selection.
 #'
-#' @export#' @md
+#' @export
+#' @md
 knockoff.threshold <- function(W, fdr=0.10, offset=1) {
   if(offset!=1 && offset!=0) {
     stop('Input offset must be either 0 or 1')
@@ -272,7 +267,8 @@ knockoff.select <- function(Ws, fdr=0.10, offset=1) {
 #' @param ... unused
 #'
 #' @method print knockoff.filter
-#' @export#' @md
+#' @export
+#' @md
 print.knockoff.filter <- function(x, ...) {
   cat('Call:\n')
   print(x$call)
