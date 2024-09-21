@@ -38,6 +38,8 @@ controls the false discovery rate (FDR) according to the usual definition,
 while an offset of 0 controls a modified FDR.}
 
 \item{verbose}{Logical; if TRUE, prints progress messages during the generation of knockoff matrices. Default is FALSE.}
+
+\item{...}{Additional arguments to be passed to the statistic function.}
 }
 \value{
 An object of class "knockoff.result". This object is a list
@@ -54,8 +56,7 @@ relevant for predicting the outcome of interest.
 }
 \details{
 This function creates the knockoffs, computes the importance statistics,
-and selects variables.
-It is the main entry point for the knockoff package.
+and selects variables. It is the main entry point for the knockoff package.
 
 The parameter \code{knockoffs} controls how knockoff variables are created.
 By default, the model-X scenario is assumed and a multivariate normal distribution
@@ -64,17 +65,6 @@ matrix are used to generate second-order approximate Gaussian knockoffs.
 In general, the function \code{knockoffs} should take a n-by-p matrix of
 observed variables \eqn{X} as input and return a n-by-p matrix of knockoffs.
 Two default functions for creating knockoffs are provided with this package.
-
-In the model-X scenario, under the assumption that the rows of \eqn{X} are distributed
-as a multivariate Gaussian with known parameters, then the function
-\code{create.gaussian} can be used to generate Gaussian knockoffs,
-as shown in the examples below.
-
-In the fixed-X scenario, one can create the knockoffs using the function
-\code{create.fixed}. This requires \eqn{n \geq p} and it assumes
-that the response \eqn{Y} follows a homoscedastic linear regression model.
-
-For more information about creating knockoffs, type \code{??create}.
 
 The default importance statistic is \link{stat.glmnet_coefdiff}.
 For a complete list of the statistics provided with this package,
@@ -86,32 +76,31 @@ or the importance statistics. Some examples can be found in the vignette.
 \examples{
 # Linear Regression
 set.seed(2024)
-p=100; n=80; k=10; scale=3
-Ac=1:k
-rho=0.3; SigmaX <- toeplitz(rho^(0:(p-1)))
-SigmaXhalf=chol(SigmaX)
-beta=matrix(0,p,1)
-beta[Ac]=sample(c(-1,1)*scale,k,replace=TRUE)
-X = matrix(rnorm(n*p),n)\%*\%SigmaXhalf
+p = 100; n = 80; k = 10; scale = 3
+Ac = 1:k
+rho = 0.3; SigmaX <- toeplitz(rho^(0:(p-1)))
+SigmaXhalf = chol(SigmaX)
+beta = matrix(0, p, 1)
+beta[Ac] = sample(c(-1, 1) * scale, k, replace = TRUE)
+X = matrix(rnorm(n * p), n) \%*\% SigmaXhalf
 y = X \%*\% beta + rnorm(n)
 Xk = create.knockoff(X = X, type = 'shrink', num = 2)
-res1 = knockoff.filter(X, y, Xk,statistic =stat.glmnet_coefdiff,offset = 1,fdr = 0.1)
+res1 = knockoff.filter(X, y, Xk, statistic = stat.glmnet_coefdiff,
+                       offset = 1, fdr = 0.1)
 print(res1$shat)
 
-
-# Logistics Regression
+# Logistic Regression
 pis <- plogis(X \%*\% beta)
 Y <- factor(rbinom(n, 1, pis))
-res2 =  knockoff.filter(X,Y,Xk,statistic =stat.glmnet_coefdiff,family='binomial',offset = 0,fdr = 0.2)
+res2 = knockoff.filter(X, Y, Xk, statistic = stat.glmnet_coefdiff,
+                       family = 'binomial', offset = 0, fdr = 0.2)
 print(res2$shat)
 
 }
 \references{
-Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
+\itemize{
+\item Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
 arXiv:1610.02351 (2016).
 \url{https://web.stanford.edu/group/candes/knockoffs/index.html}
-
-Barber and Candes,
-Controlling the false discovery rate via knockoffs.
-Ann. Statist. 43 (2015), no. 5, 2055--2085.
+}
 }

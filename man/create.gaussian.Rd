@@ -35,6 +35,8 @@ Other create:
 \code{\link{create.fixed}()},
 \code{\link{create.knockoff}()},
 \code{\link{create.pc.knockoff}()},
-\code{\link{create.second_order}()}
+\code{\link{create.pls.knockoff}()},
+\code{\link{create.second_order}()},
+\code{\link{create.zpls.knockoff}()}
 }
 \concept{create}

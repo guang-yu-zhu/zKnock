@@ -8,7 +8,7 @@ Description: Implements knockoff filter techniques for controlled variable selec
 License: GPL-3
 URL: https://guang-yu-zhu.github.io/zKnock
 Imports: 
-  Rdsdp, Matrix, corpcor, glmnet, lars, RSpectra, gtools, utils, RPtests, xgboost, mixOmics, doParallel, spcov, stabs, methods, dplyr, tibble, magrittr
+  Rdsdp, Matrix, corpcor, glmnet, lars, RSpectra, gtools, utils, RPtests, xgboost, mixOmics, doParallel, spcov, stabs, methods, dplyr, tibble, magrittr, spls
 Suggests: 
     knitr,
     testthat (>= 3.0.0),

@@ -2,19 +2,23 @@
 % Please edit documentation in R/create.zpls.knockoff.R
 \name{create.zpls.knockoff}
 \alias{create.zpls.knockoff}
-\title{Generate a knockoff variable set with PLSKO using PLS regression}
+\title{Generate a knockoff variable set with spls regression}
 \usage{
 create.zpls.knockoff(
   X,
+  ncomp = NULL,
+  eta = 0,
   nb.list = NULL,
   threshold.abs = NULL,
-  threshold.q = 0.9,
-  ncomp = NULL,
-  sparsity = 1
+  threshold.q = 0.9
 )
 }
 \arguments{
 \item{X}{A numeric matrix or data frame. The original design data matrix with \eqn{n} observations as rows and \eqn{p} variables as columns.}
+
+\item{ncomp}{Optional. An integer specifying the number of components to use in the PLS regression. Default is 2.}
+
+\item{eta}{Optional. A numeric value between 0 and 1 specifying the sparsity level in the SPLS regression. Default is 0 (no sparsity).}
 
 \item{nb.list}{Optional. A list of length \eqn{p} or adjacency matrix of \eqn{p \times p} that defines the neighbourship of variables.
 A list of length \eqn{p} should include the neighbours' index of each variable from \eqn{X_1} to \eqn{X_p} in order;
@@ -26,16 +30,12 @@ If not provided or NULL, the neighborhoods are determined based on correlations.
 \item{threshold.abs}{Optional. A value between \eqn{0} and \eqn{1}. A numeric value specifying an absolute correlation threshold to define neighborhoods.}
 
 \item{threshold.q}{Optional. A numeric value between 0 and 1 indicating the quantile of the correlation values to use as a threshold. Default is 0.9.}
-
-\item{ncomp}{Optional. An integer specifying the number of components to use in the PLS regression. Default is 2.}
-
-\item{sparsity}{Optional. A numeric value between 0 and 1 specifying the sparsity level in the PLS regression. Default is 1 (no sparsity).}
 }
 \value{
 A matrix of generated knockoff variables of \eqn{n \times p}.
 }
 \description{
-Generate a knockoff variable set with PLSKO using PLS regression
+Generate a knockoff variable set with spls regression
 }
 \details{
 Neighborhood Generation:
@@ -43,13 +43,24 @@ Neighborhood Generation:
 \item If \code{threshold.abs} is given: That absolute value is used directly.
 \item If \code{threshold.q} is given: The threshold is set based on the quantile of the absolute correlation values.
 \item If neither is provided: The function defaults to the 90th percentile of the absolute correlation values, which corresponds to using the strongest 10\% of correlations to define neighborhoods.
+Calculate the fitted value of \eqn{X_j} with  \code{spls::spls}, see \code{\link[spls:spls]{spls::spls()}} for more details.
 }
 }
 \examples{
 set.seed(10)
 X <- matrix(rnorm(100), nrow = 10)
-Xk <- create.pls.knockoff(X = X, ncomp = 3)
+Xk <- create.zpls.knockoff(X = X, ncomp = 3,eta=0.3)
 }
 \references{
 Yang, Guannan, et al. "PLSKO: a robust knockoff generator to control false discovery rate in omics variable selection." bioRxiv (2024): 2024-08.
 }
+\seealso{
+Other create: 
+\code{\link{create.fixed}()},
+\code{\link{create.gaussian}()},
+\code{\link{create.knockoff}()},
+\code{\link{create.pc.knockoff}()},
+\code{\link{create.pls.knockoff}()},
+\code{\link{create.second_order}()}
+}
+\concept{create}

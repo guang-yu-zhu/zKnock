@@ -7,6 +7,8 @@
 #' Calculate the fitted value of \eqn{X_j} with  `spls::spls`, see [spls::spls()] for more details.
 #'
 #' @param X A numeric matrix or data frame. The original design data matrix with \eqn{n} observations as rows and \eqn{p} variables as columns.
+#' @param ncomp Optional. An integer specifying the number of components to use in the PLS regression. Default is 2.
+#' @param eta Optional. A numeric value between 0 and 1 specifying the sparsity level in the SPLS regression. Default is 0 (no sparsity).
 #' @param nb.list Optional. A list of length \eqn{p} or adjacency matrix of \eqn{p \times p} that defines the neighbourship of variables.
 #' A list of length \eqn{p} should include the neighbours' index of each variable from \eqn{X_1} to \eqn{X_p} in order;
 #' The \eqn{i^{th}} element in the list includes the indices of the neighbour variables of \eqn{X_i}, or \code{NULL} when no neighbours.
@@ -15,8 +17,6 @@
 #' If not provided or NULL, the neighborhoods are determined based on correlations.
 #' @param threshold.abs Optional. A value between \eqn{0} and \eqn{1}. A numeric value specifying an absolute correlation threshold to define neighborhoods.
 #' @param threshold.q Optional. A numeric value between 0 and 1 indicating the quantile of the correlation values to use as a threshold. Default is 0.9.
-#' @param ncomp Optional. An integer specifying the number of components to use in the PLS regression. Default is 2.
-#' @param sparsity Optional. A numeric value between 0 and 1 specifying the sparsity level in the PLS regression. Default is 1 (no sparsity).
 #'
 #' @return A matrix of generated knockoff variables of \eqn{n \times p}.
 #'
@@ -32,7 +32,7 @@
 #' Xk <- create.zpls.knockoff(X = X, ncomp = 3,eta=0.3)
 #' @export
 #' @md
-create.zpls.knockoff <- function(X,ncomp = NULL, eta=0.3, nb.list = NULL, threshold.abs = NULL, threshold.q = 0.9) {
+create.zpls.knockoff <- function(X,ncomp = NULL, eta=0, nb.list = NULL, threshold.abs = NULL, threshold.q = 0.9) {
   #nb.list = NULL; threshold.abs = NULL; threshold.q = 0.9; ncomp = 4; sparsity = 1
   n <- nrow(X)
   p <- ncol(X)

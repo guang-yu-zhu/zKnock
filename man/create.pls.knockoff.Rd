@@ -45,3 +45,13 @@ Xk <- create.pls.knockoff(X = X, ncomp = 3)
 \references{
 Yang, Guannan, et al. "PLSKO: a robust knockoff generator to control false discovery rate in omics variable selection." bioRxiv (2024): 2024-08.
 }
+\seealso{
+Other create: 
+\code{\link{create.fixed}()},
+\code{\link{create.gaussian}()},
+\code{\link{create.knockoff}()},
+\code{\link{create.pc.knockoff}()},
+\code{\link{create.second_order}()},
+\code{\link{create.zpls.knockoff}()}
+}
+\concept{create}
