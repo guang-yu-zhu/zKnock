@@ -18,7 +18,7 @@ preview_site()
 # git commit and push  ------
 # commit all changes
 system('git add .')
-system('git commit -m "version 1.0.0"')
+system('git commit -m "version 1.0.2"')
 # Create the tag
 system('git tag -a v1.0.0 -m "Release version 1.0.0"')
 # Push both the commit and the tag to the remote repository
