@@ -38,7 +38,8 @@ knockoff.threshold <- function(W, fdr=0.10, offset=1) {
 #'  \item{thre}{computed selection threshold}
 #'  \item{index}{index of selected variables}
 #'
-#' @keywords internal
+#' @export
+#' @md
 knockoff.select <- function(Ws, fdr=0.10, offset=1) {
   X.names = colnames(Ws)
   if(is.vector(Ws)){
