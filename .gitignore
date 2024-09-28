@@ -6,3 +6,4 @@ _development/
 Meta
 .RDataTmp
 docs/
+.DS_Store
