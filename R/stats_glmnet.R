@@ -53,13 +53,14 @@
 #' y = X %*% beta + rnorm(n)
 #'
 #' # Knockoff Procedure
-#' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+#' Xk = create.knockoff(X = X, type = 'shrink', n_ko = 2)
 #' res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_lambdadiff)
 #' res$shat
 #' 
 #' @rdname stat.glmnet_lambdadiff
 #' @import glmnet
-#' @export#' @md
+#' @export
+#' @md
 stat.glmnet_lambdadiff <- function(X, X_k, y, family='gaussian', ...) {
   # Randomly swap columns of X and Xk
   swap = rbinom(ncol(X),1,0.5)
@@ -128,7 +129,7 @@ stat.glmnet_lambdadiff <- function(X, X_k, y, family='gaussian', ...) {
 #' y = X %*% beta + rnorm(n)
 #'
 #' # Knockoff Procedure
-#' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+#' Xk = create.knockoff(X = X, type = 'shrink', n_ko = 2)
 #' res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_lambdasmax)
 #' res$shat
 #' 

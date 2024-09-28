@@ -8,8 +8,11 @@ knockoff.filter(
   X,
   y,
   Xk = NULL,
-  knockoffs = create.second_order,
+  type,
+  n_ko,
+  ncomp = 10,
   statistic = stat.glmnet_coefdiff,
+  aggregate = agg_Freq,
   fdr = 0.1,
   offset = 1,
   verbose = FALSE,
@@ -19,59 +22,52 @@ knockoff.filter(
 \arguments{
 \item{X}{n-by-p matrix or data frame of predictors.}
 
-\item{y}{response vector of length n.}
+\item{y}{Response vector of length n.}
 
-\item{Xk}{Knockoff variables. If not provided, they will be generated using the knockoffs function.}
+\item{Xk}{Knockoff variables (optional). If not provided, they will be generated using the \code{create.knockoff} function.}
 
-\item{knockoffs}{method used to construct knockoffs for the \eqn{X} variables.
-It must be a function taking a n-by-p matrix as input and returning a n-by-p matrix of knockoff variables.
-By default, approximate model-X Gaussian knockoffs are used.}
+\item{type}{Type of knockoff to generate (e.g., "shrink", "sparse", "pc", "pls", "zpls").}
 
-\item{statistic}{statistics used to assess variable importance. By default,
-a lasso statistic with cross-validation is used. See the Details section for more information.}
+\item{n_ko}{Number of knockoff matrices to generate.}
 
-\item{fdr}{target false discovery rate (default: 0.1).}
+\item{ncomp}{Number of principal components for knockoff generation (default: 10).}
 
-\item{offset}{either 0 or 1 (default: 1). This is the offset used to compute the rejection threshold on the
-statistics. The value 1 yields a slightly more conservative procedure ("knockoffs+") that
-controls the false discovery rate (FDR) according to the usual definition,
-while an offset of 0 controls a modified FDR.}
+\item{statistic}{A function to compute test statistics (default: \code{stat.glmnet_coefdiff}).}
 
-\item{verbose}{Logical; if TRUE, prints progress messages during the generation of knockoff matrices. Default is FALSE.}
+\item{aggregate}{Function to aggregate results from multiple knockoffs (default: \code{agg_Freq}).}
 
-\item{...}{Additional arguments to be passed to the statistic function.}
+\item{fdr}{Target false discovery rate (default: 0.1).}
+
+\item{offset}{Offset for threshold computation (0 or 1; default: 1).}
+
+\item{verbose}{Logical; if TRUE, prints progress messages during knockoff generation and statistic calculation (default: FALSE).}
+
+\item{...}{Additional arguments passed to the \code{statistic} function.}
 }
 \value{
-An object of class "knockoff.result". This object is a list
-containing at least the following components:
-\item{X}{matrix of original variables}
-\item{Xk}{matrix of knockoff variables}
-\item{statistic}{computed test statistics}
-\item{threshold}{computed selection threshold}
-\item{selected}{named vector of selected variables}
+An object of class \code{knockoff.result}, containing:
+\itemize{
+\item Single Knockoff Case:
+\itemize{
+\item \strong{call}: The matched call of the function.
+\item \strong{W}: The test statistics for the original variables.
+\item \strong{threshold}: The computed selection threshold.
+\item \strong{shat}:The indices of variables selected based on the threshold.
+}
+\item Multiple Knockoff Case:
+\itemize{
+\item \strong{call}: The matched call of the function.
+\item \strong{shat}: The aggregated indices of selected variables.
+\item \strong{Ws} The matrix of test statistics for multiple knockoff copies.
+\item \strong{thresholds}: A vector of thresholds for each knockoff.
+\item \strong{shat_list}: A list where each element contains the indices of selected variables for a corresponding knockoff copy.
+\item \strong{shat_mat}: A binary matrix where each row indicates the selected variables for a specific knockoff copy (1 for selected, 0 for not selected).
+}
+}
 }
 \description{
-This function runs the Knockoffs procedure from start to finish, selecting variables
-relevant for predicting the outcome of interest.
-}
-\details{
-This function creates the knockoffs, computes the importance statistics,
-and selects variables. It is the main entry point for the knockoff package.
-
-The parameter \code{knockoffs} controls how knockoff variables are created.
-By default, the model-X scenario is assumed and a multivariate normal distribution
-is fitted to the original variables \eqn{X}. The estimated mean vector and the covariance
-matrix are used to generate second-order approximate Gaussian knockoffs.
-In general, the function \code{knockoffs} should take a n-by-p matrix of
-observed variables \eqn{X} as input and return a n-by-p matrix of knockoffs.
-Two default functions for creating knockoffs are provided with this package.
-
-The default importance statistic is \link{stat.glmnet_coefdiff}.
-For a complete list of the statistics provided with this package,
-type \code{??stat}.
-
-It is possible to provide custom functions for the knockoff constructions
-or the importance statistics. Some examples can be found in the vignette.
+This function runs the Knockoff procedure, selecting variables relevant for predicting
+the outcome of interest using knockoffs and test statistics.
 }
 \examples{
 # Linear Regression
@@ -84,23 +80,19 @@ beta = matrix(0, p, 1)
 beta[Ac] = sample(c(-1, 1) * scale, k, replace = TRUE)
 X = matrix(rnorm(n * p), n) \%*\% SigmaXhalf
 y = X \%*\% beta + rnorm(n)
-Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+Xk = create.knockoff(X = X, type = 'shrink', n_ko = 10)
 res1 = knockoff.filter(X, y, Xk, statistic = stat.glmnet_coefdiff,
                        offset = 1, fdr = 0.1)
-print(res1$shat)
+res1
 
 # Logistic Regression
 pis <- plogis(X \%*\% beta)
 Y <- factor(rbinom(n, 1, pis))
 res2 = knockoff.filter(X, Y, Xk, statistic = stat.glmnet_coefdiff,
                        family = 'binomial', offset = 0, fdr = 0.2)
-print(res2$shat)
+res2
 
 }
 \references{
-\itemize{
-\item Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
-arXiv:1610.02351 (2016).
-\url{https://web.stanford.edu/group/candes/knockoffs/index.html}
-}
+Candes, E., Fan, Y., Janson, L., & Lv, J. (2018). Panning for gold:‘model-X’knockoffs for high dimensional controlled variable selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 80(3), 551-577.
 }

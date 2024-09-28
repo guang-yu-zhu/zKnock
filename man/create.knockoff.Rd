@@ -4,7 +4,7 @@
 \alias{create.knockoff}
 \title{Generate Knockoff Matrix}
 \usage{
-create.knockoff(X, type, num, ncomp = 10, verbose = FALSE, ...)
+create.knockoff(X, type, n_ko, ncomp = 10, verbose = FALSE, ...)
 }
 \arguments{
 \item{X}{A numeric matrix representing the original design matrix.}
@@ -18,7 +18,7 @@ create.knockoff(X, type, num, ncomp = 10, verbose = FALSE, ...)
 \item "zpls" for the GZ's sparse partial least squares knockoff.
 }}
 
-\item{num}{A positive integer indicating the number of knockoff matrices to be created.}
+\item{n_ko}{A positive integer indicating the number of knockoff matrices to be created.}
 
 \item{ncomp}{The number of principal components to be used for generating knockoff matrices. Default is 10.}
 
@@ -35,7 +35,7 @@ Generate different types of knockoff matrices given an original one.
 \examples{
 set.seed(10)
 X <- matrix(rnorm(100), nrow = 10)
-Xk <- create.knockoff(X = X, type = "shrink", num = 5)
+Xk <- create.knockoff(X = X, type = "shrink", n_ko = 5)
 
 }
 \seealso{

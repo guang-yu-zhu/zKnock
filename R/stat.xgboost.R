@@ -19,7 +19,8 @@
 #' @importFrom tibble tibble
 #' @importFrom xgboost xgb.DMatrix xgb.train xgb.importance
 #' @rdname stat.xgboost
-#' @export#' @md
+#' @export
+#' @md
 stat.xgboost <- function(X, X_k, y, family = 'gaussian', nrounds = 10, ...) {
   # Randomly swap columns of X and X_k
   swap = rbinom(ncol(X), 1, 0.5)

@@ -40,7 +40,7 @@
 #' y = X %*% beta + rnorm(n)
 #'
 #' # Knockoff Procedure
-#' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+#' Xk = create.knockoff(X = X, type = 'shrink', n_ko = 2)
 #' res = knockoff.filter(X, y, Xk, statistic = stat.glmnet_coefdiff, family='gaussian')
 #' res$shat
 #'
@@ -48,7 +48,8 @@
 #' @importFrom parallel detectCores
 #' @importFrom doParallel registerDoParallel stopImplicitCluster
 #' @rdname stat.glmnet_coefdiff
-#' @export#' @md
+#' @export
+#' @md
 stat.glmnet_coefdiff <- function(X, X_k, y, family = 'gaussian', cores = 2, ...) {
   # Ensure glmnet is installed
   if (!requireNamespace('glmnet', quietly = TRUE)) {

@@ -46,12 +46,20 @@ reference:
 - title: Generate Knockoffs
   desc:
   contents:
-  - starts_with("create.")
-
+  - create.knockoff
+  - create.second_order
+  - create.gaussian
+  - create.pc.knockoff
+  - create.pls.knockoff
+  - create.zpls.knockoff
 - title: Calculate Knockoffs Statistics
   desc:
   contents:
   - starts_with("stat.")
+- title: Aggregate Multiple Knockoffs
+  desc:
+  contents:
+  - starts_with("agg_")
 footer:
   structure:
     left:

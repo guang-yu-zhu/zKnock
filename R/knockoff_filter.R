@@ -1,56 +1,37 @@
 #' The Knockoff Filter
 #'
-#' This function runs the Knockoffs procedure from start to finish, selecting variables
-#' relevant for predicting the outcome of interest.
-#'
-#' This function creates the knockoffs, computes the importance statistics,
-#' and selects variables. It is the main entry point for the knockoff package.
+#' This function runs the Knockoff procedure, selecting variables relevant for predicting
+#' the outcome of interest using knockoffs and test statistics.
 #'
 #' @param X n-by-p matrix or data frame of predictors.
-#' @param y response vector of length n.
-#' @param Xk Knockoff variables. If not provided, they will be generated using the knockoffs function.
-#' @param knockoffs method used to construct knockoffs for the \eqn{X} variables.
-#' It must be a function taking a n-by-p matrix as input and returning a n-by-p matrix of knockoff variables.
-#' By default, approximate model-X Gaussian knockoffs are used.
-#' @param statistic statistics used to assess variable importance. By default,
-#' a lasso statistic with cross-validation is used. See the Details section for more information.
-#' @param fdr target false discovery rate (default: 0.1).
-#' @param offset either 0 or 1 (default: 1). This is the offset used to compute the rejection threshold on the
-#' statistics. The value 1 yields a slightly more conservative procedure ("knockoffs+") that
-#' controls the false discovery rate (FDR) according to the usual definition,
-#' while an offset of 0 controls a modified FDR.
-#' @param verbose Logical; if TRUE, prints progress messages during the generation of knockoff matrices. Default is FALSE.
-#' @param ... Additional arguments to be passed to the statistic function.
+#' @param y Response vector of length n.
+#' @param Xk Knockoff variables (optional). If not provided, they will be generated using the `create.knockoff` function.
+#' @param type Type of knockoff to generate (e.g., "shrink", "sparse", "pc", "pls", "zpls").
+#' @param n_ko Number of knockoff matrices to generate.
+#' @param ncomp Number of principal components for knockoff generation (default: 10).
+#' @param statistic A function to compute test statistics (default: `stat.glmnet_coefdiff`).
+#' @param aggregate Function to aggregate results from multiple knockoffs (default: `agg_Freq`).
+#' @param fdr Target false discovery rate (default: 0.1).
+#' @param offset Offset for threshold computation (0 or 1; default: 1).
+#' @param verbose Logical; if TRUE, prints progress messages during knockoff generation and statistic calculation (default: FALSE).
+#' @param ... Additional arguments passed to the `statistic` function.
 #'
-#' @return An object of class "knockoff.result". This object is a list
-#'  containing at least the following components:
-#'  \item{X}{matrix of original variables}
-#'  \item{Xk}{matrix of knockoff variables}
-#'  \item{statistic}{computed test statistics}
-#'  \item{threshold}{computed selection threshold}
-#'  \item{selected}{named vector of selected variables}
+#' @return An object of class `knockoff.result`, containing:
+#' - Single Knockoff Case:
+#'    - **call**: The matched call of the function.
+#'    - **W**: The test statistics for the original variables.
+#'    - **threshold**: The computed selection threshold.
+#'    - **shat**:The indices of variables selected based on the threshold.
+#' - Multiple Knockoff Case:
+#'    - **call**: The matched call of the function.
+#'    - **shat**: The aggregated indices of selected variables.
+#'    - **Ws** The matrix of test statistics for multiple knockoff copies.
+#'    - **thresholds**: A vector of thresholds for each knockoff.
+#'    - **shat_list**: A list where each element contains the indices of selected variables for a corresponding knockoff copy.
+#'    - **shat_mat**: A binary matrix where each row indicates the selected variables for a specific knockoff copy (1 for selected, 0 for not selected).
 #'
-#' @details
-#'
-#' The parameter `knockoffs` controls how knockoff variables are created.
-#' By default, the model-X scenario is assumed and a multivariate normal distribution
-#' is fitted to the original variables \eqn{X}. The estimated mean vector and the covariance
-#' matrix are used to generate second-order approximate Gaussian knockoffs.
-#' In general, the function `knockoffs` should take a n-by-p matrix of
-#' observed variables \eqn{X} as input and return a n-by-p matrix of knockoffs.
-#' Two default functions for creating knockoffs are provided with this package.
-#'
-#' The default importance statistic is [stat.glmnet_coefdiff].
-#' For a complete list of the statistics provided with this package,
-#' type `??stat`.
-#'
-#' It is possible to provide custom functions for the knockoff constructions
-#' or the importance statistics. Some examples can be found in the vignette.
-#' @importFrom methods is
 #' @references
-#'   - Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
-#'   arXiv:1610.02351 (2016).
-#'   [https://web.stanford.edu/group/candes/knockoffs/index.html](https://web.stanford.edu/group/candes/knockoffs/index.html)
+#' Candes, E., Fan, Y., Janson, L., & Lv, J. (2018). Panning for gold:‘model-X’knockoffs for high dimensional controlled variable selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 80(3), 551-577.
 #'
 #' @examples
 #' # Linear Regression
@@ -63,120 +44,99 @@
 #' beta[Ac] = sample(c(-1, 1) * scale, k, replace = TRUE)
 #' X = matrix(rnorm(n * p), n) %*% SigmaXhalf
 #' y = X %*% beta + rnorm(n)
-#' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+#' Xk = create.knockoff(X = X, type = 'shrink', n_ko = 10)
 #' res1 = knockoff.filter(X, y, Xk, statistic = stat.glmnet_coefdiff,
 #'                        offset = 1, fdr = 0.1)
-#' print(res1$shat)
+#' res1
 #'
 #' # Logistic Regression
 #' pis <- plogis(X %*% beta)
 #' Y <- factor(rbinom(n, 1, pis))
 #' res2 = knockoff.filter(X, Y, Xk, statistic = stat.glmnet_coefdiff,
 #'                        family = 'binomial', offset = 0, fdr = 0.2)
-#' print(res2$shat)
+#' res2
 #'
 #' @export
 #' @md
 knockoff.filter <- function(X, y, Xk = NULL,
-                            knockoffs = create.second_order,
+                            type, n_ko, ncomp = 10,
                             statistic = stat.glmnet_coefdiff,
+                            aggregate = agg_Freq,
                             fdr = 0.10,
                             offset = 1,
                             verbose = FALSE,
                             ...) {
 
-  # Validate input types.
+  # Validate input types
   if (is.data.frame(X)) {
-    X.names = names(X)
-    X = as.matrix(X, rownames.force = FALSE)
+    X.names <- names(X)
+    X <- as.matrix(X)
   } else if (is.matrix(X)) {
-    X.names = colnames(X)
+    X.names <- colnames(X)
   } else {
     stop('Input X must be a numeric matrix or data frame')
   }
 
   if (!is.numeric(X)) stop('Input X must be a numeric matrix or data frame')
-
-  if (!is.factor(y) && !is.numeric(y)) {
-    stop('Input y must be either of numeric or factor type')
-  }
-  if (is.numeric(y)) y = as.vector(y)
-
-  if (offset != 1 && offset != 0) {
-    stop('Input offset must be either 0 or 1')
-  }
-
-  if (!is.function(knockoffs)) stop('Input knockoffs must be a function')
+  if (!is.factor(y) && !is.numeric(y)) stop('Input y must be either numeric or factor type')
+  if (is.numeric(y)) y <- as.vector(y)
+  if (offset != 0 && offset != 1) stop('Input offset must be either 0 or 1')
   if (!is.function(statistic)) stop('Input statistic must be a function')
 
-  # Validate input dimensions
-  n = nrow(X); p = ncol(X)
+  n <- nrow(X); p <- ncol(X)
   stopifnot(length(y) == n)
 
-  if (is.matrix(Xk)) {
-    Xk = list(Xk)
-  }
-  if (is.null(X.names)) X.names = 1:p
-  # If fixed-design knockoffs are being used, provide them with the response vector
-  # in order to augment the data with new rows if necessary
-  if (identical(knockoffs, create.fixed))
-    knockoffs = function(x) create.fixed(x, y = y)
+  if (is.null(X.names)) X.names <- seq_len(p)
 
-  # Create knockoff variables if Xk is not given
+  # Create knockoff variables if Xk is not provided
   if (is.null(Xk)) {
-    knock_variables = knockoffs(X)
-    # If fixed-design knockoffs are being used, update X and Y with the augmented observations (if present)
-    if (methods::is(knock_variables, "knockoff.variables")) {
-      X = knock_variables$X
-      Xk = knock_variables$Xk
-      if (!is.null(knock_variables$y)) y = knock_variables$y
-      rm(knock_variables)
-    } else if (is(knock_variables, "matrix")) {
-      Xk = knock_variables
-      rm(knock_variables)
-    } else {
-      stop('Knockoff variables of incorrect type')
-    }
+    Xk <- create.knockoff(X, type = type, n_ko = 2, ncomp = ncomp)
   }
 
-  # Compute statistics
+  if (is.matrix(Xk)) {
+    Xk <- list(Xk)
+  }
+
+  # Compute statistics for each knockoff
   Ws <- vector(mode = "list", length = length(Xk))
-  for (i in 1:length(Xk)) {
-    if (verbose) cat('--Calculate', i, 'knockoff statistics.\n')
+  for (i in seq_along(Xk)) {
+    if (verbose) cat('-- Calculating knockoff statistics for copy', i, '.\n')
     Ws[[i]] <- statistic(X, Xk[[i]], y, ...)
   }
 
-  # Run average filtering
-  Ws_mat <- matrix(unlist(Ws), ncol = length(Ws[[1]]), byrow = TRUE)
-  W = colMeans(Ws_mat)
-  thre <- knockoff.threshold(W, fdr, offset)
-  shat <- which(W >= thre)
-  # Package up the results.
-  if(length(Ws)==1){
-    structure(list(call = match.call(),
-                   W = W,
-                   thre = thre,
-                   shat = shat),
-              class = 'knockoff.filter')
-  }else{ #multiple knockoffs
-    # Run separate filtering
-    thres=mapply(Ws,FUN = knockoff.threshold,fdr,offset)
-    shat.mat<-(Ws_mat>thres%*%matrix(1,1,p))*1
-    shat.list <- apply(shat.mat,1,function(vec) which(vec==1),simplify = FALSE)
+  # Convert list of statistics to matrix
+  Ws_mat <- do.call(rbind, Ws)
 
-    # shat.list <- list()
-    # for (l in 1:length(Ws)){
-    #   shat.list[[l]] <- which(Ws[[l]] >= thres[l])
-    # }
-    structure(list(call = match.call(),
-                   W = W,
-                   thre = thre,
-                   shat = shat,
-                   Ws = Ws_mat,
-                   thres = thres,
-                   shat.list = shat.list,
-                   shat.mat = shat.mat),
-              class = 'knockoff.filter')
+  # Single knockoff case
+  if (length(Ws) == 1) {
+    W <- Ws_mat
+    threshold <- knockoff.threshold(W, fdr, offset)
+    shat <- which(W >= threshold)
+
+    result <- list(
+      call = match.call(),
+      W = W,
+      threshold = threshold,
+      shat = shat
+    )
+  } else {  # Multiple knockoff case
+    # Aggregate results from multiple knockoffs
+    shat <- aggregate(Ws_mat, fdr = fdr, offset = offset)
+
+    # Run separate filtering for each knockoff
+    thresholds <- apply(Ws_mat,1,knockoff.threshold, fdr = fdr, offset = offset)
+    shat_mat <- sweep(Ws_mat, 2, thresholds, FUN = `>=`)*1
+    shat_list <- apply(shat_mat, 1, function(vec) which(vec == 1))
+
+    result <- list(
+      call = match.call(),
+      shat = shat,
+      Ws = Ws_mat,
+      thresholds = thresholds,
+      shat_list = shat_list,
+      shat_mat = shat_mat
+    )
   }
+  class(result) <- 'knockoff.filter'
+  return(result)
 }
-

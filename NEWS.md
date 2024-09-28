@@ -1,11 +1,16 @@
-# ZKnock 1.0.0 (2024-05-01)
-- `knockoff.filter` can take `family` argument and pass to statistics functions such as `stat.glmnet_coefdiff`
+# ZKnock Changelog
 
-# ZKnock 1.0.1 (2024-08-15)
-- Add function `create.knockoff` which can generate multiple knockoffs samples.
-- Add function `create.pc.knockoff`, which can generate knockoffs using a principal component construction algorithm.
-- Add function `stat.SHAP`, 
+## ZKnock 1.0.0 (2024-05-01)
+- `knockoff.filter` now accepts a `family` argument, which is passed to statistics functions like `stat.glmnet_coefdiff`.
 
-# ZKnock 1.0.2 (2024-09-17)
-- Add function `create.pls.knockoff` and `create.zpls.knockoff`.
+## ZKnock 1.0.1 (2024-08-15)
+- Added `create.knockoff`, a function to generate multiple knockoff samples.
+- Added `create.pc.knockoff`, a function for generating knockoffs using a principal component construction algorithm.
+- Added `stat.SHAP` function.
 
+## ZKnock 1.0.2 (2024-09-17)
+- Added `create.pls.knockoff` and `create.zpls.knockoff` functions.
+
+## ZKnock 1.0.3 (2024-09-27)
+- Added `agg_Avg`, `agg_BH`, and `agg_Freq` functions to perform multiple knockoff procedures.
+- Revised `knockoff.filter` to accept aggregate functions as an argument.

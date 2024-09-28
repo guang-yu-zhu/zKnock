@@ -33,12 +33,13 @@
 #' y = X %*% beta + rnorm(n)
 #'
 #' # Knockoff Procedure
-#' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+#' Xk = create.knockoff(X = X, type = 'shrink', n_ko = 2)
 #' res= knockoff.filter(X,y,Xk,statistic = stat.random_forest,family='gaussian')
 #' res$shat
 #'
 #' @rdname stat.random_forest
-#' @export#' @md
+#' @export
+#' @md
 stat.random_forest <- function(X, X_k, y, ...) {
   if (!requireNamespace('ranger', quietly=T))
     stop('ranger is not installed', call.=F)

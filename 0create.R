@@ -5,6 +5,7 @@ file.edit('_pkgdown.yml')
 file.edit('NAMESPACE')
 file.edit('DESCRIPTION')
 file.edit('README.md')
+file.edit('NEWS.md')
 #-----
 # pkgdown::build_favicons() # run once when you have your man/figures/logo.png
 library(pkgdown)

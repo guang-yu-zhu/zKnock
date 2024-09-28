@@ -2,7 +2,7 @@
 % Please edit documentation in R/knockoff.threshold.R
 \name{print.knockoff.filter}
 \alias{print.knockoff.filter}
-\title{Print results for the knockoff filter}
+\title{Print results for the multiple knockoff filter}
 \usage{
 \method{print}{knockoff.filter}(x, ...)
 }

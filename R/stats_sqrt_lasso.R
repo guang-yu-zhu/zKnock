@@ -32,13 +32,14 @@
 #' y = X %*% beta + rnorm(n)
 #'
 #' # Knockoff Procedure
-#' Xk = create.knockoff(X = X, type = 'shrink', num = 2)
+#' Xk = create.knockoff(X = X, type = 'shrink', n_ko = 2)
 #' res= knockoff.filter(X,y,Xk,statistic = stat.sqrt_lasso)
 #' res$shat
 #' 
 #' @rdname stat.sqrt_lasso
 #' @import RPtests
-#' @export#' @md
+#' @export
+#' @md
 stat.sqrt_lasso <- function(X, X_k, y, ...) {
   if (!requireNamespace('RPtests', quietly=T))
     stop('RPtests is not installed', call.=F)

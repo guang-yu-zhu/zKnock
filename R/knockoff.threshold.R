@@ -65,7 +65,7 @@ knockoff.select <- function(Ws, fdr=0.10, offset=1) {
 }
 
 
-#' Print results for the knockoff filter
+#' Print results for the multiple knockoff filter
 #'
 #' Prints the list of variables selected by the knockoff filter and the corresponding function call.
 #'
@@ -75,11 +75,17 @@ knockoff.select <- function(Ws, fdr=0.10, offset=1) {
 #' @method print knockoff.filter
 #' @export
 #' @md
-print.knockoff.filter <- function(x, ...) {
+print.knockoff.filter<- function(x, ...) {
   cat('Call:\n')
   print(x$call)
   cat('\nSelected variables:\n')
   print(x$shat)
+  if(!is.null(x$shat_list)){
+    #cat('\nSelected variables for each knockoff copy:\n')
+    #print(x$shat_list)
+    cat('\nFrequency of selected variables from', length(x$shat_list) ,'knockoff copys:\n')
+    print(colSums(x$shat_mat))
+  }
 }
 
 #' Verify dependencies for chosen statistics

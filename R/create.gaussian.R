@@ -19,7 +19,8 @@
 #'   [https://web.stanford.edu/group/candes/knockoffs/index.html](https://web.stanford.edu/group/candes/knockoffs/index.html)
 #' 
 #' 
-#' @export#' @md
+#' @export
+#' @md
 create.gaussian <- function(X, mu, Sigma, method=c("asdp","sdp","equi"), diag_s=NULL) {
   method = match.arg(method)
   
