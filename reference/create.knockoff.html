@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zKnock</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create.knockoff</span><span class="op">(</span><span class="va">X</span>, <span class="va">type</span>, <span class="va">num</span>, ncomp <span class="op">=</span> <span class="fl">10</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create.knockoff</span><span class="op">(</span><span class="va">X</span>, <span class="va">type</span>, <span class="va">n_ko</span>, ncomp <span class="op">=</span> <span class="fl">10</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -115,7 +115,7 @@
 </ol></dd>
 
 
-<dt id="arg-num">num<a class="anchor" aria-label="anchor" href="#arg-num"></a></dt>
+<dt id="arg-n-ko">n_ko<a class="anchor" aria-label="anchor" href="#arg-n-ko"></a></dt>
 <dd><p>A positive integer indicating the number of knockoff matrices to be created.</p></dd>
 
 
@@ -150,7 +150,7 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">Xk</span> <span class="op">&lt;-</span> <span class="fu">create.knockoff</span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, type <span class="op">=</span> <span class="st">"shrink"</span>, num <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Xk</span> <span class="op">&lt;-</span> <span class="fu">create.knockoff</span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, type <span class="op">=</span> <span class="st">"shrink"</span>, n_ko <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

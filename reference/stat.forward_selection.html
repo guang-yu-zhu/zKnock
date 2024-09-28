@@ -34,7 +34,7 @@ See the Details for information about forward selection."><!-- mathjax --><scrip
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zKnock</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
       </span>
     </div>
 
@@ -165,7 +165,7 @@ after regressing on <em>all</em> the previously selected variables.</p>
 <span class="r-in"><span><span class="va">y</span> <span class="op">=</span> <span class="va">X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">beta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Knockoff Procedure</span></span></span>
-<span class="r-in"><span><span class="va">Xk</span> <span class="op">=</span> <span class="fu"><a href="create.knockoff.html">create.knockoff</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, type <span class="op">=</span> <span class="st">'shrink'</span>, num <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Xk</span> <span class="op">=</span> <span class="fu"><a href="create.knockoff.html">create.knockoff</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, type <span class="op">=</span> <span class="st">'shrink'</span>, n_ko <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="knockoff.filter.html">knockoff.filter</a></span><span class="op">(</span><span class="va">X</span>,<span class="va">y</span>,<span class="va">Xk</span>,statistic <span class="op">=</span> <span class="va">stat.forward_selection</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span><span class="op">$</span><span class="va">shat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> integer(0)</span>

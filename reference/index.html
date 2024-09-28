@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zKnock</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
       </span>
     </div>
 
@@ -107,19 +107,23 @@
       </tr><tr><td>
           <p><code><a href="print.knockoff.filter.html">print(<i>&lt;knockoff.filter&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Print results for the knockoff filter</p></td>
+        <td><p>Print results for the multiple knockoff filter</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="generate-knockoffs">Generate Knockoffs <a href="#generate-knockoffs" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="create.gaussian.html">create.gaussian()</a></code> </p>
-        </td>
-        <td><p>Model-X Gaussian knockoffs</p></td>
-      </tr><tr><td>
           <p><code><a href="create.knockoff.html">create.knockoff()</a></code> </p>
         </td>
         <td><p>Generate Knockoff Matrix</p></td>
+      </tr><tr><td>
+          <p><code><a href="create.second_order.html">create.second_order()</a></code> </p>
+        </td>
+        <td><p>Second-order Gaussian knockoffs</p></td>
+      </tr><tr><td>
+          <p><code><a href="create.gaussian.html">create.gaussian()</a></code> </p>
+        </td>
+        <td><p>Model-X Gaussian knockoffs</p></td>
       </tr><tr><td>
           <p><code><a href="create.pc.knockoff.html">create.pc.knockoff()</a></code> </p>
         </td>
@@ -128,10 +132,6 @@
           <p><code><a href="create.pls.knockoff.html">create.pls.knockoff()</a></code> </p>
         </td>
         <td><p>Generate a knockoff variable set with PLSKO using PLS regression</p></td>
-      </tr><tr><td>
-          <p><code><a href="create.second_order.html">create.second_order()</a></code> </p>
-        </td>
-        <td><p>Second-order Gaussian knockoffs</p></td>
       </tr><tr><td>
           <p><code><a href="create.zpls.knockoff.html">create.zpls.knockoff()</a></code> </p>
         </td>
@@ -176,6 +176,22 @@
           <p><code><a href="stat.xgboost.html">stat.xgboost()</a></code> </p>
         </td>
         <td><p>Importance statistics based on xgboost</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="aggregate-multiple-knockoffs">Aggregate Multiple Knockoffs <a href="#aggregate-multiple-knockoffs" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="agg_Avg.html">agg_Avg()</a></code> </p>
+        </td>
+        <td><p>Aggregated Knockoff with Average Test Statistics</p></td>
+      </tr><tr><td>
+          <p><code><a href="agg_BH.html">agg_BH()</a></code> </p>
+        </td>
+        <td><p>Aggregated Knockoffs with AKO (Aggregation of Multiple Knockoffs)</p></td>
+      </tr><tr><td>
+          <p><code><a href="agg_Freq.html">agg_Freq()</a></code> </p>
+        </td>
+        <td><p>Aggregated Knockoff Using Selection Frequency</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

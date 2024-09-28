@@ -5,6 +5,10 @@
 <url><loc>https://guang-yu-zhu.github.io/zKnock/authors.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/index.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/news/index.html</loc></url>
+<url><loc>https://guang-yu-zhu.github.io/zKnock/reference/agg_Avg.html</loc></url>
+<url><loc>https://guang-yu-zhu.github.io/zKnock/reference/agg_BH.html</loc></url>
+<url><loc>https://guang-yu-zhu.github.io/zKnock/reference/agg_Freq.html</loc></url>
+<url><loc>https://guang-yu-zhu.github.io/zKnock/reference/bhq_threshold.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/create.fixed.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/create.gaussian.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/create.knockoff.html</loc></url>
@@ -19,6 +23,7 @@
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/create_sdp.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/decompose.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/divide.sdp.html</loc></url>
+<url><loc>https://guang-yu-zhu.github.io/zKnock/reference/empirical_pval.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/fs.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/index.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/knockoff.filter.html</loc></url>
@@ -30,6 +35,7 @@
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/pipe.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/pls.recovery.generator.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/print.knockoff.filter.html</loc></url>
+<url><loc>https://guang-yu-zhu.github.io/zKnock/reference/quantile_aggregation.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/r_criterion.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/spls.recovery.generator.html</loc></url>
 <url><loc>https://guang-yu-zhu.github.io/zKnock/reference/stability_selection_importance.html</loc></url>
