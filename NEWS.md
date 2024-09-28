@@ -1,5 +1,3 @@
-# ZKnock Changelog
-
 ## ZKnock 1.0.0 (2024-05-01)
 - `knockoff.filter` now accepts a `family` argument, which is passed to statistics functions like `stat.glmnet_coefdiff`.
 
