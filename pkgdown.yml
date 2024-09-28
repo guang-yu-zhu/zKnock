@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-09-28T03:33Z
+last_built: 2024-09-28T03:39Z
 urls:
   reference: https://guang-yu-zhu.github.io/zKnock/reference
   article: https://guang-yu-zhu.github.io/zKnock/articles
