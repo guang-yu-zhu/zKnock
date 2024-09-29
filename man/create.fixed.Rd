@@ -50,11 +50,14 @@ Ann. Statist. 43 (2015), no. 5, 2055--2085.
 \seealso{
 Other create: 
 \code{\link{create.gaussian}()},
-\code{\link{create.knockoff}()},
-\code{\link{create.pc.knockoff}()},
-\code{\link{create.pls.knockoff}()},
+\code{\link{create.pc}()},
+\code{\link{create.pls}()},
 \code{\link{create.second_order}()},
-\code{\link{create.zpls.knockoff}()}
+\code{\link{create.seq}()},
+\code{\link{create.shrink_Gaussian}()},
+\code{\link{create.sparse_Gaussian}()},
+\code{\link{create.sparse_seq}()},
+\code{\link{create.zpls}()}
 }
 \concept{create}
 \keyword{internal}

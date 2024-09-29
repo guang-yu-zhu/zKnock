@@ -9,11 +9,15 @@
 #'
 #' @param X n-by-p matrix of original variables.
 #' @param X_k n-by-p matrix of knockoff variables.
-#' @param y Response variable vector of length n. Quantitative for family="gaussian" or "poisson".
-#' For family="binomial", y should be either a two-level factor, a two-column matrix of counts,
-#' or proportions. For family="multinomial", y can be a factor with at least two levels or a matrix.
-#' For family="cox", y should be a two-column matrix with 'time' and 'status'. For family="mgaussian",
-#' y is a matrix of quantitative responses.
+#' @param y Response variable vector of length n. 
+#'   Quantitative for family = "gaussian" or "poisson".
+#'   - For family = "binomial", y should be either:
+#'   	- a two-level factor,
+#'   	- a two-column matrix of counts, or
+#'   	- proportions.
+#'   - For family = "multinomial", y can be a factor with at least two levels or a matrix.
+#'   - For family = "cox", y should be a two-column matrix with 'time' and 'status'.
+#'   - For family = "mgaussian", y is a matrix of quantitative responses.
 #' @param family Response type, one of 'gaussian', 'binomial', 'multinomial', 'cox', or 'mgaussian'.
 #' @param cores Number of cores to use for parallel computation. Defaults to 2 if available.
 #' @param ... Additional arguments specific to `glmnet` (see Details).
@@ -30,19 +34,15 @@
 #' @family statistics
 #'
 #' @examples
-#' # Synthetic Data
 #' set.seed(2024)
-#' p=200; n=100; k=15
-#' mu = rep(0,p); Sigma = diag(p)
-#' X = matrix(rnorm(n*p),n)
-#' nonzero = 1:k
-#' beta = 3.5 * (1:p %in% nonzero)
-#' y = X %*% beta + rnorm(n)
-#'
-#' # Knockoff Procedure
-#' Xk = create.knockoff(X = X, type = 'shrink', n_ko = 2)
-#' res = knockoff.filter(X, y, Xk, statistic = stat.glmnet_coefdiff, family='gaussian')
-#' res$shat
+#' n=80; p=100; k=10; Ac = 1:k; Ic = (k+1):p
+#' X = generate_X(n=n,p=p)
+#' y <- generate_y(X, p_nn=k, a=3)
+#' Xk = create.shrink_Gaussian(X = X, n_ko = 10)
+#' res1 = knockoff.filter(X, y, Xk, statistic = stat.glmnet_coefdiff,
+#'                        offset = 1, fdr = 0.1)
+#' res1
+#' perf_eval(res1$shat,Ac,Ic)
 #'
 #' @importFrom glmnet cv.glmnet glmnet
 #' @importFrom parallel detectCores

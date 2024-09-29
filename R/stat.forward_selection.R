@@ -24,22 +24,19 @@
 #' @family statistics
 #' 
 #' @examples
-#' # Synthetic Data
 #' set.seed(2024)
-#' p=200; n=100; k=15
-#' mu = rep(0,p); Sigma = diag(p)
-#' X = matrix(rnorm(n*p),n)
-#' nonzero = 1:k
-#' beta = 3.5 * (1:p %in% nonzero)
-#' y = X %*% beta + rnorm(n)
-#'
-#' # Knockoff Procedure
-#' Xk = create.knockoff(X = X, type = 'shrink', n_ko = 2)
-#' res = knockoff.filter(X,y,Xk,statistic = stat.forward_selection)
-#' res$shat
+#' n=80; p=100; k=10; Ac = 1:k; Ic = (k+1):p
+#' X = generate_X(n=n,p=p)
+#' y <- generate_y(X, p_nn=k, a=3)
+#' Xk = create.shrink_Gaussian(X = X, n_ko = 10)
+#' res1 = knockoff.filter(X, y, Xk, statistic = stat.forward_selection,
+#'                        offset = 1, fdr = 0.1)
+#' res1
+#' perf_eval(res1$shat,Ac,Ic)
 #' 
 #' @rdname stat.forward_selection
-#' @export#' @md
+#' @export
+#' @md
 stat.forward_selection <- function(X, X_k, y, omp=F) {
   if( is.numeric(y) ){
     y = as.vector(y)

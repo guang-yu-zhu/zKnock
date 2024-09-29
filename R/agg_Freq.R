@@ -13,17 +13,11 @@
 #' Ren, Z., Wei, Y., & Candès, E. (2023). Derandomizing knockoffs. Journal of the American Statistical Association, 118(542), 948-958.
 #'
 #' @examples
-#' # Linear Regression
 #' set.seed(2024)
-#' p = 100; n = 80; k = 10; scale = 3
-#' Ac = 1:k
-#' rho = 0.3; SigmaX <- toeplitz(rho^(0:(p-1)))
-#' SigmaXhalf = chol(SigmaX)
-#' beta = matrix(0, p, 1)
-#' beta[Ac] = sample(c(-1, 1) * scale, k, replace = TRUE)
-#' X = matrix(rnorm(n * p), n) %*% SigmaXhalf
-#' y = X %*% beta + rnorm(n)
-#' Xk = create.knockoff(X = X, type = 'shrink', n_ko = 10)
+#' p = 100; n = 80
+#' X = generate_X(n=80,p=100)
+#' y <- generate_y(X, p_nn=10, a=3)
+#' Xk = create.shrink_Gaussian(X = X, n_ko = 10)
 #' res1 = knockoff.filter(X, y, Xk, statistic = stat.glmnet_coefdiff,
 #'                        aggregate = agg_BH,
 #'                        offset = 1, fdr = 0.1)

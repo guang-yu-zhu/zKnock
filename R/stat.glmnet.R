@@ -9,18 +9,15 @@
 #' 
 #' @param X n-by-p matrix of original variables.
 #' @param X_k n-by-p matrix of knockoff variables.
-#' @param y vector of length n, containing the response variables. Quantitative for family="gaussian", 
-#' or family="poisson" (non-negative counts). For family="binomial" 
-#' should be either a factor with two levels, or a two-column matrix of counts 
-#' or proportions (the second column is treated as the target class; for a factor, 
-#' the last level in alphabetical order is the target class). For family="multinomial", 
-#' can be a nc>=2 level factor, or a matrix with nc columns of counts or proportions. 
-#' For either "binomial" or "multinomial", if y is presented as a vector, it will 
-#' be coerced into a factor. For family="cox", y should be a two-column matrix with 
-#' columns named 'time' and 'status'. The latter is a binary variable, with '1' 
-#' indicating death, and '0' indicating right censored. The function Surv() in 
-#' package survival produces such a matrix. For family="mgaussian", y is a matrix 
-#' of quantitative responses.
+#' @param y Response variable vector of length n. 
+#'   Quantitative for family = "gaussian" or "poisson".
+#'   - For family = "binomial", y should be either:
+#'   	- a two-level factor,
+#'   	- a two-column matrix of counts, or
+#'   	- proportions.
+#'   - For family = "multinomial", y can be a factor with at least two levels or a matrix.
+#'   - For family = "cox", y should be a two-column matrix with 'time' and 'status'.
+#'   - For family = "mgaussian", y is a matrix of quantitative responses.
 #' @param family response type (see above).
 #' @param ... additional arguments specific to `glmnet` (see Details).
 #' @return A vector of statistics \eqn{W} of length p.
@@ -43,19 +40,15 @@
 #' @family statistics
 #' 
 #' @examples
-#' # Synthetic Data
 #' set.seed(2024)
-#' p=200; n=100; k=15
-#' mu = rep(0,p); Sigma = diag(p)
-#' X = matrix(rnorm(n*p),n)
-#' nonzero = 1:k
-#' beta = 3.5 * (1:p %in% nonzero)
-#' y = X %*% beta + rnorm(n)
-#'
-#' # Knockoff Procedure
-#' Xk = create.knockoff(X = X, type = 'shrink', n_ko = 2)
-#' res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_lambdadiff)
-#' res$shat
+#' n=80; p=100; k=10; Ac = 1:k; Ic = (k+1):p
+#' X = generate_X(n=n,p=p)
+#' y <- generate_y(X, p_nn=k, a=3)
+#' Xk = create.shrink_Gaussian(X = X, n_ko = 10)
+#' res1 = knockoff.filter(X, y, Xk, statistic = stat.glmnet_lambdadiff,
+#'                        offset = 1, fdr = 0.1)
+#' res1
+#' perf_eval(res1$shat,Ac,Ic)
 #' 
 #' @rdname stat.glmnet_lambdadiff
 #' @import glmnet
@@ -90,18 +83,15 @@ stat.glmnet_lambdadiff <- function(X, X_k, y, family='gaussian', ...) {
 #' 
 #' @param X n-by-p matrix of original variables.
 #' @param X_k n-by-p matrix of knockoff variables.
-#' @param y vector of length n, containing the response variables. Quantitative for family="gaussian", 
-#' or family="poisson" (non-negative counts). For family="binomial" 
-#' should be either a factor with two levels, or a two-column matrix of counts 
-#' or proportions (the second column is treated as the target class; for a factor, 
-#' the last level in alphabetical order is the target class). For family="multinomial", 
-#' can be a nc>=2 level factor, or a matrix with nc columns of counts or proportions. 
-#' For either "binomial" or "multinomial", if y is presented as a vector, it will 
-#' be coerced into a factor. For family="cox", y should be a two-column matrix with 
-#' columns named 'time' and 'status'. The latter is a binary variable, with '1' 
-#' indicating death, and '0' indicating right censored. The function Surv() in 
-#' package survival produces such a matrix. For family="mgaussian", y is a matrix 
-#' of quantitative responses.
+#' @param y Response variable vector of length n. 
+#'   Quantitative for family = "gaussian" or "poisson".
+#'   - For family = "binomial", y should be either:
+#'   	- a two-level factor,
+#'   	- a two-column matrix of counts, or
+#'   	- proportions.
+#'   - For family = "multinomial", y can be a factor with at least two levels or a matrix.
+#'   - For family = "cox", y should be a two-column matrix with 'time' and 'status'.
+#'   - For family = "mgaussian", y is a matrix of quantitative responses.
 #' @param family response type (see above).
 #' @param ... additional arguments specific to `glmnet` (see Details).
 #' @return A vector of statistics \eqn{W} of length p.
@@ -119,22 +109,19 @@ stat.glmnet_lambdadiff <- function(X, X_k, y, family='gaussian', ...) {
 #' For a complete list of the available additional arguments, see [glmnet::glmnet()].
 #' 
 #' @examples
-#' # Synthetic Data
 #' set.seed(2024)
-#' p=200; n=100; k=15
-#' mu = rep(0,p); Sigma = diag(p)
-#' X = matrix(rnorm(n*p),n)
-#' nonzero = 1:k
-#' beta = 3.5 * (1:p %in% nonzero)
-#' y = X %*% beta + rnorm(n)
-#'
-#' # Knockoff Procedure
-#' Xk = create.knockoff(X = X, type = 'shrink', n_ko = 2)
-#' res = knockoff.filter(X,y,Xk,statistic = stat.glmnet_lambdasmax)
-#' res$shat
+#' n=80; p=100; k=10; Ac = 1:k; Ic = (k+1):p
+#' X = generate_X(n=n,p=p)
+#' y <- generate_y(X, p_nn=k, a=3)
+#' Xk = create.shrink_Gaussian(X = X, n_ko = 10)
+#' res1 = knockoff.filter(X, y, Xk, statistic = stat.glmnet_lambdasmax,
+#'                        offset = 1, fdr = 0.1)
+#' res1
+#' perf_eval(res1$shat,Ac,Ic)
 #' 
 #' @rdname stat.glmnet_lambdasmax
-#' @export#' @md
+#' @export
+#' @md
 stat.glmnet_lambdasmax <- function(X, X_k, y, family='gaussian', ...) {
   # Randomly swap columns of X and Xk
   swap = rbinom(ncol(X),1,0.5)

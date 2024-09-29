@@ -18,6 +18,19 @@
 #' @importFrom dplyr right_join mutate
 #' @importFrom tibble tibble
 #' @importFrom xgboost xgb.DMatrix xgb.train xgb.importance
+#'
+#' @examples
+#' set.seed(2024)
+#' n=80; p=100; k=10; Ac = 1:k; Ic = (k+1):p
+#' X = generate_X(n=n,p=p)
+#' y <- generate_y(X, p_nn=k, a=3)
+#' Xk = create.shrink_Gaussian(X = X, n_ko = 10)
+#' res1 = knockoff.filter(X, y, Xk, statistic = stat.xgboost,
+#'                        offset = 1, fdr = 0.1)
+#' res1
+#' perf_eval(res1$shat,Ac,Ic)
+#'
+#' @family statistics
 #' @rdname stat.xgboost
 #' @export
 #' @md

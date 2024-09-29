@@ -39,9 +39,13 @@ arXiv:1610.02351 (2016).
 Other create: 
 \code{\link{create.fixed}()},
 \code{\link{create.gaussian}()},
-\code{\link{create.knockoff}()},
-\code{\link{create.pc.knockoff}()},
-\code{\link{create.pls.knockoff}()},
-\code{\link{create.zpls.knockoff}()}
+\code{\link{create.pc}()},
+\code{\link{create.pls}()},
+\code{\link{create.seq}()},
+\code{\link{create.shrink_Gaussian}()},
+\code{\link{create.sparse_Gaussian}()},
+\code{\link{create.sparse_seq}()},
+\code{\link{create.zpls}()}
 }
 \concept{create}
+\keyword{internal}

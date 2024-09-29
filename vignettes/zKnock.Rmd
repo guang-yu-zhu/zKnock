@@ -1,0 +1,43 @@
+---
+title: "The zKnock package"
+author: 
+   - 
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{zKnock-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: ref.bib
+link-citations: true
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+In this vignette we demonstrate the main functionalities of the knockofftools package. In particular, we demonstrate functions for generating data sets, simulating knockoffs (MX and sequential), applying the multiple knockoff filter for variable selection and visualizing selections.
+
+Let's first recall how the knockoff variable selection methodology works in a nutshell:
+
+1. Simulate a knockoff copy $\tilde{X}$ of the original covariates data $X$.
+2. Compute feature statistics $W_j=|\beta_j|-|\tilde{\beta}_j|$ from an aggregated regression of $Y$ on $X$ and $\tilde{X}$. Large, positive statistics $W_j$ indicate association of $X_j$ with $Y$.
+3. For FDR control use the *knockoffs$+$* procedure to select variables $j$ that fulfill $W_j \geq \tau_+$ where
+$$
+\tau_+ = \underset{t>0}{\operatorname{argmin}} \left\{\frac{1 + |\{j : W_j \leq t\}|}{|\{j : W_j \leq t\}|} \leq q\right\}.
+$$
+This workflow selects variables associated with response with guaranteed control of false discovery rate $FDR \leq q$.
+
+```{r setup, message=FALSE}
+library(zKnock)
+```
+
+## Data generation {#simdata}
+
+
+## References

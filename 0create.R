@@ -6,8 +6,9 @@ file.edit('NAMESPACE')
 file.edit('DESCRIPTION')
 file.edit('README.md')
 file.edit('NEWS.md')
-#-----
+# build website -----
 # pkgdown::build_favicons() # run once when you have your man/figures/logo.png
+library(devtools)
 library(pkgdown)
 library(roxygen2)
 roxygenise(clean = TRUE)
@@ -15,16 +16,19 @@ roxygenise(clean = TRUE)
 #build_reference()
 build_site()
 preview_site()
+#  load developing package  -------
+devtools::load_all()
+
 
 # git commit and push  ------
 # commit all changes
 system('git add .')
-system('git commit -m "version 1.0.3.2"')
+system('git commit -m "version 1.0.4"')
 # Create the tag
-system('git tag -a v1.0.3.2 -m "Release version 1.0.3.2"')
+system('git tag -a v1.0.4 -m "Release version 1.0.4"')
 # Push both the commit and the tag to the remote repository
 system('git push')
-system('git push origin v1.0.3.2')
+system('git push origin v1.0.4')
 
 
 

@@ -38,6 +38,10 @@ navbar:
       icon: fab fa-github fa-lg
       href: https://github.com/guang-yu-zhu/zKnock
 reference:
+- title: Generate Simulation Data
+  desc:
+  contents:
+  - starts_with("generate_")
 - title: Controlled Feature Selection
   desc:
   contents:
@@ -46,12 +50,29 @@ reference:
 - title: Generate Knockoffs
   desc:
   contents:
-  - starts_with("create.")
-
+  - create.shrink_Gaussian
+  - create.sparse_Gaussian
+  - create.pc
+  - create.pls
+  - create.zpls
+  - create.seq
+  - create.sparse_seq
 - title: Calculate Knockoffs Statistics
   desc:
   contents:
-  - starts_with("stat.")
+  - starts_with("stat")
+- title: Recovery functions
+  desc:
+  contents:
+  - ends_with("recovery")
+- title: Aggregate Multiple Knockoffs
+  desc:
+  contents:
+  - starts_with("agg_")
+- title: Performance Evaluation
+  contents:
+  - eval_fdp
+  - eval_tpp
 footer:
   structure:
     left:

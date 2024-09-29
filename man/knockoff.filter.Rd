@@ -8,9 +8,6 @@ knockoff.filter(
   X,
   y,
   Xk = NULL,
-  type,
-  n_ko,
-  ncomp = 10,
   statistic = stat.glmnet_coefdiff,
   aggregate = agg_Freq,
   fdr = 0.1,
@@ -20,17 +17,11 @@ knockoff.filter(
 )
 }
 \arguments{
-\item{X}{n-by-p matrix or data frame of predictors.}
+\item{X}{A numeric n-by-p matrix or data frame of predictors.}
 
-\item{y}{Response vector of length n.}
+\item{y}{A response vector of length n.}
 
-\item{Xk}{Knockoff variables (optional). If not provided, they will be generated using the \code{create.knockoff} function.}
-
-\item{type}{Type of knockoff to generate (e.g., "shrink", "sparse", "pc", "pls", "zpls").}
-
-\item{n_ko}{Number of knockoff matrices to generate.}
-
-\item{ncomp}{Number of principal components for knockoff generation (default: 10).}
+\item{Xk}{A list of Knockoff copys.}
 
 \item{statistic}{A function to compute test statistics (default: \code{stat.glmnet_coefdiff}).}
 
@@ -45,20 +36,20 @@ knockoff.filter(
 \item{...}{Additional arguments passed to the \code{statistic} function.}
 }
 \value{
-An object of class \code{knockoff.result}, containing:
+An object of class \code{knockoff.filter}, containing:
 \itemize{
 \item Single Knockoff Case:
 \itemize{
 \item \strong{call}: The matched call of the function.
 \item \strong{W}: The test statistics for the original variables.
 \item \strong{threshold}: The computed selection threshold.
-\item \strong{shat}:The indices of variables selected based on the threshold.
+\item \strong{shat}: The indices of variables selected based on the threshold.
 }
 \item Multiple Knockoff Case:
 \itemize{
 \item \strong{call}: The matched call of the function.
 \item \strong{shat}: The aggregated indices of selected variables.
-\item \strong{Ws} The matrix of test statistics for multiple knockoff copies.
+\item \strong{Ws}: The matrix of test statistics for multiple knockoff copies.
 \item \strong{thresholds}: A vector of thresholds for each knockoff.
 \item \strong{shat_list}: A list where each element contains the indices of selected variables for a corresponding knockoff copy.
 \item \strong{shat_mat}: A binary matrix where each row indicates the selected variables for a specific knockoff copy (1 for selected, 0 for not selected).
@@ -72,27 +63,25 @@ the outcome of interest using knockoffs and test statistics.
 \examples{
 # Linear Regression
 set.seed(2024)
-p = 100; n = 80; k = 10; scale = 3
-Ac = 1:k
-rho = 0.3; SigmaX <- toeplitz(rho^(0:(p-1)))
-SigmaXhalf = chol(SigmaX)
-beta = matrix(0, p, 1)
-beta[Ac] = sample(c(-1, 1) * scale, k, replace = TRUE)
-X = matrix(rnorm(n * p), n) \%*\% SigmaXhalf
-y = X \%*\% beta + rnorm(n)
-Xk = create.knockoff(X = X, type = 'shrink', n_ko = 10)
+n=80; p=100; k=10; Ac = 1:k; Ic = (k+1):p
+X = generate_X(n=n,p=p)
+y <- generate_y(X, p_nn=k, a=3)
+Xk = create.shrink_Gaussian(X = X, n_ko = 10)
 res1 = knockoff.filter(X, y, Xk, statistic = stat.glmnet_coefdiff,
                        offset = 1, fdr = 0.1)
 res1
+perf_eval(res1$shat,Ac,Ic)
 
 # Logistic Regression
-pis <- plogis(X \%*\% beta)
+lp <- generate_lp(X, p_nn=k, a=3)
+pis <- plogis(lp)
 Y <- factor(rbinom(n, 1, pis))
 res2 = knockoff.filter(X, Y, Xk, statistic = stat.glmnet_coefdiff,
                        family = 'binomial', offset = 0, fdr = 0.2)
 res2
+perf_eval(res2$shat,Ac,Ic)
 
 }
 \references{
-Candes, E., Fan, Y., Janson, L., & Lv, J. (2018). Panning for gold:‘model-X’knockoffs for high dimensional controlled variable selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 80(3), 551-577.
+Candes, E., Fan, Y., Janson, L., & Lv, J. (2018). Panning for gold: ‘model-X’ knockoffs for high dimensional controlled variable selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 80(3), 551-577.
 }
