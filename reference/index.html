@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zKnock</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
       </span>
     </div>
 
@@ -39,6 +39,9 @@
     <span class="fas fa-home fa-lg"></span>
 
   </a>
+</li>
+<li>
+  <a href="../articles/zKnock.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">
@@ -89,6 +92,26 @@
     </div>
 
     <table class="ref-index"><colgroup><col class="alias"><col class="title"></colgroup><tbody><tr><th colspan="2">
+          <h2 id="generate-simulation-data">Generate Simulation Data <a href="#generate-simulation-data" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="generate_X.html">generate_X()</a></code> </p>
+        </td>
+        <td><p>Simulate Gaussian and binary covariate predictors</p></td>
+      </tr><tr><td>
+          <p><code><a href="generate_y.html">generate_y()</a></code> </p>
+        </td>
+        <td><p>Simulate Gaussian response from a sparse regression model</p></td>
+      </tr><tr><td>
+          <p><code><a href="generate_lp.html">generate_lp()</a></code> </p>
+        </td>
+        <td><p>Generate linear predictor with first p_nn beta coefficients = a, all other = 0</p></td>
+      </tr><tr><td>
+          <p><code><a href="generate_Weib.html">generate_Weib()</a></code> </p>
+        </td>
+        <td><p>Function that simulates response from Cox model with Weibull baseline hazard.</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="controlled-feature-selection">Controlled Feature Selection <a href="#controlled-feature-selection" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
         </th>
@@ -113,29 +136,33 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="create.knockoff.html">create.knockoff()</a></code> </p>
+          <p><code><a href="create.shrink_Gaussian.html">create.shrink_Gaussian()</a></code> </p>
         </td>
-        <td><p>Generate Knockoff Matrix</p></td>
+        <td><p>Create Shrink Gaussian Knockoffs</p></td>
       </tr><tr><td>
-          <p><code><a href="create.second_order.html">create.second_order()</a></code> </p>
+          <p><code><a href="create.sparse_Gaussian.html">create.sparse_Gaussian()</a></code> </p>
         </td>
-        <td><p>Second-order Gaussian knockoffs</p></td>
+        <td><p>Create Sparse Gaussian Knockoffs</p></td>
       </tr><tr><td>
-          <p><code><a href="create.gaussian.html">create.gaussian()</a></code> </p>
+          <p><code><a href="create.pc.html">create.pc()</a></code> </p>
         </td>
-        <td><p>Model-X Gaussian knockoffs</p></td>
+        <td><p>Create PC Knockoffs</p></td>
       </tr><tr><td>
-          <p><code><a href="create.pc.knockoff.html">create.pc.knockoff()</a></code> </p>
+          <p><code><a href="create.pls.html">create.pls()</a></code> </p>
         </td>
-        <td><p>Create PC Knockoffs A sequential algorithm to create non-parametric knockoffs based on principal component regression and residuals permutation.</p></td>
+        <td><p>Generate knockoff variables using PLS regression (PLSKO)</p></td>
       </tr><tr><td>
-          <p><code><a href="create.pls.knockoff.html">create.pls.knockoff()</a></code> </p>
+          <p><code><a href="create.zpls.html">create.zpls()</a></code> </p>
         </td>
-        <td><p>Generate a knockoff variable set with PLSKO using PLS regression</p></td>
+        <td><p>Generate knockoff variables using sparse partial least squares (SPLS) regression</p></td>
       </tr><tr><td>
-          <p><code><a href="create.zpls.knockoff.html">create.zpls.knockoff()</a></code> </p>
+          <p><code><a href="create.seq.html">create.seq()</a></code> </p>
         </td>
-        <td><p>Generate a knockoff variable set with spls regression</p></td>
+        <td><p>Sequential knockoffs for continuous and categorical variables</p></td>
+      </tr><tr><td>
+          <p><code><a href="create.sparse_seq.html">create.sparse_seq()</a></code> </p>
+        </td>
+        <td><p>Sparse sequential knockoff generation algorithm</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="calculate-knockoffs-statistics">Calculate Knockoffs Statistics <a href="#calculate-knockoffs-statistics" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
@@ -177,6 +204,30 @@
         </td>
         <td><p>Importance statistics based on xgboost</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="recovery-functions">Recovery functions <a href="#recovery-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="glmnet.recovery.html">glmnet.recovery()</a></code> </p>
+        </td>
+        <td><p>Simulate from glmnet penalized regression model</p></td>
+      </tr><tr><td>
+          <p><code><a href="ols.recovery.html">ols.recovery()</a></code> </p>
+        </td>
+        <td><p>Calculate \(\hat{X}\) by fitting OLS regression on its neighbors</p></td>
+      </tr><tr><td>
+          <p><code><a href="pls.recovery.html">pls.recovery()</a></code> </p>
+        </td>
+        <td><p>Calculate \(\hat{X}\) by fitting PLS regression on its neighbours</p></td>
+      </tr><tr><td>
+          <p><code><a href="simple.recovery.html">simple.recovery()</a></code> </p>
+        </td>
+        <td><p>Simple knockoff generator</p></td>
+      </tr><tr><td>
+          <p><code><a href="spls.recovery.html">spls.recovery()</a></code> </p>
+        </td>
+        <td><p>Calculate \(\hat{X}\) by fitting sparse PLS</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="aggregate-multiple-knockoffs">Aggregate Multiple Knockoffs <a href="#aggregate-multiple-knockoffs" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
         </th>
@@ -192,6 +243,14 @@
           <p><code><a href="agg_Freq.html">agg_Freq()</a></code> </p>
         </td>
         <td><p>Aggregated Knockoff Using Selection Frequency</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="performance-evaluation">Performance Evaluation <a href="#performance-evaluation" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="perf_eval.html">perf_eval()</a></code> </p>
+        </td>
+        <td><p>Evaluate False Discovery Proportion (FDP) and True Positive Proportion (TPP)</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

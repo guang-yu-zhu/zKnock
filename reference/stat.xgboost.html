@@ -32,7 +32,7 @@ of the jth variable and its knockoff, respectively."><!-- mathjax --><script src
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zKnock</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
       </span>
     </div>
 
@@ -42,6 +42,9 @@ of the jth variable and its knockoff, respectively."><!-- mathjax --><script src
     <span class="fas fa-home fa-lg"></span>
 
   </a>
+</li>
+<li>
+  <a href="../articles/zKnock.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">
@@ -137,7 +140,44 @@ otherwise regression is assumed.</p></dd>
     <h2>Value</h2>
     <p>A vector of statistics \(W\) of length p.</p>
     </div>
+    <div id="see-also">
+    <h2>See also</h2>
+    <div class="dont-index"><p>Other statistics:
+<code><a href="stat.SHAP.html">stat.SHAP</a>()</code>,
+<code><a href="stat.forward_selection.html">stat.forward_selection</a>()</code>,
+<code><a href="stat.glmnet_coefdiff.html">stat.glmnet_coefdiff</a>()</code>,
+<code><a href="stat.glmnet_lambdadiff.html">stat.glmnet_lambdadiff</a>()</code>,
+<code><a href="stat.random_forest.html">stat.random_forest</a>()</code>,
+<code><a href="stat.sqrt_lasso.html">stat.sqrt_lasso</a>()</code>,
+<code><a href="stat.stability_selection.html">stat.stability_selection</a>()</code></p></div>
+    </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">n</span><span class="op">=</span><span class="fl">80</span>; <span class="va">p</span><span class="op">=</span><span class="fl">100</span>; <span class="va">k</span><span class="op">=</span><span class="fl">10</span>; <span class="va">Ac</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">k</span>; <span class="va">Ic</span> <span class="op">=</span> <span class="op">(</span><span class="va">k</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="va">p</span></span></span>
+<span class="r-in"><span><span class="va">X</span> <span class="op">=</span> <span class="fu"><a href="generate_X.html">generate_X</a></span><span class="op">(</span>n<span class="op">=</span><span class="va">n</span>,p<span class="op">=</span><span class="va">p</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="generate_y.html">generate_y</a></span><span class="op">(</span><span class="va">X</span>, p_nn<span class="op">=</span><span class="va">k</span>, a<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Xk</span> <span class="op">=</span> <span class="fu"><a href="create.shrink_Gaussian.html">create.shrink_Gaussian</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, n_ko <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res1</span> <span class="op">=</span> <span class="fu"><a href="knockoff.filter.html">knockoff.filter</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, <span class="va">Xk</span>, statistic <span class="op">=</span> <span class="va">stat.xgboost</span>,</span></span>
+<span class="r-in"><span>                       offset <span class="op">=</span> <span class="fl">1</span>, fdr <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res1</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> knockoff.filter(X = X, y = y, Xk = Xk, statistic = stat.xgboost, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fdr = 0.1, offset = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> integer(0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Frequency of selected variables from 0 knockoff copys:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [75] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span>
+<span class="r-in"><span><span class="fu"><a href="perf_eval.html">perf_eval</a></span><span class="op">(</span><span class="va">res1</span><span class="op">$</span><span class="va">shat</span>,<span class="va">Ac</span>,<span class="va">Ic</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 0</span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
