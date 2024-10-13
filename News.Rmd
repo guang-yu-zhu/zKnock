@@ -1,0 +1,36 @@
+---
+title: "Changelog"
+output: 
+  rmarkdown::md_document:
+    variant: markdown_github
+---
+
+```{r,include=FALSE}
+library(toolkit)
+pkgname='zKncok'
+```
+
+## ZKnock 1.0.0 (2024-05-01)
+
+- `r fun_links("knockoff.filter",pkgname)` now accepts a family argument, which is passed to statistics functions like `r fun_links("stat.glmnet_coefdiff",pkgname)`.
+
+ZKnock 1.0.1 (2024-08-15)
+
+- Added `r fun_links("create.knockoff", pkgname)`, a function to generate multiple knockoff samples.
+- Added `r fun_links("create.pc.knockoff", pkgname)`, a function for generating knockoffs using a principal component construction algorithm.
+- Added `r fun_links("stat.SHAP", pkgname)` function.
+
+ZKnock 1.0.2 (2024-09-17)
+
+- Added `r fun_links("create.pls.knockoff", pkgname)` and `r fun_links("create.zpls.knockoff", pkgname)` functions.
+
+ZKnock 1.0.3 (2024-09-27)
+
+- Added `r fun_links("agg_Avg", pkgname)`, `r fun_links("agg_BH", pkgname)`, and `r fun_links("agg_Freq", pkgname)` functions to perform multiple knockoff procedures.
+- Revised `r fun_links("knockoff.filter", pkgname)` to accept aggregate functions as an argument.
+
+## ZKnock 1.0.4 (2024-09-28)
+
+- Added `r fun_links("generate_X", pkgname)`, `r fun_links("generate_y", pkgname)`, `r fun_links("generate_lp", pkgname)`, and `r fun_links("generate_Weib", pkgname)` functions to generate simulation data.
+- Added `r fun_links("create.seq", pkgname)` and `r fun_links("create.sparse_seq", pkgname)` functions to generate Sequential knockoffs.
+- Added `r fun_links("perf_eval", pkgname)` function to evaluate TDR and FDR.

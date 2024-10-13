@@ -5,7 +5,7 @@ file.edit('_pkgdown.yml')
 file.edit('NAMESPACE')
 file.edit('DESCRIPTION')
 file.edit('README.md')
-file.edit('NEWS.md')
+file.edit('NEWS.Rmd')
 # build website -----
 # pkgdown::build_favicons() # run once when you have your man/figures/logo.png
 library(devtools)
@@ -21,15 +21,8 @@ devtools::load_all()
 
 
 # git commit and push  ------
-# commit all changes
-system('git add .')
-system('git commit -m "version 1.0.4"')
-# Create the tag
-system('git tag -a v1.0.4 -m "Release version 1.0.4"')
-# Push both the commit and the tag to the remote repository
-system('git push')
-system('git push origin v1.0.4')
-
+rmarkdown::render("NEWS.Rmd", output_file = "NEWS.md")
+toolkit::commit_and_tag("1.0.4")
 
 
 #  usethis -----
