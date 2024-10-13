@@ -22,7 +22,7 @@ devtools::load_all()
 
 # git commit and push  ------
 rmarkdown::render("NEWS.Rmd", output_file = "NEWS.md")
-toolkit::commit_and_tag("1.0.4")
+toolkit::commit_and_tag("1.0.5")
 
 
 #  usethis -----
