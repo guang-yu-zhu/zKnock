@@ -1,0 +1,46 @@
+name: R-CMD-check
+
+on:
+  push:
+    branches: [main, master]  # Trigger on pushes to main and master branches
+
+jobs:
+  R-CMD-check:
+    runs-on: ubuntu-latest
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      # Step 1: Checkout the repository
+      - uses: actions/checkout@v2
+
+      # Step 2: Install system dependencies required by R packages
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+
+
+      # Step 3: Set up R environment
+      - name: Install R
+        uses: r-lib/actions/setup-r@v2
+
+      # Step 4: Install dependencies listed in the DESCRIPTION file automatically
+      - name: Install dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: devtools  # Ensure devtools is installed as an extra dependency
+
+
+      # # Step 4: Install dependencies with pak
+      # - name: Install dependencies with pak
+      #   run: |
+      #     Rscript -e 'install.packages("pak")'
+      #     Rscript -e 'pak::pak("devtools")'
+
+      # Step 5: Run R CMD check
+      - name: Run R CMD check
+        run: R CMD check .
+
+

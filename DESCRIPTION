@@ -1,6 +1,6 @@
 Package: zKnock
 Title: Knockoff Filter for Controlled Selection
-Version: 1.0.4
+Version: 1.0.5
 Date: 2024-09-28
 Authors@R: 
   c(person("Guangyu", "Zhu", role = c("aut", "cre"), email = "guangyuzhu@uri.edu"))

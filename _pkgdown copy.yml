@@ -41,7 +41,10 @@ reference:
 - title: Generate Simulation Data
   desc:
   contents:
-  - starts_with("generate_")
+  - generate_X
+  - generate_y
+  - generate_lp
+  - generate_Weib
 - title: Controlled Feature Selection
   desc:
   contents:
@@ -71,8 +74,7 @@ reference:
   - starts_with("agg_")
 - title: Performance Evaluation
   contents:
-  - eval_fdp
-  - eval_tpp
+  - perf_eval
 footer:
   structure:
     left:

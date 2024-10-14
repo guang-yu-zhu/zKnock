@@ -1,28 +1,49 @@
-name: R-CMD-check
+name: Automatic Release
 
 on:
   push:
     tags:
-      - 'v*.*.*'  # Run on version tags
+      - 'v*.*.*'  # Runs only on version tags
 
 jobs:
-  R-CMD-check:
+  release:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: Install system dependencies
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # Step 2: Install system dependencies for R packages
+      - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev
-          
-      - name: Install R
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+
+      # Step 3: Set up R
+      - name: Setup R
         uses: r-lib/actions/setup-r@v2
-      
-      - name: Install required R packages
+
+      # Step 4: Create GitHub Release (only on tag pushes)
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref }}  # Use the tag that triggered the workflow
+          release_name: Release ${{ github.ref }}  # Name of the release
+          body: |
+            Automatic release for version ${{ github.ref }}.  # Release notes
+          draft: false  # Set to true if you want the release to be a draft
+          prerelease: false  # Set to true for pre-releases
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the built-in GitHub token
+
+      # Step 5: Debug Information
+      - name: Debug Information
         run: |
-          Rscript -e 'install.packages(c("curl", "gert", "gh", "httr2", "ragg"), repos = "https://cloud.r-project.org")'
-          Rscript -e 'install.packages(c("usethis", "pkgdown", "rcmdcheck", "rversions", "urlchecker", "devtools"), repos = "https://cloud.r-project.org")'
-      
-      - name: Run R CMD check
-        run: R CMD check .
+          echo "GitHub Ref: ${{ github.ref }}"
+          echo "Release Name: Release ${{ github.ref }}"
+
+      # Step 6: Set output variable (if needed)
+      - name: Set Output
+        run: |
+          echo "RELEASE_NAME=Release ${{ github.ref }}" >> $GITHUB_ENV  # Store in environment file

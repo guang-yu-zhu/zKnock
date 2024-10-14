@@ -1,6 +1,7 @@
 file.edit('.gitignore')
 file.edit('.github/workflows/pkgdown.yaml')
-file.edit('.github/workflows/release.yml')
+file.edit('.github/workflows/Release.yml')
+file.edit('.github/workflows/R-CMD-check.yml')
 file.edit('_pkgdown.yml')
 file.edit('NAMESPACE')
 file.edit('DESCRIPTION')
@@ -22,23 +23,7 @@ devtools::load_all()
 
 # git commit and push  ------
 rmarkdown::render("NEWS.Rmd", output_file = "NEWS.md")
-toolkit::commit_and_tag("1.0.5")
-
-
-#  usethis -----
-library(usethis)
-use_pipe()
-use_description(fields = list(Language = "es"))
-edit_r_profile(scope = c("user", "project"))
-use_mit_license()       # need a LICENSE file
-use_roxygen_md()        # use {roxygen2} for documentation and configuration
-use_package_doc()       # setup a package-level manual page
-use_testthat()          # setup testing infrastructure
-use_test("placeholder") # setup a placeholder test file
-devtools::document()             # Let {roxygen2} create NAMESPACE entries, build manual pages (and, more later on)
-devtools::check()                # looking for the three "0's" that tell us we're ready to roll!
-use_git()               # put the directory under git version control
-git_vaccinate()         # Prevent leaking credentials and other unnecessary filesystem cruft
+toolkit::git_commit_push("version 1.0.5")
 
 
 #  ----  buid pdf manual
